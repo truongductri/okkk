@@ -1,0 +1,323 @@
+﻿<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="left-content pull-left">
+                <!--<img src="{{$root.logo}}">-->
+                <span class="modal-title">{{title}}</span>
+            </div>
+            <div class="right-content pull-right">
+                <button type="button" class="close" data-dismiss="modal"><i class="bowtie-icon bowtie-navigate-close"></i></button>
+                <button type="button" class="close" ng-click="onResizeDialog()"><i class="bowtie-icon bowtie-view-full-screen"></i></button>
+            </div>
+        </div>
+        <div class="modal-body" style="overflow:unset;">
+            <div class="col-md-12" style="margin-top: 10px;">
+    <nav-tabs min-height="72vh" max-height="72vh" style="overflow:unset;" >
+        <tab-content name="tab1"  title="${get_res('list_user','Người dùng')}" select="onSelectTabOne">
+            <div class="col-md-12" style="height: 66vh;padding:0px 6px;" select="onSelectTab">
+               
+                <!--Table user-->
+          <input-text-icon on-click="change" style="padding:5px;">
+            </input-text-icon>
+            <div style="height:calc(100% - 40px)">
+            <table-data data-source="tableSource" fields="tableFields" type="MultiSelect" 
+                    paging="true" page-length="table_info.page_size" server-side="true" 
+                    press-enter="$table.onSelectTableRow" selected-items="$table.selectedItems" 
+                    current-item="$table.currentItem" search-text="$table.tableSearchText"
+                    refresh-row="$table.refreshDataRow" >
+            </table-data>
+            </div>
+            </div>
+        </tab-content>
+        <tab-content name="tab2" title="${get_res('list_group_user','Nhóm người dùng')}" select="onSelectTabTwo">
+            <div class="col-md-12" style="height: 66vh;padding:0px 6px;">
+            <input-text-icon on-click="change" style="padding:5px;">
+            </input-text-icon>
+            <div style="height:calc(100% - 40px)">
+            <table-data data-source="_tableSource" fields="_tableFields" type="MultiSelect" 
+                    paging="true" page-length="table_info.page_size" server-side="true" 
+                    press-enter="$table_group._onSelectTableRow" selected-items="$table_group._selectedItems" 
+                    current-item="$table_group._currentItem" search-text="$table_group._tableSearchText"
+                    refresh-row="$table_group.refreshDataRow">
+            </table-data>
+            </div>
+            </div>
+        </tab-content>
+    </nav-tabs>
+</div>
+           
+            
+        </div>
+        <div class="modal-footer">
+            <div class="right-content pull-right">
+                <button ng-click="save($event)"><i class="la la-check"></i></button>
+                <button ng-click="close($event)"><i class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (scope) {
+        scope.onTabOne = true;
+        scope.onTabTwo = false;
+
+        scope.onSelectTabTwo = function () {
+            debugger
+            setTimeout(function () {
+                $(document).trigger("resize");
+            }, 100);
+            scope.onTabOne = false;
+            scope.onTabTwo = true;
+           
+
+        }
+        scope.onSelectTabOne = function () {
+            
+            scope.onTabOne = true;
+            scope.onTabTwo = false;
+            
+        }
+
+
+        scope.title = scope.$parent.headerTitle;
+        
+        scope.tableFields = [
+            { "data": "login_account", "title": "${ get_res('login_account_table_title', 'Mã người dùng') }"},
+            { "data": "display_name", "title": "${ get_res('display_name_table_title', 'Tên hiển thị') }"},
+            { "data": "manlevel_from", "title": "${ get_res('manlevel_from_table_title', 'Mức quản lí từ') }"},
+            { "data": "manlevel_to", "title": "${ get_res('manlevel_to_table_title', 'Mức quản lí đến') }"},
+            {
+                "data": "created_on",
+                "title": "${ get_res('created_on_table_title', 'Thời điểm tạo') }",
+                "format": "date: " + scope.$root.systemConfig.date_format
+            }
+        ];
+        
+        scope.tableSource = _loadDataServerSide;
+        function _loadDataServerSide(fnReloadData, iPage, iPageLength, orderBy, searchText) {
+            scope.$$tableConfig = {
+                fnReloadData: fnReloadData,
+                iPage: iPage,
+                iPageLength: iPageLength,
+                orderBy: orderBy,
+                searchText: searchText
+            };
+            //setTimeout(function () {
+            if (fnReloadData) {
+                if (searchText) {
+                    _tableData(iPage, iPageLength, orderBy, searchText, function (data) {
+                        fnReloadData(data);
+                    });
+                } else {
+                    _tableData(iPage, iPageLength, orderBy, null, function (data) {
+                        fnReloadData(data);
+                    });
+                }
+            }
+            //}, 1000);
+        };
+        scope.onSelectTableRow = pressEnter;
+        //Danh sách các dòng đc chọn (nếu là table MultiSelect)
+        scope.$table = {
+            selectedItems:[]
+        };
+        
+        //Dòng hiện tại đang được focus (nếu table là SingleSelect hoặc MultiSelect)
+        scope.currentItem = null;
+        scope.tableSearchText = '';
+        scope.SearchText = '';
+        //Refesh table
+        scope.refreshDataRow = function () { /*Do nothing*/ };
+
+        scope.onResizeDialog = onResizeDialog;
+        scope.save = save;
+        scope.close = close;
+
+        function pressEnter($row) {
+            
+        }
+
+        scope.change = function (val) {
+            scope.tableSearchText = val;
+            var config = scope.$$tableConfig;
+            _tableData(config.iPage, config.iPageLength, config.orderBy, config.searchText, config.fnReloadData);
+        }
+
+        function onResizeDialog() {
+            $dialog.fullScreen();
+            setTimeout(function () {
+                $(window).trigger('resize');
+            }, 100);
+        }
+
+        function save() {  
+            
+            
+            if (scope.onTabOne) {
+                scope.$parent.dataItemSelects = scope.$table.selectedItems;
+                scope.$parent.$applyAsync();
+            }
+            else {
+                scope.$parent.dataItemSelects = scope.$table_group._selectedItems;
+                scope.$parent.$applyAsync();
+            }
+            $dialog.closeDialog();
+
+        }
+
+        function close() {
+            $dialog.closeDialog();
+        }
+
+        function reloadData() {
+            var tableConfig = scope.$parent.$$table_List_User_Config;
+            scope.$parent._tableData("${get_api_key('app_main.api.LMSLS_MaterialManagement/get_list_user_with_searchtext')}",
+                tableConfig.iPage, tableConfig.iPageLength, tableConfig.orderBy,
+                tableConfig.searchText, tableConfig.fnReloadData);
+        }
+
+        function _tableData(iPage, iPageLength, orderBy, searchText, callback) {
+            var sort = {};
+            $.each(orderBy, function (i, v) {
+                sort[v.columns] = (v.type === "asc") ? 1 : -1;
+            });
+            sort[orderBy[0].columns] =
+                services.api("${get_api_key('app_main.api.LMSLS_MaterialManagement/get_list_user_with_searchtext')}")
+                .data({
+                    //parameter at here
+                        "pageIndex": iPage - 1,
+                        "pageSize": iPageLength,
+                        "search": searchText,
+                        "sort": sort
+                    })
+                    .done()
+                .then(function (res) {
+                    debugger
+
+                    if (scope.$parent.user_list && scope.$parent.user_list.length) {
+                        for (let i = 0; i < res.items.length; i++) {
+                            for (let j = 0; j < scope.$parent.user_list.length; j++) {
+                                if (res.items[i]._id === scope.$parent.user_list[j]._id) {
+                                    res.items.splice(i,1)
+                                }
+                            }
+                        }
+                    }
+                    var dataRes = res.items;
+
+
+                        var data = {
+                            recordsTotal: res.total_items,
+                            recordsFiltered: res.total_items,
+                            data: res.items
+                        };
+                        callback(data);
+                        scope.currentItem = null;
+                        scope.$apply();
+                    })
+        }
+        ////////////////////////////////////////////////////////////////////////
+        scope._tableFields = [
+        { "data": "role_code", "title": "${ get_res('role_code_table_header', 'Mã nhóm người dùng') }", "className": "text-left" },
+        { "data": "role_name", "title": "${ get_res('role_name_table_header', 'Tên nhóm người dùng') }", "className": "text-left" },
+        { "data": "description", "title": "${ get_res('description_table_header', 'Mô tả chi tiết') }", "className": "text-left" },
+        { "data": "dd_name", "title": "${ get_res('dd_name_table_header', 'Vùng dữ liệu truy cập') }", "className": "text-left" },
+        { "data": "stop", "title": "${ get_res('stop_table_header', 'Ngưng sử dụng') }", "className": "text-center", "format" : "checkbox" },
+        {
+            "data": "created_on",
+            "title": "${ get_res('created_on_table_header', 'Thời điểm tạo') }",
+            "format": "date: " + scope.$root.systemConfig.date_format
+        }
+    ];
+        scope.$$tableConfig = {};
+        //Dữ liệu cho table
+    scope._tableSource = _loadDataServerSideGroup;
+    function _loadDataServerSideGroup(fnReloadData, iPage, iPageLength, orderBy, searchText) {
+        scope.$$tableConfig = {
+            fnReloadData: fnReloadData,
+            iPage: iPage,
+            iPageLength: iPageLength,
+            orderBy: orderBy,
+            searchText: searchText
+        };
+        //setTimeout(function () {
+        if (fnReloadData) {
+            if (searchText) {
+                _tableDataGroup(iPage, iPageLength, orderBy, searchText, function (data) {
+                    fnReloadData(data);
+                });
+            } else {
+                _tableDataGroup(iPage, iPageLength, orderBy, null, function (data) {
+                    fnReloadData(data);
+                });
+            }
+        }
+        //}, 1000);
+    };
+    scope._onSelectTableRow = pressEnter;
+
+    
+
+    scope._currentItem = null;
+    scope._tableSearchText = '';
+    scope.SearchText = '';
+    scope.$table_group = {
+            _selectedItems:[]
+        };
+
+        
+
+
+
+    scope._tableDataGroup = _tableDataGroup;
+    scope.$applyAsync();
+
+
+    
+    
+
+  
+
+    function _tableDataGroup(iPage, iPageLength, orderBy, searchText, callback) {
+        var sort = {};
+        $.each(orderBy, function (i, v) {
+            sort[v.columns] = (v.type === "asc") ? 1 : -1;
+        });
+        sort[orderBy[0].columns] =
+            services.api("${get_api_key('app_main.api.LMSLS_MaterialManagement/get_list_group_user')}")
+                .data({
+                    //parameter at here
+                    "pageIndex": iPage - 1,
+                    "pageSize": iPageLength,
+                    "search": searchText,
+                    "stop": scope.$parent.$parent.$parent.advancedSearch.data_lock,
+                    "sort": sort
+                })
+                .done()
+            .then(function (res) {
+                
+                    if (scope.$parent.user_list && scope.$parent.user_list.length) {
+                        for (let i = 0; i < res.items.length; i++) {
+                            for (let j = 0; j < scope.$parent.user_list.length; j++) {
+                                if (res.items[i]._id === scope.$parent.user_list[j]._id) {
+                                    res.items.splice(i,1)
+                                }
+                            }
+                        }
+                    }
+                    //_.each(res.items, function (val) { val.user_group = 1; })
+                    var data = {
+                        recordsTotal: res.total_items,
+                        recordsFiltered: res.total_items,
+                        data: res.items
+                    };
+                    callback(data);
+
+                    scope.currentItem = null;
+                    scope.$apply();
+                })
+    }
+
+        
+});
+</script>

@@ -1,0 +1,31 @@
+﻿<%!
+    _style = ""
+    _height = ""
+    _maximize = "true"
+%>
+<div class="modal-dialog" style="${self.attr._style}">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="left-content pull-left">
+                <!--<img src="{{$root.logo}}">-->
+                <span class="modal-title">{{title}}</span>
+            </div>
+            <div class="right-content pull-right">
+                <button type="button" class="close" data-dismiss="modal"><i class="bowtie-icon bowtie-navigate-close"></i></button>
+                <button type="button" style="display:{{ ${self.attr._maximize} == true ? '' : 'none' }};" class="close" ng-click="onResizeDialog()"><i class="bowtie-icon bowtie-view-full-screen"></i></button>
+            </div>
+        </div>
+        <div class="modal-body" style="height:${self.attr._height};">
+            <%block name="modal_body"/>
+        </div>
+        <div class="modal-footer">
+            <div class="right-content pull-right">
+                <button ng-click="saveNNext($event)" title="${get_global_res('save_and_next','Lưu & tiếp')}"><i class="bowtie-icon bowtie-save-as"></i></button>
+                <button ng-click="saveNClose($event)" title="${get_global_res('save_and_close','Lưu & đóng')}"><i class="bowtie-icon bowtie-save-close"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<%block name="modal_script"/>
+${self.body()}
+

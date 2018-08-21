@@ -1,0 +1,16 @@
+﻿<div id="hcs-system-admin-menu" class="hcs-left-sidebar">
+    <ul>
+        <li style="height:100px;margin-top:25px;" ng-if="displayAvatar == true">
+            <img src="{{imageSrc}}" style="width:75px; height:100px;"/>
+        </li>
+        <li ng-repeat="f in listFunction" class="{{ $index == 0 ? 'hcs-sidebar-selected' : ''}}">
+            <div ng-click="onClickFunctionLeftMenu(f, $event)" 
+                    class="hcs-left-sidebar-item"
+                    id="admin-system-{{f.function_id}}">
+
+                <p class="sidebar-icon text-center"><i class="bowtie-icon bowtie-log"></i></p><!--{{$index + 1}}-->
+                <p class="sidebar-title text-center">{{f.custom_name ? f.custom_name : f.default_name}}</p>
+            </div>
+        </li>
+    </ul>
+</div>

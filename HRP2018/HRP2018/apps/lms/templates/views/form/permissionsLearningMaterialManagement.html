@@ -1,0 +1,239 @@
+﻿<%!
+    #_style="width:200px;"
+%>
+    <%inherit file="../commons/dialog_save_close.html"/>
+
+<%block name="modal_body">
+
+
+   
+
+<div class="col-md-12 col-sm-12">
+<collapse-box class="zb-form-common" title="${get_res('authorization_control','Authorization Control')}">
+<div class="col-md-6" >
+    <div class="form-group zb-form-group">
+        <label for="inputEmp_Train_Mode_Name" class="col-sm-5 zb-form-label">File Name</label>
+        <div class="col-sm-7">      
+                <input-text id="inputEmp_Train_Mode_Name" ng-model="_currentItem.material_name" disabled>
+        </div>
+    </div>
+    <div class="form-group zb-form-group">
+        <label for="inputEmp_Train_Mode_Name" class="col-sm-5 zb-form-label">Group or user names</label>
+    </div>
+</div>
+    <div class="col-md-12"> 
+        <table class="display zb-data-table responsive nowrap dataTable no-footer">
+        <thead>
+            <tr>
+                <th style="text-align:center"></th>
+                <th style="color:dodgerblue;text-align:center"> 
+                </th>
+                <th style="color:red;text-align:center">
+                    <button class="btn btn-default" ng-click="delUser()" style="float:right; margin-left:10px;" >
+                        <span><i class="glyphicon glyphicon-remove"></i></span> Delete
+                    </button>
+                    <button class="btn btn-default" ng-click="addUserDlg()" style="float:right; margin-left:10px;">
+                        <span><i class="glyphicon glyphicon-plus"></i></span> Add
+                    </button>
+                </th>
+            </tr>
+        </thead>
+        </table>
+    </div>
+
+<!---->
+<div class="col-md-12 " style="height:160px;  overflow-y: scroll;">
+    <table class="display zb-data-table responsive nowrap dataTable no-footer">
+        <tbody>
+            <tr role= "row" ng-repeat="elem in user_list track by $index">
+                <td ><input-checkbox ng-model="elem.select_user"/></td>
+                <td class="ng-binding">
+                    <i class="fa fa-{{elem.login_account ? 'user':'users'}}" style="font-size:24px"></i> {{elem.login_account ? elem.login_account : elem.role_name}}
+                </td>
+                
+                <td>
+                    <span ng-repeat="data in elem.list_permision" style="color:black">
+                        <i class="bowtie-icon bowtie-checkbox"></i> 
+                        {{data.allow === true ? data.name + "; " : null}}
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!---->
+
+</div>
+<div class="col-md-12 col-sm-12">
+<collapse-box class="zb-form-common" title="${get_res('permission_for_selected_user','Permission for selected user')}">
+<div class="col-md-12">
+    <div class="form-group zb-form-group">
+        <label for="inputEmp_Train_Mode_Name" class="col-sm-12 zb-form-label">These file permission are entitled to the predefined permission of the folder which the file belongs to. User still can set specific permission for the file.</label>
+    </div>
+</div>
+<br />
+<div class="col-md-12">
+    <table class="display zb-data-table responsive nowrap dataTable no-footer">
+        <thead>
+            <tr>
+                <th style="text-align:center"></th>
+                <th style="color:dodgerblue;text-align:center">Allow</th>
+                <th style="color:red;text-align:center">Deny</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr role= "row"  ng-repeat="item in listPermissions track by $index">
+               
+                <td>{{item.name =="Full control"? "Full control (User can read, write, modify or delete the file.)" :item.name}}</td>
+                <td style="text-align: center; color:red">
+                    <input-checkbox ng-model="item.allow" ng-change="changeAllow(item, item.allow)"/>
+                </td>
+                <td style="text-align: center">
+                    <input-checkbox ng-model="item.deny" ng-change="changeDeny(item, item.deny)"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</%block>
+<%block name="modal_script">
+<script>
+    (function (scope) {
+        
+        scope.user_list = [];
+        //scope.elem.select_user = [];
+        scope._currentItem = scope.$parent.currentItem;
+        scope.changeAllow = function (model, val) {
+            
+            if (model.name == "Full control") {
+                for (var i = 0; i < scope.listPermissions.length; i++) {
+                    scope.listPermissions[i].allow = val
+                    scope.listPermissions[i].deny = !val
+                    }
+            }
+            model.deny = !val;
+           scope.$applyAsync();
+        }
+        scope.changeDeny = function (model, val) {
+            if (model.name == "Full control") {
+                for (var i = 0; i < scope.listPermissions.length; i++) {
+                    scope.listPermissions[i].deny = val
+                    scope.listPermissions[i].allow = !val
+                    }
+            }
+            model.allow= !val;
+           scope.$applyAsync();
+        }
+        //scope.dataItemSelects = [];
+		scope.col_group = 6;
+		scope.col = 12;
+		scope.onResizeDialog = onResizeDialog;
+		scope.listPermissions = [
+			{ name: "Full control", allow: false, deny: false },
+			{ name: "Modify" , allow:false, deny:false},
+			{ name: "Read-Only" , allow:false, deny:false},
+			{ name: "Read & Excute" , allow:false, deny:false},
+			{ name: "Review" , allow:false, deny:false},
+			{ name: "Comment" , allow:false, deny:false},
+			{ name: "Download" , allow:false, deny:false},
+			{ name: "Share" , allow:false, deny:false}
+			
+		]
+        scope.delUser = function () {
+            
+            debugger
+            if (scope.user_list && scope.user_list.length) {
+                scope.user_list = _.reject(scope.user_list , { "select_user" : true});
+                
+            }
+            scope.$applyAsync();
+              
+		}
+		scope.addUserDlg = function () {
+			openDialog("${get_res('add_user','Thêm người dùng')}", 'directives/combobox/template_custom', function () {
+				setTimeout(function () {
+					$(window).trigger('resize');
+				}, 200);
+			}, "diaAddUser");
+		}
+		function openDialog(title, path, callback, id = 'myModal') {
+			//check tồn tại của form dialog theo id
+			scope.headerTitle = title;
+			//Đặt ID cho form dialog
+			dialog(scope, id).url(path).done(function () {
+				callback();
+				//Set draggable cho form dialog
+				$dialog.draggable();
+			});
+		}
+
+		function onResizeDialog() {
+            $dialog.fullScreen();
+            scope.col = scope.col == 12 ? 6 : 12;
+            scope.col_group = scope.col_group == 6 ? 8 : 6;
+        }
+
+        //scope.$watch("dataItemSelects", function (data) {
+
+        //    debugger
+            
+        //    console.log(data)
+            
+        //        scope.user_list.push(...data);
+            
+        //})
+
+        scope.saveNClose = saveNClose;
+            
+        function saveNClose() {
+            debugger
+            if (scope.user_list && scope.user_list.length && scope.listPermissions && scope.listPermissions.length) {
+
+                scope.user_list = _.map(scope.user_list, function (user) {
+                        if (user.select_user === true) {
+                             user.list_permision = scope.listPermissions
+                        }
+                        return user
+                })
+            }
+            scope.$applyAsync();
+                services.api("${get_api_key('app_main.api.LMSLS_MaterialManagement/update_info_permission')}")
+                .data({
+                    "where": {
+                        'id': scope._currentItem['_id'],
+                        'permission': scope.user_list,
+                    }
+                })
+                .done()
+                    .then(function (res) {
+                    scope.$applyAsync();
+                    $msg.alert("${get_global_res('Handle_Success','Thao tác thành công')}", $type_alert.INFO);
+                    $dialog.closeDialog();
+                })
+        }
+        scope.loadDataPermission = function () {
+           debugger
+            services.api("${get_api_key('app_main.api.LMSLS_MaterialManagement/get_data_permission')}")
+                .data({
+                    "where": {
+                        'id': scope._currentItem['_id']
+                    }
+                })
+                .done()
+                .then(function (res) {
+                    debugger
+                    if (scope.user_list.length == 0) {
+                        if (res.permission.length > 0) {
+                            scope.user_list = _.map(res.permission, function (user) { user.select_user = false; return user })
+                        }
+                    }
+                   
+                    scope.$applyAsync();
+                })
+        }
+        scope.loadDataPermission();
+	});
+
+</script>
+</%block>

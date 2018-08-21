@@ -1,0 +1,173 @@
+@tab_bg_blue: #008CCB;
+@tab_cl_bd: #ddd;
+
+.zb-nav-tabs {
+    ul.zb-navbar {
+        padding: 0;
+        list-style: none;
+        display: table;
+        width: 100%;
+        margin: 0;
+        border-bottom: 1px solid @tab_cl_bd;
+
+        > li {
+            float: left;
+            height: 35px;
+            margin: 0 15px 1px 0;
+
+            > span {
+                height: 35px;
+                padding-top: 0;
+                line-height: 33px;
+                background: #f9f9f9;
+                display: table-cell;
+                padding: 0 13px;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+                cursor: pointer;
+                border-left: 1px solid transparent;
+                border-right: 1px solid transparent;
+                border-bottom: 1px solid transparent;
+                border-top: 2px solid transparent;
+            }
+
+            > span:hover {
+                background: #fff;
+                border-left: 1px solid @tab_cl_bd;
+                border-right: 1px solid @tab_cl_bd;
+                border-top: 2px solid @tab_bg_blue;
+            }
+        }
+
+        > li.zb-active {
+            > span {
+                line-height: 34px;
+                border-left: 1px solid @tab_cl_bd;
+                border-right: 1px solid @tab_cl_bd;
+                border-top: 2px solid @tab_bg_blue;
+                border-bottom: 1px solid transparent;
+                background: #fff;
+            }
+        }
+    }
+
+    div.zb-tab-container {
+        border: 1px solid @tab_cl_bd;
+        border-top: 0;
+        padding: 10px;
+        /*>div,
+            >tab-content {
+                visibility: hidden;
+            }
+            >div.zb-active {
+                visibility: unset;
+            }*/
+        > div,
+        > tab-content {
+            display: block;
+        }
+
+        > .zb-inactive {
+            display: none;
+        }
+    }
+}
+/* Tabs panel */
+.tabbable-panel {
+    /*border:1px solid #eee;
+  padding: 10px;*/
+}
+
+/* Default mode */
+.tabbable-line > .nav-tabs {
+    border: none;
+    margin: 0px;
+}
+
+.tabbable-line > .nav-tabs > li {
+    margin-right: 2px;
+}
+
+.tabbable-line > .nav-tabs > li > a {
+    border: 0;
+    margin-right: 0;
+    color: #737373;
+}
+
+.tabbable-line > .nav-tabs > li > a > i {
+    color: #a6a6a6;
+}
+
+.tabbable-line > .nav-tabs > li.open, .tabbable-line > .nav-tabs > li:hover {
+    border-bottom: 4px solid #bde3f5;
+}
+
+.tabbable-line > .nav-tabs > li.open > a, .tabbable-line > .nav-tabs > li:hover > a {
+    border: 0;
+    background: none !important;
+    color: #333333;
+}
+
+.tabbable-line > .nav-tabs > li.open > a > i, .tabbable-line > .nav-tabs > li:hover > a > i {
+    color: #a6a6a6;
+}
+
+.tabbable-line > .nav-tabs > li.open .dropdown-menu, .tabbable-line > .nav-tabs > li:hover .dropdown-menu {
+    margin-top: 0px;
+}
+
+.tabbable-line > .nav-tabs > li.active {
+    border: 1px solid #eee;
+    border-bottom: 4px solid #008ccb;
+    position: relative;
+}
+
+.tabbable-line > .nav-tabs > li.active > a {
+    border: 0;
+    color: #333333;
+    background-color: whitesmoke;
+}
+
+.tabbable-line > .nav-tabs > li.active > a > i {
+    color: #404040;
+}
+
+.tabbable-line > .tab-content {
+    margin-top: -3px;
+    background-color: #fff;
+    border: 0;
+    /*border-top: 1px solid #eee;
+  padding: 15px 0;*/
+}
+
+.portlet .tabbable-line > .tab-content {
+    padding-bottom: 0;
+}
+
+/* Below tabs mode */
+
+.tabbable-line.tabs-below > .nav-tabs > li {
+    border-top: 4px solid transparent;
+}
+
+.tabbable-line.tabs-below > .nav-tabs > li > a {
+    margin-top: 0;
+}
+
+.tabbable-line.tabs-below > .nav-tabs > li:hover {
+    border-bottom: 0;
+    border-top: 4px solid #bde3f5;
+}
+
+.tabbable-line.tabs-below > .nav-tabs > li.active {
+    margin-bottom: -2px;
+    border-bottom: 0;
+    border-top: 4px solid #f3565d;
+}
+
+.tabbable-line.tabs-below > .tab-content {
+    margin-top: -10px;
+    border-top: 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}

@@ -1,0 +1,166 @@
+﻿<div class="hcs-container" style="height: 100%">
+    <style>
+
+        .lms-dashboard {
+        padding: 30px;
+    }
+
+    .lms-dashboard-header-box {
+        height: 150px;
+        cursor: pointer;
+    }
+
+
+    .lms-dashboard-header-box-hover {
+        /*box-shadow: 0px 3px 3px rgb(0, 0, 0);
+        transform: scale(1);
+        transition: transform 1s;
+        color: #000 !important;*/
+    }
+        
+    .lms-dashboard-header-span-cl {
+        color: #000 !important;
+        transition: color 2s ;
+        -webkit-transition: color 2s;
+    }
+
+    .lms-dashboard-header-box-tx {
+        display: flex;
+        height: 80%;
+    }
+
+    .lms-dashboard-header-box-mo {
+        text-align: center;
+        height: 20%;
+        color: #fff;
+    }
+
+    .lms-dashboard-categories {
+        border: 1px solid #548235;
+        background: #A9D08E;
+    }
+
+    .lms-dashboard-categories-bot {
+        background: #70AD47;
+        border-bottom: 1px solid #548235;
+        border-left: 1px solid #548235;
+        border-right: 1px solid #548235;
+    }
+
+    .lms-dashboard-peding {
+        border: 1px solid #C65911;
+        background: #F4B084;
+    }
+
+    .lms-dashboard-peding-bot {
+        background: #ED7D31;
+        border-bottom: 1px solid #C65911;
+        border-left: 1px solid #C65911;
+        border-right: 1px solid #C65911;
+    }
+
+    .lms-dashboard-download {
+        border: 1px solid #BF8F00;
+        background: #FFD966;
+    }
+
+    .lms-dashboard-download-bot {
+        background: #fff;
+        color: #fff;
+        /*border-bottom: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;*/
+        cursor: pointer;
+    }
+    
+    .lms-dashboard-header-box-mo span {
+        /*line-height: 1.7;*/
+        font-size: 0.875rem;
+    }
+    .lms-dashboard-header-box-mo i {
+        padding-right: 10px;
+        font-size: 1.3rem;
+    }
+    .lms-dashboard-header-box-tx-info {
+        width: 80%;
+        padding: 5px;
+    }
+    .lms-dashboard-header-box-tx-icon {
+        width: 30%;
+        padding: 15px 10px 15px 0;
+    }
+
+    .lms-dashboard-header-box-tx-icon img{
+        
+    }
+    .lms-dashboard-count {
+        font-size: 27px;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 0;
+    }
+    .lms-dashboard-info {
+        font-size: 14px;
+        font-weight: 600;
+        color: #fff;
+    }
+    .lms-dashboard-chart {
+        padding-top: 10px;
+    }
+         .hcs-padding {
+            padding: 10px 5px;
+        }
+
+        .hcs-list-functions {
+            height: 150px;
+            margin-bottom: 10px;
+        }
+        .hcs-list-item {
+            text-align: center;
+            display: table;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hcs-list-item span {
+            vertical-align: middle;
+            display: table-cell;
+        }
+    </style>
+    <div class="col-md-2 hcs-padding" style="height: 100%; overflow-y: scroll;">
+        <!--<div class="hcs-list-functions"  ng-repeat="item in $dataBoBaoCao">
+            <div class="hcs-list-item" style="background: {{item.color}}" ng-click="redirectPage(item)">
+                <span>{{item.default_name}}</span>
+            </div>
+        </div>-->
+        <div class="lms-dashboard-header-box hcs-box-custom hcs-list-functions {{$index == 0 ? 'lms-dashboard-header-box-hover' : ''}}"  
+             ng-repeat="item in $dataBoBaoCao" ng-click="redirectPage(item, $event)" style="border: 1px solid {{item.color['border']}};">
+            <div class="lms-dashboard-header-box-tx " style="background: {{item.color['background-top']}};">
+                <div class="lms-dashboard-header-box-tx-info">
+                    <span class="lms-dashboard-count {{$index == 0 ? 'lms-dashboard-header-span-cl' : ''}}">12</span> <br />
+                    <span class="lms-dashboard-info {{$index == 0 ? 'lms-dashboard-header-span-cl' : ''}}">{{item.default_name}}</span>
+                </div>
+                <div class="lms-dashboard-header-box-tx-icon">
+                    <img ng-src="{{item.image}}">
+                </div>
+            </div>
+            <div class="lms-dashboard-header-box-mo lms-dashboard-download-bot" 
+                 style="background: {{item.color['background-bot']}};     
+                        border-top: 1px solid {{item.color['border']}};">
+                <div class="hcs-list-item">
+                    <span class="{{$index == 0 ? 'lms-dashboard-header-span-cl' : ''}}" style="text-align: right">
+                        <i class="bowtie-icon bowtie-navigate-forward-circle"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-10">
+        <div c-template url="${get_app_url('')}/pages/{{$partialpage}}" 
+                 style="position: absolute; top: 0; bottom: 0; left: 0; right: 0;"></div>
+    </div>
+</div>
+
+<script>
+    <%include file="../scripts/BoChiTieu.js"/>
+</script>

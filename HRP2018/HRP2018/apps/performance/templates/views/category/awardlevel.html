@@ -1,0 +1,31 @@
+﻿    <div id="collapseTableAwardLevel" class="row">
+        <div class="col-md-12" style="height: 42.5vh;">
+        <collapse-box class="zb-form-common" title="${get_res('award_level_caption_toolbar','Cấp khen thưởng')}">
+            <toolbar>
+                <input-text-icon icon="bowtie-icon bowtie-search"
+                                 on-click="onSearch"></input-text-icon>
+                <button class="zb-btn zb-btn-o-green" ng-click="onAdd()">
+                    <i class="bowtie-icon bowtie-math-plus"></i>
+                </button>
+                <button class="zb-btn zb-btn-o-blue" ng-click="onEdit()">
+                    <i class="bowtie-icon bowtie-edit-outline"></i>
+                </button>
+                <button class="zb-btn zb-btn-o-red" ng-click="onDelete()">
+                    <i class="bowtie-icon bowtie-trash"></i>
+                </button>
+                <button class="zb-btn" ng-click="onReload()">
+                    <i class="bowtie-icon bowtie-navigate-refresh"></i>
+                </button>
+            </toolbar>
+            <table-data data-source="tableSource" fields="tableFields" type="MultiSelect" 
+            server-side="true" page-length="100" paging="true" 
+            selected-items="selectedItems"
+            current-item="currentItem" search-text="tableSearchText"
+            refresh-row="refreshDataRow">
+            </table-data>
+        </collapse-box>
+        </div>
+    </div>
+<script>
+    <%include file = "./scripts/awardlevel.js" />
+</script>

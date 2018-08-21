@@ -1,0 +1,176 @@
+﻿
+<%!
+    #_style="width:300px;"
+%>
+<%inherit file="../../commons/dialog_selected_cancel.html"/>
+
+<%block name="modal_body">
+      <div class="col-md-8">
+		   <collapse-box class="zb-form-common" title="${get_global_res('employee','Nhân viên')}">
+			   <div class=" col-md-12 col-sm-12">
+				   <div class="form-group zb-form-group">
+                             <label class="col-sm-5 zb-form-label">${get_res('full_name','Họ tên')}</label>
+                             <div class="col-sm-7">
+                               <input-text ng-model="entity.employee_name" disabled />
+                             </div>
+                         </div>
+			   </div>
+			   <div class=" col-md-12 col-sm-12">
+				   <div class="form-group zb-form-group">
+                             <label class="col-sm-5 zb-form-label">${get_res('department','Bộ phận')}</label>
+                             <div class="col-sm-7">
+                               <input-text ng-model="entity.department_code" disabled /> 
+                             </div>
+                         </div>
+			   </div>
+			   <div class=" col-md-12 col-sm-12">
+				   <div class="form-group zb-form-group">
+                             <label class="col-sm-5 zb-form-label">${get_res('job_w_code','Chức danh')}</label>
+                             <div class="col-sm-7">
+                               <input-text ng-model="entity.job_w_code" disabled />
+                             </div>
+                         </div>
+			   </div>
+			   </collapse-box>
+	  </div>
+
+<div class="col-md-12">
+		      <collapse-box class="zb-form-common" title="${get_global_res('reason','Lý do không đánh giá trong kỳ')}">
+                    <div class="row">
+                        <!--Ghi chú-->
+                        <div class="col-sm-12">
+                            <input-textarea rows="9" ng-model="entity.reason"></input-textarea>
+                        </div>
+                    </div>
+                </collapse-box>
+            </div>
+<div class="col-md-12">
+   <collapse-box class="zb-form-common" title="${get_global_res('Note','Ghi chú')}">
+                    <div class="row">
+                        <!--Ghi chú-->
+                        <div class="col-sm-12">
+                            <input-textarea rows="9" ng-model="entity.note"></input-textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="padding-top: 16px;">
+                        <div class="form-group zb-form-group">
+                            <label for="DisplayInfo" class="col-sm-3 zb-form-label">${get_global_res('create_and_modify','Tạo | Sửa')}</label>
+                            <div class="col-sm-9">
+                                <input-text 
+                                            value="{{ entity.created_on | date: $root.systemConfig.date_format}} {{entity.created_by}} | {{ entity.modified_on | date: $root.systemConfig.date_format}} {{entity.modified_by}}" ng-disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                </collapse-box>
+	</div>
+</%block>
+
+<%block name="modal_script">
+<script>
+	(function (scope) {
+		scope.title = "Chi Tiết Nhân Viên Không Đánh giá";
+		scope.onResizeDialog = onResizeDialog;
+		scope.cbbApprovalPeriod = [];
+		scope.entity = {};
+		scope.entity = scope.$parent.currentItem;
+		scope.$$tableConfig = {};
+    //Dữ liệu cho table
+    
+		function onResizeDialog() {
+			$dialog.fullScreen();
+			scope.col = scope.col == 12 ? 6 : 12;
+			scope.col_group = scope.col_group == 6 ? 8 : 6;
+		}
+		scope.selectBtn = selectBtn;
+		//scope.cancelBtn = cancelBtn; 
+		 
+
+		(function _getDataInitCombobox() {
+			debugger
+            scope.$root.$getInitComboboxData(scope,
+                {
+                    "key": "${encryptor.get_key('cbb_departments')}",
+                    "code": scope.entity
+                        && scope.entity.hasOwnProperty('department_code')
+                        ? scope.entity.department_code
+                        : null,
+                    "alias": "$$$cbb_departments"
+                }
+            );
+		})();
+
+		scope.listRatingLevel = [];
+		debugger
+		(function getListRankCode() {
+        services.api("${get_api_key('app_main.api.TMLS_Rank/getListRankcode')}")
+            .data()
+            .done()
+            .then(function (res) {
+				scope.listRatingLevel = res;
+                scope.$applyAsync();
+            });
+		})();
+
+		function selectBtn() {
+			debugger
+            if (scope.entity != null) {
+                beforeCallToServer();
+                editData(function (res) {
+                    if (res.error == null) {
+                        $dialog.closeDialog();//Đóng form input
+                        $msg.alert("${get_global_res('Handle_Success','Thao tác thành công')}", $type_alert.INFO);//Xuất thông báo thành cônng
+                        if (scope.$parent.mode == 1 || scope.$parent.mode == 3) {
+                            //Reload table data
+							reloadData();
+							
+						} else if (scope.$parent.mode == 2) {
+							debugger
+                            //scope.$parent.currentItem = scope.entity;
+       //                     scope.$parent.currentItem.modified_on = res.item.modified_on;
+							//scope.$parent.currentItem.modified_by = res.item.modified_by;
+							scope.$parent.$apply();
+							reloadData();
+                        }
+                    } else {
+                        $msg.message("${get_global_res('Internal_Server_Error','Có lỗi từ phía máy chủ')}", "${get_global_res('Please_Try_Again','Xin thử vui lòng thử lại')}", function () { });
+                    }
+                });
+            }
+		}
+		
+		function editData(callback) {
+            var url = getUrl();
+            if (scope.$parent.mode == 3) {
+
+			}
+			scope.entity.tmp = 1;
+            services.api(url)
+				.data(scope.entity)
+                .done()
+                .then(function (res) {
+                    callback(res);
+                })
+        }
+
+        function beforeCallToServer() {
+
+        }
+
+		function getUrl() {
+			debugger
+            return scope.$parent.mode == 1 || scope.$parent.mode == 3 ? "${get_api_key('app_main.api.TMPER_AprPeriodEmpOut/insert')}" /*Mode 1: Tạo mới*/
+                    : "${get_api_key('app_main.api.TMPER_AprPeriodEmpOut/update')}" /*Mode 2: Cập nhật*/
+        }
+
+		function reloadData() {
+            var tableConfig = scope.$parent.$$tableConfig;
+            scope.$parent._tableData(tableConfig.iPage,
+                tableConfig.iPageLength, tableConfig.orderBy,
+                tableConfig.searchText, tableConfig.fnReloadData);
+        }
+        
+		
+    });
+</script>
+
+</%block>

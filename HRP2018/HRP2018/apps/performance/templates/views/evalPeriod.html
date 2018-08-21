@@ -1,0 +1,91 @@
+﻿<div class="hcs-container" style="height: 100%">
+    <page-sidebar on-add="onAdd" 
+                  on-edit="onEdit" 
+                  on-delete="onDelete" 
+                  on-save="onSave" 
+                  on-import="onImport" 
+                  on-export="onExport"
+                  on-search-press="onSearch"
+                  source="mapName" 
+                  key-field="function_id" 
+                  display-field="default_name" 
+                  icon-field="icon" 
+                  selected-key="selectedFunction"
+                  reload-on-change="true"
+                  advanced-search="advancedSearch">
+        <site-map>
+            <a><span>{{$root.currentFunction.default_name}}</span></a>
+            <span><i class="bowtie-icon bowtie-chevron-right"></i></span>
+            <span>{{currentFunction.default_name}}</span>
+            <a data-target="#dropdownFunction" style="color:#333" data-toggle="collapse"><i class="bowtie-icon bowtie-chevron-down"></i></a>
+            <div id="dropdownFunction" class="dropdown-content">
+                <div class="filter">
+                    <input-text-icon ng-model="search" style="padding:3px;">
+                </div>
+                <div class="dropdown">
+                    <p ng-repeat="f in mapName | filter : search" ng-class="{focus : selectedFunction === f.function_id}" ng-click="selectFunc($event, f.function_id)">{{f.custom_name ? f.default_name : f.custom_name}}</p>
+                </div>
+            </div>
+        </site-map>
+        <!--on-search-change="onSearch"-->
+        <advanced-search>
+            <div class="col-xs-3">
+                <input-select data-list="cbbSysLock" ng-model="advancedSearch.data_lock"
+                                    placeholder="" 
+                                    data-value="value" 
+                                    data-caption="caption"/>
+            </div>
+            <!--Combox filter data của màn hình phân cấp hành chính-->
+            <div class="col-xs-3" ng-if="selectedFunction == 'HCSSYS0380'">
+                <!--<input-combobox
+                            list-code="${encryptor.get_key('cbb_region')}"
+                            list-value="[{ '@region_code': true }]"
+                            current-item="advancedSearch.main_region_code"
+                            multi-select="false">-->
+                <combobox load-data="$root.$getComboboxData" 
+                            ng-model="advancedSearch.main_region_code"
+                            params="{key:'${encryptor.get_key('cbb_region')}', value:[{ '@region_code': true }]}"
+                            on-search-change="false"
+                            on-search-press="true"
+                            placeholder=""
+                            init-data="$$$cbb_region.value"
+                            caption-field="{{$$$cbb_region.caption_field}}"
+                            paging="true"
+                            close-on-select="true"
+                            template-fields="$$$cbb_region.display_fields"
+                            reload="false"
+                            required>
+                </combobox>
+            </div>
+            <div class="col-xs-3" ng-if="selectedFunction == 'HCSSYS0380'">
+                <!--<input-combobox
+                            list-code="${encryptor.get_key('cbb_nation')}"
+                            list-value="[{ '@nation_code': '' }]"
+                            current-item="advancedSearch.main_nation_code"
+                            multi-select="false">-->
+                <combobox load-data="$root.$getComboboxData" 
+                            ng-model="advancedSearch.main_nation_code"
+                            params="{key:'${encryptor.get_key('cbb_nation')}', value:[{ '@nation_code': '' }]}"
+                            on-search-change="false"
+                            on-search-press="true"
+                            placeholder=""
+                            init-data="$$$cbb_nation.value"
+                            caption-field="{{$$$cbb_nation.caption_field}}"
+                            paging="true"
+                            close-on-select="true"
+                            template-fields="$$$cbb_nation.display_fields"
+                            reload="false"
+                            required>
+                </combobox>
+            </div>
+            <!--Combox filter data của màn hình phân cấp hành chính-->
+        </advanced-search>
+        <content>
+            <div c-template url="${get_app_url('')}/pages/{{$partialpage}}" 
+                 style="position: absolute; top: 0; bottom: 0; left: 0; right: 0;"></div>
+        </content>
+    </page-sidebar>
+</div>
+<script>
+    <%include file="../scripts/category.js"/>
+</script>

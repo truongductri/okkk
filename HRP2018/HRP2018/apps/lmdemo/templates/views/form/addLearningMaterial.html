@@ -1,0 +1,518 @@
+﻿
+<%!
+    #_style="width:200px;"
+%>
+<%inherit file="../commons/dialog_save_close.html"/>
+
+<%block name="modal_body">
+            <div class="col-md-{{col_group}} col-sm-{{col_group}}">
+                <collapse-box class="zb-form-common" title="${get_res('create_new_folder','Create a new folder')}">
+                    <div class="col-md-{{col}}">
+                        <div class="form-group zb-form-group">
+                            <!--Mã trình độ-->
+                            <label for="inputEmp_Train_Mode_Code" class="col-sm-5 zb-form-label">${get_res('parent_code','Parent')}</label>
+                            <div class="col-sm-7">
+                                <input-combobox-custom 
+                                    list-code="${encryptor.get_key('cbb_lmsls_materialfolder')}"
+                                    list-value="[{ '@lock': true }, { '@parent_code': null }]"
+                                    list-data="[{'folder_id': 'root', 'folder_name': 'root'}]"
+                                    is-push-data="true"
+                                    item-custom = "entity.customData"
+                                    current-item="entity.parent_code"
+                                    current-item-other="currentItemOther" required /> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-{{col}}">
+                        <div class="form-group zb-form-group">
+                            <!--Tên loại hình đào tạo-->
+                            <label for="inputEmp_Train_Mode_Name" class="col-sm-5 zb-form-label">${get_res('fol_id','Mã Folder')}</label>
+                            <div class="col-sm-7">
+                                <input-text ng-disabled="__mode == 2" id="inputEmp_Train_Mode_Name" ng-model="entity.folder_id" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-{{col}}">
+                        <div class="form-group zb-form-group">
+                            <!--Tên loại hình đào tạo-->
+                            <label for="inputEmp_Train_Mode_Name" class="col-sm-5 zb-form-label">${get_res('folder_name','Folder Name')}</label>
+                            <div class="col-sm-7">
+                                <input-text id="inputEmp_Train_Mode_Name" ng-model="entity.folder_name" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-{{col}}">
+                        <div class="form-group zb-form-group">
+                            <label for="inputEmp_QuitJob_Type" class="col-sm-5 zb-form-label">${get_res('moderator','Moderator')}</label>
+                            <div class="col-sm-7">
+                                <input-combobox 
+                                    list-code="${encryptor.get_key('cbb_employees_cbcc')}"
+                                    list-value="[{ '@is_cbcc': true }]"
+                                    current-item="entity.moderator_id" required /> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-{{col}}">
+                        <div class="form-group zb-form-group">
+                            <label for="inputEmp_QuitJob_Type" class="col-sm-5 zb-form-label">${get_res('type','Type')}</label>
+                            <div class="col-sm-7">
+                                <input-select ng-model="entity.approve_type" data-list="$root.cbbTypeFolder" data-value="value" data-caption="caption" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-{{col}}">
+                        <div class="form-group zb-form-group">
+                            <!--Tên khác-->
+                            <label for="inputEmp_Train_Mode_Name2" class="col-sm-5 zb-form-label">${get_res('approver','Approver(s)')}</label>
+                            <div class="col-sm-7">
+                                <input-combobox 
+                                    list-code="${encryptor.get_key('cbb_employees_cbcc')}"
+                                    list-value="[{ '@is_cbcc': false }]"
+                                    current-item="entity.approver_id" required />
+                                <div>
+                                    <p class="zb-form-label" style="cursor: pointer; font-size: 11px !important;">Add new appover</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-{{col}}">
+                        <div class="form-group zb-form-group">
+                            <!--Thứ tự-->
+                            <label for="inputOrdinal" class="col-sm-5 zb-form-label">${get_res('publish','Publish')}</label>
+                            <div class="col-sm-7 "> 
+                                <label class="radio-inline control-label">
+                                    <input style="top: 2px;" type="radio" ng-model="entity.active" ng-value="true"> <span style="font-size: 13px;">Yes</span>
+                                </label>
+                                <label class="radio-inline control-label">
+                                    <input style="top: 2px;" type="radio" ng-model="entity.active" ng-value="false"> <span style="font-size: 13px;">No</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-{{col}}">
+                        <div class="form-group zb-form-group">
+                            <!--Ngưng sử dụng-->
+                            <label for="inputLock" class="col-sm-5 zb-form-label">${get_res('lock','Ngưng sử dụng')}</label>
+                            <div class="col-sm-7">
+                                <input-checkbox id="inputLock" ng-model="entity.lock">
+                            </div>
+                        </div>
+                    </div>
+                </collapse-box>
+            </div>
+            <div class="col-md-{{ 12 - col_group}} col-sm-{{ 12 - col_group}}">
+                <collapse-box class="zb-form-common" title="${get_global_res('Note','Ghi chú')}">
+                    <!--Ghi chú-->
+                    <div class="col-sm-12">
+                        <input-textarea rows="7" ng-model="entity.note"></input-textarea>
+                    </div>
+                    <div class="col-md-12" style="padding-top: 16px;">
+                        <div class="form-group zb-form-group">
+                            <label for="DisplayInfo" class="col-sm-3 zb-form-label">${get_global_res('create_and_modify','Tạo | Sửa')}</label>
+                            <div class="col-sm-9">
+                                <input-text value="{{ entity.created_on | date: $root.systemConfig.date_format}} - {{entity.created_by}} | {{ entity.modified_on | date: $root.systemConfig.date_format}} - {{entity.modified_by}}" ng-disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                </collapse-box>
+            </div>
+            <div class="col-md-12">
+                <collapse-box class="zb-form-common" title="${get_res('filder_permission','Folder Permissions')}">
+                    <!--<toolbar>
+                        <input-text-icon icon="bowtie-icon bowtie-search"
+                                         on-click="onSearch"></input-text-icon>
+                        <button ng-click="addDetail()" class="zb-btn zb-btn-o-green">
+                            <i class="bowtie-icon bowtie-math-plus"></i>
+                        </button>
+                        <button ng-click="editDetail()" class="zb-btn zb-btn-o-blue">
+                            <i class="bowtie-icon bowtie-edit-outline"></i>
+                        </button>
+                        <button ng-click="deleteDetail()" class="zb-btn zb-btn-o-red">
+                            <i class="bowtie-icon bowtie-trash"></i>
+                        </button>
+                        <button ng-click="" class="zb-btn">
+                            <i class="bowtie-icon bowtie-navigate-refresh"></i>
+                        </button>
+                    </toolbar>-->
+                    <div class="col-md-12 no-padding" style="height:230px;">
+                    <!--<table-data data-source="$$table.tableSource" fields="$$table.tableFields" type="MultiSelect" 
+                        paging="true" page-length="100" server-side="true" 
+                        press-enter="$$table.onSelectTableRow" selected-items="$$table.selectedItems"
+                        current-item="$$table.currentItem" search-text="$$table.tableSearchText"
+                        refresh-row="$$table.refreshDataRow">
+                    </table-data>-->
+                        <table class="display zb-data-table responsive nowrap dataTable no-footer">
+                            <thead>
+                              <tr>
+                                <th style="{{item.style}}" ng-repeat="item in $$table.tableFields">{{item.title}}</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr ng-repeat="item in entity.permisions track by $index">
+                                <td>{{item.role}}</td>
+                                <td style="text-align: center">
+                                  <input-checkbox ng-model="item.allow_full_control">
+                                </td>
+                                <td style="text-align: center">
+                                  <input-checkbox ng-model="item.allow_list_content"/>
+                                </td>
+                                <td style="text-align: center">
+                                  <input-checkbox ng-model="item.allow_modify"/>
+                                </td>
+                                <td style="text-align: center">
+                                  <input-checkbox ng-model="item.allow_view"/>
+                                </td>
+                                <td style="text-align: center">
+                                  <input-checkbox ng-model="item.allow_download"/>
+                                </td>
+                              </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </collapse-box>
+            </div>
+</%block>
+
+<%block name="modal_script">
+<script>
+    (function (scope) {
+        scope.__mode = scope.$parent.mode;
+        scope.currentItemOther = scope.__mode == 1 ? '' : 'root';
+        scope.onResizeDialog = onResizeDialog;
+        scope.col = 12;
+        scope.col_group = 6;
+        scope.col_conf_sal = 6;
+        scope.title = scope.$parent.headerTitle;
+        scope.customCbb = {};
+        var __entity = JSON.parse(JSON.stringify(scope.$parent.currentItem ? scope.$parent.currentItem : {}));
+        //Mode 1: tạo mới, Mode 2: chỉnh sửa, Mode 3: sao chép
+        scope.entity = scope.__mode == 2 ? __entity : {};
+        scope.parent_code_old = scope.entity.parent_code;
+        //combobox source
+        scope.cbbTrainCof = scope.$parent.LAcadameRange;
+        scope.cbbCoeff = scope.$parent.LAcadameCoEff;
+        scope.cbbBeginDateCal = scope.$parent.LBeginDateCal;
+
+        //Nút lưu và thêm
+        scope.saveNNext = saveNNext;
+        //Nút lưu
+        scope.saveNClose = saveNClose;
+        //Nút thêm chi tiết
+        //scope.addDetail = addDetail;
+        //Nút xóa chi tiết
+        //scope.deleteDetail = deleteDetail;
+        //Nút sửa chi tiết
+        //scope.editDetail = editDetail;
+
+        //Cấu hình tên field và caption hiển thị trên UI
+        scope.$$table = {
+            "tableFields": [
+                { "data": "role", "title": "${get_res('role_table_header','Role')}"},
+                { "data": "allow_full_control", "title": "${get_res('allow_full_control_table_header','Full Control')}", "format": "checkbox", "style": "text-align: center;"},
+                { "data": "allow_list_content", "title": "${get_res('allow_list_content_content_table_header','List Folder Contents')}", "format": "checkbox", "style": "text-align: center;"},
+                { "data": "allow_modify", "title": "${get_res('modify_table_header','Modify')}", "format": "checkbox", "style": "text-align: center;"},
+                { "data": "allow_view", "title": "${get_res('view_table_header','View')}", "format": "checkbox", "style": "text-align: center;"},
+                { "data": "allow_download", "title": "${get_res('download_table_header','Download')}", "format": "checkbox", "style": "text-align: center;"}
+            ],
+            "$$tableConfig" : {},
+            "tableSource": _loadDataServerSide,
+            "onSelectTableRow" : function ($row) {
+                editDetail();
+            },
+            "selectedItems": [],
+            "currentItem": null,
+            "tableSearchText": "",
+            "refreshDataRow" : function () { /*Do nothing*/ }
+        }
+
+        scope.$$cbbList = {
+            cbbParent: [{}],
+            cbbModerator: [{}],
+            cbbApprover: [{}]
+        }
+        scope.SearchText = '';
+        //Refesh table
+        scope._tableData = _tableData;
+        scope.entity.permisions = scope.__mode == 1 ? scope.permisions = [{
+            role_id: "sys_admin",
+            role: "System Admin",
+            allow_full_control: true,
+            allow_list_content: false,
+            allow_modify: false,
+            allow_view: false,
+            allow_download: false,
+        }, {
+            role_id: "instructor",
+            role: "Instructor",
+            allow_full_control: false,
+            allow_list_content: false,
+            allow_modify: false,
+            allow_view: false,
+            allow_download: false,
+        }, {
+            role_id: "student",
+            role: "Student",
+            allow_full_control: false,
+            allow_list_content: false,
+            allow_modify: false,
+            allow_view: false,
+            allow_download: false,
+        }, {
+            role_id: "guest",
+            role: "Guest",
+            allow_full_control: false,
+            allow_list_content: false,
+            allow_modify: false,
+            allow_view: false,
+            allow_download: false,
+        }] : scope.entity.permisions;
+        function _loadDataServerSide(fnReloadData, iPage, iPageLength, orderBy, searchText) {
+            scope.$$tableConfig = {
+                fnReloadData: fnReloadData,
+                iPage: iPage,
+                iPageLength: iPageLength,
+                orderBy: orderBy,
+                searchText: searchText
+            };
+            if (fnReloadData) {
+                if (searchText) {
+                    _tableData(iPage, iPageLength, orderBy, searchText, function (data) {
+                        fnReloadData(data);
+                    });
+                } else {
+                    _tableData(iPage, iPageLength, orderBy, null, function (data) {
+                        fnReloadData(data);
+                    });
+                }
+            }
+        };
+        
+        function _tableData(iPage, iPageLength, orderBy, searchText, callback) {
+            var sort = {};
+            $.each(orderBy, function (i, v) {
+                sort[v.columns] = (v.type === "asc") ? 1 : -1;
+            });
+            sort[orderBy[0].columns] =
+                services.api("${get_api_key('app_main.api.LMSLS_MaterialFolder/get_list_with_searchtext')}")
+                    .data({
+                        //parameter at here
+                        "train_level_code": scope.entity ? scope.entity.train_level_code : " ",
+                        "pageIndex": iPage - 1,
+                        "pageSize": iPageLength,
+                        "search": searchText,
+                        "sort": sort
+                    })
+                    .done()
+                    .then(function (res) {
+                        var data = null;
+                        if (scope.__mode == 1) { // mode add new
+                            data = {
+                                recordsTotal: scope.permisions.length,
+                                recordsFiltered: scope.permisions.length,
+                                data: scope.permisions
+                            };
+                            scope.entity.permisions = scope.permisions;
+                        } else if (scope.__mode == 2) { // mode edit
+                            data = {
+                                recordsTotal: res.total_items,
+                                recordsFiltered: res.total_items,
+                                data: res.items
+                            };
+                        }
+                        callback(data);
+                        scope.$$table.currentItem = null;
+                        scope.$apply();
+                    })
+        }
+
+        /**
+         * Thay đỗi kích thước form Dialog và các control trên form dialog
+         */
+        function onResizeDialog() {
+            $dialog.fullScreen();
+            scope.col = scope.col == 12 ? 6 : 12;
+            scope.col_group = scope.col_group == 6 ? 8 : 6;
+            scope.col_conf_sal = scope.col_conf_sal == 6 ? 4 : 6;
+        }
+
+        function saveNClose() {
+            if (scope.entity != null) {
+                var rsCheck = checkError();//Kết quả check input
+                if (rsCheck.result) {
+                    $msg.message("${get_global_res('Input_Error','Nhập liệu sai')}", rsCheck.errorMsg, function () { });
+                    return;
+                }
+                beforeCallToServer();
+                editData(function (res) {
+                    if (res.error == null) {
+                        $dialog.closeDialog();//Đóng form input
+                        $msg.alert("${get_global_res('Handle_Success','Thao tác thành công')}", $type_alert.INFO);//Xuất thông báo thành cônng
+                        if (scope.__mode == 1 || scope.__mode == 3) {
+                            //Reload table data
+                            reloadData();
+                        } else if (scope.__mode == 2) {
+                            scope.$parent.currentItem = scope.entity;
+                            scope.$parent.currentItem.modified_on = res.item.modified_on;
+                            scope.$parent.currentItem.modified_by = res.item.modified_by;
+                            scope.$parent.$apply();
+                            //Refesh datatable
+                            scope.$root.refresh();
+                        }
+                    } else {
+                        $msg.message("${get_global_res('Internal_Server_Error','Có lỗi từ phía máy chủ')}", "${get_global_res('Please_Try_Again','Xin thử vui lòng thử lại')}", function () { });
+                    }
+                });
+            }
+        }
+
+        function saveNNext() {
+            if (scope.entity != null) {
+                var rsCheck = checkError();//Kết quả check input
+                if (rsCheck.result) {
+                    //Nhập sai: break khỏi hàm
+                    $msg.message("${get_global_res('Input_Error','Nhập liệu sai')}", rsCheck.errorMsg, function () { });
+                    return;
+                }
+                beforeCallToServer();
+                editData(function (res) {
+                    if (res.error == null) {
+                        if (scope.__mode == 1 || scope.__mode == 3)
+                            reloadData();
+                        else {
+                            scope.$parent.currentItem = scope.entity;
+                            scope.$parent.currentItem.modified_on = res.item.modified_on;
+                            scope.$parent.currentItem.modified_by = res.item.modified_by;
+                            scope.$parent.$apply();
+                            //Refesh datatable
+                            scope.$root.refresh();
+                        }
+                        $msg.alert("${get_global_res('Handle_Success','Thao tác thành công')}", $type_alert.INFO);
+                        scope.entity = {};
+                        scope.__mode = 1;
+                        scope.$apply();
+                    } else {
+                        $msg.message("${get_global_res('Notification','Thông báo')}", "${get_global_res('Internal_Server_Error','Có lỗi từ phía máy chủ')}", function () { });
+                    }
+                })
+            } else {
+                $msg.message("${get_global_res('Input_Error','Nhập liệu sai')}", rsCheck.errorMsg, function () { });
+            }
+        }
+
+        function editData(callback) {
+            var url = getUrl();
+            if (scope.__mode == 3) {
+
+            }
+            if (scope.__mode == 1) {
+                if (scope.entity.parent_code === 'root') {
+                    scope.entity.parent_id = null;
+                    scope.entity.parent_code = null;
+                    scope.entity.level = 1;
+                    scope.entity.level_code = [
+                        scope.entity.folder_id
+                    ];
+                } else {
+                    var dataLevelCode = scope.entity.customData.filter(function (el) {
+                        return el["level_code"];
+                    })
+                    var level = scope.entity.customData.filter(function (el) {
+                        return el["level"];
+                    })
+                    scope.entity.parent_code = scope.entity.parent_code;
+                    scope.entity.parent_id = null;
+                    scope.entity.level = dataLevelCode[0]["level"] + 1;
+                    dataLevelCode[0]["level_code"].push(scope.entity.folder_id);
+                    scope.entity.level_code = dataLevelCode[0]["level_code"];
+                }
+            } else if (scope.__mode == 2) {
+                for (var i = 0; i < scope.entity.level_code.length; i++) {
+                    if (scope.entity.level_code[i] == scope.parent_code_old) {
+                        scope.entity.level_code[i] = scope.entity.parent_code;
+                    }
+                }
+            }
+            services.api(url)
+                .data(scope.entity)
+                .done()
+                .then(function (res) {
+                    callback(res);
+                })
+        }
+
+        function getUrl() {
+            return scope.__mode == 1 || scope.__mode == 3 ? "${get_api_key('app_main.api.LMSLS_MaterialFolder/insert')}" /*Mode 1: Tạo mới*/
+                    : "${get_api_key('app_main.api.LMSLS_MaterialFolder/update')}" /*Mode 2: Cập nhật*/
+        }
+
+        function reloadData() {
+            var tableConfig = scope.$root.$$tableConfig;
+            scope.$root._tableData(tableConfig.iPage,
+            tableConfig.iPageLength, tableConfig.orderBy,
+                tableConfig.searchText, tableConfig.fnReloadData);
+            //
+            scope.$root._departments();
+        }
+
+        function beforeCallToServer() { }
+
+        /**
+         * Function check input
+         */
+        function checkError() {
+            var errMsg;
+            var valid = null;
+            var rs = {
+                "result": false,
+                "errorMsg": ''
+            };
+            valid = lv.Validate(scope.entity.parent_code);
+            rs.result = valid.isNullOrWhiteSpace();
+            rs.errorMsg = rs.result === true ? "${get_res('parent_code_is_not_null','Mã Thư mục cha không được để trống')}" + '\n' : "" ;
+            if(rs.result === true){
+                return rs;
+            }
+            valid = lv.Validate(scope.entity.folder_id);
+            rs.result = valid.isNullOrWhiteSpace();
+            rs.errorMsg = rs.result === true ? "${get_res('folder_id_is_not_null','Mã Thư mục không được để trống')}" + '\n' : "" ;
+            if(rs.result === true){
+                return rs;
+            }
+            valid = lv.Validate(scope.entity.folder_name);
+            rs.result = valid.isNullOrWhiteSpace();
+            rs.errorMsg = rs.result === true ? "${get_res('folder_name_is_not_null','Tên Thư mục không được để trống')}" + '\n' : "" ;
+            if(rs.result === true){
+                return rs;
+            }
+            valid = lv.Validate(scope.entity.moderator_id);
+            rs.result = valid.isNullOrWhiteSpace();
+            rs.errorMsg = rs.result === true ? "${get_res('moderator_id_is_not_null','Moderator không được để trống')}" + '\n' : "" ;
+            if(rs.result === true){
+                return rs;
+            }
+            return rs;
+        }
+
+        /**
+         * Hàm mở dialog
+         * @param {string} title Tittle của dialog
+         * @param {string} path Đường dẫn file template
+         * @param {function} callback Xử lí sau khi gọi dialog
+         * @param {string} id Id của form dialog, default = 'myModal'
+         */
+        function openDialog(title, path, callback, id = 'myModal') {
+
+            //check tồn tại của form dialog theo id
+            if ($('#' + id).length === 0) {
+                scope.headerTitle = title;
+                //Đặt ID cho form dialog
+                dialog(scope, id).url(path).done(function () {
+                    callback();
+                    //Set draggable cho form dialog
+                    $dialog.draggable();
+                });
+            }
+        }
+    });
+</script>
+</%block>

@@ -1,0 +1,71 @@
+﻿<div class="hcs-container" style="height: 100%">
+    <page-sidebar on-add="onAdd" 
+                  on-edit="onEdit" 
+                  on-delete="onDelete" 
+                  on-save="onSave" 
+                  on-import="onImport" 
+                  on-export="onExport"
+                  on-search-press="onSearch"
+                  source="mapName" 
+                  key-field="function_id" 
+                  display-field="default_name" 
+                  icon-field="icon" 
+                  selected-key="selectedFunction"
+                  reload-on-change="true"
+                  advanced-search="advancedSearch">
+        <site-map>
+            <a><span>{{$root.currentFunction.default_name}}</span></a>
+            <span><i class="bowtie-icon bowtie-chevron-right"></i></span>
+            <span>{{currentFunction.default_name}}</span></site-map>
+        <extend-toolbar>
+             <button class="zb-btn" ng-click="onDisplayListData()">
+                    <i class="bowtie-icon bowtie-editor-list-bullet"></i>
+                </button>
+             <button class="zb-btn" ng-click="onDisplayGridData()">
+                    <i class="bowtie-icon bowtie-view-grid"></i>
+                </button>
+            <div class="col-md-6" style="padding-right: 0; top: 2px;">
+                <!--<input-text-icon id="tableSearchText" on-click="objSearch.onSearch" ng-model="objSearch.$$$modelSearch"></input-text-icon>-->
+                 <div class="hcs-left-side-department-tree-tool-bar-div-search">
+                    <input class="hcs-left-side-department-tree-tool-bar-input-search" on-click="objSearch.onSearch" ng-model="objSearch.$$$modelSearch">
+                    <div class="hcs-left-side-department-tree-tool-bar-input-search-bot"></div>
+                    <div class="hcs-left-side-department-tree-tool-bar-input-search-bot-icon">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </div>
+                </div>
+            </div>
+             <button class="zb-btn" ng-click="viewHistoryLearningMaterial()">
+                    <i class="bowtie-icon bowtie-navigate-history"></i>
+                </button>
+            <button class="zb-btn" ng-click="viewDetailsLearningMaterial()">
+                    <i class="bowtie-icon bowtie-ellipsis"></i>
+                </button>
+            <button class="zb-btn" ng-click="addLearningMaterial()">
+                    <i class="bowtie-icon bowtie-math-plus"></i>
+                </button>
+            <button class="zb-btn" ng-click="editLearningMaterial()">
+                    <i class="bowtie-icon bowtie-edit-outline"></i>
+                </button>
+            <button class="zb-btn" ng-click="delLearningMaterial()">
+                    <i class="bowtie-icon bowtie-trash"></i>
+            </button>
+            <button class="zb-btn" ng-click="importLearningMaterial()">
+                    <i class="bowtie-icon bowtie-transfer-upload"></i>
+                </button>
+            <button class="zb-btn" ng-click="exportLearningMaterial()">
+                    <i class="bowtie-icon bowtie-transfer-download"></i>
+                </button>
+            <button class="zb-btn" ng-click="$root.refresh()">
+                    <i class="bowtie-icon bowtie-navigate-refresh"></i>
+                </button>
+            
+        </extend-toolbar>
+        <content>
+            <div c-template url="${get_app_url('')}/pages/{{$partialpage}}" 
+                 style="position: absolute; top: 0; bottom: 0; left: 0; right: 0;"></div>
+        </content>
+    </page-sidebar>
+</div>
+<script>
+    <%include file="../scripts/learning_dashboard.js"/>
+</script>

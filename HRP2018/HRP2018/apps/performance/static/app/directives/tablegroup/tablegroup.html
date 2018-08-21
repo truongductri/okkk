@@ -1,0 +1,76 @@
+﻿<style>
+    .lms-table-history-custom-header {
+        height: auto;
+	    padding: 0;
+        display: grid;
+        grid-template-columns: 30px 1fr 100px 100px 1fr 1fr; /* fraction*/
+        padding-bottom: 3px;
+        background: #008ccb;
+        color: white;
+    }
+    .lms-table-history-custom {
+	    height: auto;
+	    padding: 0;
+        display: grid;
+        grid-template-columns: 30px 1fr 100px 100px 1fr 1fr; /* fraction*/
+        padding-bottom: 3px;
+    }
+    .lms-table-history-custom-group {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        padding-top: 15px;
+        padding-bottom: 10px;
+    }
+    .lms-icon-up {
+        color: #555;
+        display: inline-block;
+        transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        transition: all ease .3s;
+    }
+    .lms-icon-down {
+        color: #555;
+        display: inline-block;
+        transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -webkit-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        transition: all ease .3s;
+    }
+</style>
+<div class="">
+    <div class="lms-table-history-custom-header">
+		<div ng-repeat="item in currentHeader">{{item.value}}</div>
+	</div>
+    <div class="lms-table-history-custom-body">
+        <div ng-repeat="item in currentItem track by $index">
+            <div class="lms-table-history-custom-group" item-group="{{$index}}">
+                <div style="color: #008ccb">
+                    {{item.caption}} ({{item.items.length}})
+                </div>
+                <div style="border-bottom: 1px solid #008ccb"></div>
+                <div>
+                    <i class="bowtie-icon bowtie-chevron-left-light lms-icon-up" style="color: #008ccb" onclick="onClickIcon(this)"></i>
+                </div>
+            </div>
+            <div class="lms-table-history-custom" item-group-child="{{$parent.$index}}" ng-repeat="data in item.items">
+                <div>
+                    <img ng-src="{{data.file_thumbnail}}" width="24px" />
+                </div>
+                <div>{{data.material_name}}</div>
+                <div>
+                    {{data.version}}<i class="bowtie-icon bowtie-security-lock-fill" style="color: blue;"></i>
+                </div>
+                <div>
+                    <i class="bowtie-icon bowtie-record-fill" style="color: orange;"></i>{{data.status}}
+                </div>
+                <div>{{data.modidied_by}}</div>
+                <div>{{data.comment}}</div>
+            </div>
+        </div>
+    </div>
+</div>

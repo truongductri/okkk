@@ -1,0 +1,158 @@
+﻿<style>
+	span.stars, span.stars span {
+    display: block;
+    background: url('https://apppresser.com/wp-content/uploads/2015/11/stars.png') 0 -16px repeat-x;
+    width: 80px;
+    height: 16px;
+}
+
+span.stars span {
+    background-position: 0 0;
+}
+    .rating_checked {
+        color: orange !important;
+    }
+</style>
+<div class="hcs-container" style="height: 100%">
+    <div class="row hcs-profile-list">
+        <div class="hcs-left-side-department-content">
+            <div class="hcs-left-side-department-tree-tool-bar">
+                <div class="pull-left" style="padding-left:10px;">
+                    <div class="hcs-left-side-department-tree-tool-bar-div-search">
+                        <input class="hcs-left-side-department-tree-tool-bar-input-search" placeholder="Filter" ng-model="treeSearchText">
+                        <div class="hcs-left-side-department-tree-tool-bar-input-search-bot"></div>
+                        <div class="hcs-left-side-department-tree-tool-bar-input-search-bot-icon">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="pull-left" style="padding-left:10px;">
+                    <button class="zb-btn hcs-left-side-department-tree-tool-bar-btn-custom-icon" ng-click="$treeCollapseAll()" style="text-align: center;">
+                        <span>
+                            <i class="bowtie-icon bowtie-chevron-up-all"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="pull-left" style="padding-left:5px;">
+                    <button class="zb-btn hcs-left-side-department-tree-tool-bar-btn-custom-icon" ng-click="$treeExpandAll()" style="text-align: center;">
+                        <span>
+                            <i class="bowtie-icon bowtie-chevron-down-all"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="hcs-left-side-department-tree" style="padding: 0 7px;">
+                <tree-data data-source="treeDepartmentsDataSource" display-field="folder_name" parent-field="parent_code" key-field="folder_id" multi-select="treeMultiSelect" select-mode="treeMode" on-select="selectTreeNode" current-node="treeCurrentNode" selected-nodes="treeSelectedNodes" selected-root-nodes="treeSelectedRootNodes" search-text="treeSearchText" check-all="treeCheckAll" checked-field="is_selected" disabled="true" expand-all="$treeExpandAll" collapse-all="$treeCollapseAll" />
+            </div>
+        </div>
+        <div class="hcs-right-side-department-content" ng-show="$parent.isList">
+            <div class="hcs-right-side-department-list" style="height: 100%">
+                <table-data data-source="tableSource" fields="tableFields" type="MultiSelect" paging="true" page-length="100" server-side="true" press-enter="onSelectTableRow" selected-items="selectedItems" current-item="currentItem" search-text="tableSearchText" refresh-row="refreshDataRow">
+                </table-data>
+            </div>
+        </div>
+        <div class="hcs-right-side-department-content" ng-show="$parent.isGrid">
+            <div class="hcs-right-side-department-content-grid">
+                <div class="col-md-6 hcs-right-side-department-content-grid-data" ng-repeat="item in ItemTables" ng-click="fnSelectDataGrid(item)" ng-dblclick="onSelectTableRow()">
+                    <div class="lmm-item-material">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label class="lmm-container-item">
+                                    <input type="checkbox" ng-click="onCheckItemGird(item)">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="col-md-10">
+                                <p class="lmm-container-item-title" style="">{{item.material_id}}_{{item.material_name}}</p>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-lg-4 col-sm-4">
+                                <div class="lmm-container-item-body">
+                                    <table width="100%" cellspacing="0" cellpadding="0" height="100%" style="table-layout: fixed;">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <a href="#">
+                                                        <img ng-src="{{$root.url_static}}{{item.files['file_thumbnail']}}" style="max-width: 103px;"/>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="lmm-container-item-star">
+									 <!--<div ng-repeat="rating in [item.total_rating]">
+										 <span class="stars">
+											 <span ng-style="{ 'width': getStars(rating) }"></span>
+										</span>
+									</div>-->
+                                    <div>
+                                        <span class="bowtie-icon {{item.total_rating >= rt ? 'rating_checked bowtie-favorite' : 'bowtie-favorite-outline'}}" style="font-size: 0.875rem; color: orange;" ng-repeat="rt in [1,2,3,4,5]"></span>
+                                    </div>
+								</div>
+                                <div class="lmm-container-item-comment">
+                                    <span>
+                                        {{item.comments.length ? item.comments.length : 0 }} comments
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-lg-8 col-sm-8 lmm-container-item-form">
+                                <div class="form-group zb-form-group">
+                                    <!--Danh mục-->
+                                    <label for="inputEmp_Train_Mode_Name" class="col-md-4 lmm-container-item-form-label">${get_res('category','Category')}</label>
+                                    <div class="col-md-8 lmm-container-item-form-info">
+                                        <p class="info-item">{{item.category}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group zb-form-group">
+                                    <!--Tên tác giả-->
+                                    <label for="inputEmp_Train_Mode_Name" class="col-md-4 lmm-container-item-form-label">${get_res('author','Author')}</label>
+                                    <div class="col-md-8 lmm-container-item-form-info">
+                                        <p class="info-item">{{item.author_name}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group zb-form-group">
+                                    <!--Khóa học-->
+                                    <label for="inputEmp_Train_Mode_Name" class="col-md-4 lmm-container-item-form-label">${get_res('course','Course')}</label>
+                                    <div class="col-md-8 lmm-container-item-form-info">
+                                        <p class="info-item">{{item.course_name}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group zb-form-group">
+                                    <!--Người tạo-->
+                                    <label for="inputEmp_Train_Mode_Name" class="col-md-4 lmm-container-item-form-label">${get_res('creator','Creator')}</label>
+                                    <div class="col-md-8 lmm-container-item-form-info">
+                                        <p class="info-item">{{item.created_by}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group zb-form-group">
+                                    <!--Ngày tạo-->
+                                    <label for="inputEmp_Train_Mode_Name" class="col-md-4 lmm-container-item-form-label">${get_res('date_cre','Date Created')}</label>
+                                    <div class="col-md-8 lmm-container-item-form-info">
+                                        <p class="info-item">{{item.created_on | date:'dd-MM-yyyy'}}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group zb-form-group">
+                                    <!--Dung lượng file-->
+                                    <label for="inputEmp_Train_Mode_Name" class="col-md-4 lmm-container-item-form-label">${get_res('size','Size')}</label>
+                                    <div class="col-md-8 lmm-container-item-form-info">
+                                        <p class="info-item">{{convertFileSize(item.files.file_size/1024)}}</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    <%include file="../../scripts/partialscript/learning_material_masterial.js"/>
+</script>

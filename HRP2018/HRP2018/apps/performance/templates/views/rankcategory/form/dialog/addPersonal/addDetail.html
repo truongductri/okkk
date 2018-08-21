@@ -1,0 +1,328 @@
+﻿<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="left-content pull-left">
+                <!--<img src="{{$root.logo}}">-->
+                <span class="modal-title">{{title}}</span>
+            </div>
+            <div class="right-content pull-right">
+                <button type="button" class="close" data-dismiss="modal"><i class="la la-close"></i></button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div title="{{$parent.headerTitle}}" style="height:100%;">
+                <div class="col-md-6">
+                    <collapse-box class="zb-form-common" title="${get_global_res('Common_Information','Thông tin chung')}">
+                        <div class="col-md-12">
+                            <div class="form-group zb-form-group">
+                                <!--Đối tượng thiết lập-->
+                                <label class="col-md-5 zb-form-label">${get_res('detail_change_object','Đối tượng thiết lập')}</label>
+                                <div class="col-sm-7">
+                                    {{entity.change_object}}
+                                    <input-select ng-model="entity.change_object" data-list="cbbChangeObject" data-value="value" data-caption="caption" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group zb-form-group" ng-if="change_object == 1">
+                                <!--Tên chi tiết-->
+                                <label class="col-md-5 zb-form-label">${get_res('detail_object_name','Tên chi tiết')}</label>
+                                <div class="col-md-7">
+                                    <combobox load-data="$root.$getComboboxData" 
+                                              ng-model="entity.object_code"
+                                              params="{key:{{listNamecombobox}}, value:[{ '@lock': true }]}"
+                                              on-search-change="false"
+                                              on-search-press="true"
+                                              placeholder=""
+                                              init-data="$$$cbb_object_code"
+                                              caption-field="{{$$$cbb_object_code.caption_field}}"
+                                              paging="true"
+                                              close-on-select="true"
+                                              template-fields="$$$cbb_object_code.display_fields"
+                                              reload="false"
+                                              multi-select="true"
+                                              required>
+                                    </combobox>
+                                </div>
+                            </div>
+                            <div class="form-group zb-form-group" ng-if="change_object == 2">
+                                <!--Tên chi tiết-->
+                                <label class="col-md-5 zb-form-label">${get_res('detail_object_name','Tên chi tiết')}</label>
+                                <div class="col-md-7">
+                                    <combobox load-data="$root.$getComboboxData" 
+                                              ng-model="entity.object_code"
+                                              params="{key:{{listNamecombobox}}, value:[{ '@lock': true }]}"
+                                              on-search-change="false"
+                                              on-search-press="true"
+                                              placeholder=""
+                                              init-data="$$$cbb_object_code"
+                                              caption-field="{{$$$cbb_object_code.caption_field}}"
+                                              paging="true"
+                                              close-on-select="true"
+                                              template-fields="$$$cbb_object_code.display_fields"
+                                              reload="false"
+                                              multi-select="true"
+                                              required>
+                                    </combobox>
+                                </div>
+                            </div>
+                            <div class="form-group zb-form-group"  ng-if="change_object == 3">
+                                <!--Tên chi tiết-->
+                                <label class="col-md-5 zb-form-label">${get_res('detail_object_name','Tên chi tiết')}</label>
+                                <div class="col-md-7">
+                                    <combobox load-data="$root.$getComboboxData" 
+                                              ng-model="entity.object_code"
+                                              params="{key:{{listNamecombobox}}, value:[{ '@lock': true }]}"
+                                              on-search-change="false"
+                                              on-search-press="true"
+                                              placeholder=""
+                                              init-data="$$$cbb_object_code"
+                                              caption-field="{{$$$cbb_object_code.caption_field}}"
+                                              paging="true"
+                                              close-on-select="true"
+                                              template-fields="$$$cbb_object_code.display_fields"
+                                              reload="false"
+                                              multi-select="true"
+                                              required>
+                                    </combobox>
+                                </div>
+                            </div>
+                            <div class="form-group zb-form-group"  ng-if="change_object == 4">
+                                <!--Tên chi tiết-->
+                                <label class="col-md-5 zb-form-label">${get_res('detail_object_name','Tên chi tiết')}</label>
+                                <div class="col-md-7">
+                                    <combobox load-data="$root.$getComboboxData" 
+                                              ng-model="entity.object_code"
+                                              params="{key:{{listNamecombobox}}, value:[{ '@lock': true }]}"
+                                              on-search-change="false"
+                                              on-search-press="true"
+                                              placeholder=""
+                                              init-data="$$$cbb_object_code"
+                                              caption-field="{{$$$cbb_object_code.caption_field}}"
+                                              paging="true"
+                                              close-on-select="true"
+                                              template-fields="$$$cbb_object_code.display_fields"
+                                              reload="false"
+                                              multi-select="true"
+                                              required>
+                                    </combobox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group zb-form-group">
+                                <!--Tổng điểm từ-->
+                                <label class="col-sm-5 zb-form-label">${get_res('detail_total_from','Tổng điểm từ')}</label>
+                                <div class="col-sm-7">
+                                    <input-number ng-model="entity.total_from">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group zb-form-group">
+                                <!--Tổng điểm đến-->
+                                <label class="col-sm-5 zb-form-label">${get_res('detail_total_to','Tổng điểm đến')}</label>
+                                <div class="col-sm-7">
+                                    <input-number ng-model="entity.total_to">
+                                </div>
+                            </div>
+                        </div>
+                    </collapse-box>
+                </div>
+                <div class="col-md-6">
+                    <collapse-box class="zb-form-common" title="${get_global_res('note','Ghi chú')}">
+                        <div class="row">
+                            <!--Ghi chú-->
+                            <div class="col-sm-12">
+                                <input-textarea rows="4" ng-model="entity.note"></input-textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group zb-form-group">
+                                <label for="DisplayInfo" class="col-sm-3 zb-form-label">${get_global_res('create_and_modify','Tạo | Sửa')}</label>
+                                <div class="col-sm-9">
+                                    <input-text 
+                                                value="{{ entity.created_on | date: $root.systemConfig.date_format}} {{entity.created_by}} | {{ entity.modified_on | date: $root.systemConfig.date_format}} {{entity.modified_by}}" ng-disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                    </collapse-box>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="right-content pull-right">
+                <div class="pull-right"><button ng-click="save($event)"><i class="la la-save"></i></button></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (scope) {
+        debugger
+        scope.save = save;
+        scope.cbbChangeObject = [];
+        scope.listNamecombobox = "";
+        scope.mode = scope.$parent.__modeDetail;
+        scope.entity = scope.mode === 2 ? scope.$parent.$$table.currentItem : null;
+        scope.change_object = scope.mode == 1 ? 1 : scope.entity.change_object;
+        scope.comboboxInfo = {
+                title: "",
+                captionField: "",
+                valueField: ""
+        };
+        scope.initComboMulti = [];
+        scope.$applyAsync();
+        scope.$combobox = {
+            loadData: (cbSetData, pgIdx, txtSearch, params) => {
+                var data = services.extension.getComboboxData(pgIdx, txtSearch, scope.listNamecombobox, [{ "@lock": true }], cbSetData, function (res) {
+                    scope.comboboxInfo.title = res.display_name;
+                    scope.comboboxInfo.captionField = res.caption_field;
+                    scope.comboboxInfo.valueField = res.value_field;
+                    scope.$applyAsync();
+                });
+                //cbSetData(data);
+            },
+            selectCombobox: function(item) {
+                console.log("selectCombobox", item);
+            },
+            acceptCombobox: function(item) {
+                console.log("acceptCombobox", item);
+            },
+            onSearchPress: function(txtSearch) {
+                console.log("onSearchPress: ", txtSearch)
+            },
+            onSearchChange: function(txtSearch) {
+                console.log("onSearchChange: ", txtSearch)
+            },
+            // onPaging: function(pageIndex) {
+            //     console.log("pageIndex: ", pageIndex);
+            // },
+            //numberItems: 2000,
+            //numberOnPage: 30,
+            //pageIndex: 1
+        }
+
+        function __combobox() {
+            services.api("${get_api_key('app_main.api.common/get_combobox_data')}")
+                    .data({
+                        //parameter at here
+                        "key": scope.listNamecombobox,
+                        "value": [{ "@lock": true }],
+                        "code": scope.entity.object_code,
+                    })
+                    .done()
+                    .then(function (res) {
+                        scope.initComboMulti = res.data.items
+                        scope.$applyAsync();
+                    });
+        }
+
+        function save() {
+            editData(function (res)  {
+                    if (res.updatedExisting == true) {
+                        $('#dialogInputRankSub').modal('hide');//Đóng form input
+                        $msg.alert("${get_global_res('Handle_Success','Thao tác thành công')}", $type_alert.INFO);//Xuất thông báo thành cônng
+                        reloadData();
+                    } else {
+                        $msg.message("${get_global_res('Internal_Server_Error','Có lỗi từ phía máy chủ')}", "${get_global_res('Please_Try_Again','Xin thử vui lòng thử lại')}", function () { });
+                    }
+            });
+        }
+
+        function reloadData() {
+            var tableConfig = scope.$parent.$$table.$$tableConfig;
+            scope.$parent._tableData(tableConfig.iPage,
+            tableConfig.iPageLength, tableConfig.orderBy,
+            tableConfig.searchText, tableConfig.fnReloadData);
+        }
+
+        function editData(callback) {
+            var url = getUrl();
+            var parameter = {};
+            services.api(url)
+                .data({
+                    "rank_code": scope.$parent.entity.rank_code,
+                    "details":scope.entity
+                })
+                .done()
+                .then(function (res) {
+                    callback(res);
+                })
+        }
+
+        function getUrl() {
+            return scope.mode === 1 ? "${get_api_key('app_main.api.TMLS_Rank/insert_details')}"
+                :"${get_api_key('app_main.api.TMLS_Rank/update_details')}";
+        }
+
+        function _selectBoxData() {
+            services.api("${get_api_key('app_main.api.TMSYS_ConfigChangeObjectPriority/get_list')}")
+            .data({
+                "name": "TMChangeObjectRank"
+            })
+            .done()
+                .then(function (res) {
+                    debugger
+                var rs = [];
+                _.each(res, function (val) {
+                    rs.push({
+                        "value": val.change_object,
+                        "caption": val.change_object_name
+                    });
+                });
+                    scope.cbbChangeObject = rs;
+                    console.log("scope.cbbChangeObject", scope.cbbChangeObject);
+                scope.$applyAsync();
+            })
+        }
+        _selectBoxData();
+
+        scope.$watch("entity.change_object", function (newVal, oldVal) {
+            if (newVal && newVal != oldVal) {
+                switch (newVal) {
+                    case 1: scope.listNamecombobox = "" ; break;
+                    case 2: scope.listNamecombobox = "" ; break;
+                    case 3: scope.listNamecombobox = "${encryptor.get_key('cbb_position')}" ; break;
+                    case 4: scope.listNamecombobox = "${encryptor.get_key('cbb_employee_type')}" ; break;
+                    default: scope.listNamecombobox = "";
+                };
+            }
+            scope.$applyAsync();
+        });
+
+        function getListName(changeCode) {
+            var rs = "";
+            switch (changeCode) {
+                case 1: rs = "${encryptor.get_key('cbb_position')}" ; break;
+                case 2: rs = "${encryptor.get_key('cbb_position')}" ; break;
+                case 3: rs = "${encryptor.get_key('cbb_position')}" ; break;
+                case 4: rs = "${encryptor.get_key('cbb_employee_type')}" ; break;
+                default: rs = "";
+            };
+            return rs;
+        }
+
+        function _getDataInitCombobox() {
+            scope.$root.$getInitComboboxData(scope,
+                {
+                    "key": scope.listNamecombobox,
+                    "code": scope.entity
+                        && scope.entity.hasOwnProperty('dd_code')
+                        ? scope.entity.dd_code
+                        : null,
+                    "alias": "$$$cbb_object_code"
+                }
+            );
+        };
+
+        (function __init__() {
+            if (scope.mode == 2) {
+                scope.listNamecombobox = getListName(scope.entity.change_object);
+                _getDataInitCombobox();
+            } else {
+                _getDataInitCombobox();
+            }
+        })();
+    })
+</script>

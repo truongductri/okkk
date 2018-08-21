@@ -1,0 +1,365 @@
+﻿
+<%!
+    #_style="width:300px;"
+%>
+<%inherit file="../../commons/dialog_save_close.html"/>
+
+<%block name="modal_body">
+<div class="col-md-{{col_group}} col-sm-{{col_group}}">
+    <collapse-box class="zb-form-common" title="${get_global_res('Common_Information','Thông tin chung')}">
+            <div class="col-md-{{col}}">
+            <div class="form-group zb-form-group">
+                <!--Mã yếu tố-->
+                <label class="col-sm-5 zb-form-label">${get_res('factor_code','Mã yếu tố')}</label>
+                <div class="col-sm-7">
+                    <input-text ng-model="entity.factor_code" ng-disabled="{{ __mode === 2 ? 'true' : 'false' }}" required>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-{{col}}">
+                <div class="form-group zb-form-group">
+                    <!--Tên yếu tố-->
+                    <label class="col-sm-5 zb-form-label">${get_res('factor_name','Tên yếu tố')}</label>
+                    <div class="col-sm-7">
+                        <input-text ng-model="entity.factor_name" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-{{col}}">
+                <div class="form-group zb-form-group">
+                    <!--Tên khác-->
+                    <label class="col-sm-5 zb-form-label">${get_res('factor_name2','Tên khác')}</label>
+                    <div class="col-sm-7">
+                        <input-text ng-model="entity.factor_name2">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-{{col}}">
+                <div class="form-group zb-form-group">
+                    <!--Thuộc nhóm-->
+                    <label class="col-sm-5 zb-form-label">${get_res('parent_code','Thuộc nhóm')}</label>
+                    <div class="col-sm-7">
+                        <!--<input-combobox 
+                                list-code="${encryptor.get_key('cbb_tmls_factor_appraisal_group')}"
+                                list-value="[{ '@lock': true }]"
+                                current-item="entity.factor_group_code"
+                                multi-select="false">-->
+                        <tree-combobox
+                                load-data="$root.$getComboboxData" 
+                                ng-model="entity.factor_group_code"
+                                placeholder=""
+                                init-data="$$$cbb_tmls_factor_appraisal_group.value"
+                                caption-field="{{$$$cbb_tmls_factor_appraisal_group.caption_field}}"
+                                key-field="{{$$$cbb_tmls_factor_appraisal_group.value_field}}"
+                                parent-field="{{$$$cbb_tmls_factor_appraisal_group.parent_field}}"
+                                on-accept=""
+                                params="{key:'${encryptor.get_key('cbb_tmls_factor_appraisal_group')}', value:[{ '@lock': true }]}"
+                                required>
+                        </tree-combobox>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-{{col}}">
+                <div class="form-group zb-form-group">
+                    <!--Trọng số-->
+                    <label class="col-sm-5 zb-form-label">${get_res('weight','Trọng số')}</label>
+                    <div class="col-sm-7">
+                        <input-number ng-model="entity.weight">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-{{col}}">
+                <div class="form-group zb-form-group">
+                    <!--Áp dụng toàn công ty-->
+                    <label class="col-sm-5 zb-form-label">${get_res('is_apply_all','Áp dụng toàn công ty')}</label>
+                    <div class="col-sm-7">
+                        <input-checkbox ng-model="entity.is_apply_all" ng-change="checkJobWorking()">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-{{col}}">
+                <div class="form-group zb-form-group">
+                    <!--Áp dụng theo CDCV-->
+                    <label class="col-sm-5 zb-form-label">${get_res('job_working','Áp dụng theo CDCV')}</label>
+                    <div class="col-sm-7">
+                        <form-search ng-model="entity.job_working" ng-disabled="apply_jobworking" placeholder="" open="set_job_working()" init-data="$$$job_working" multi="true"></form-search>
+                    </div>
+                </div>
+            </div>
+    </collapse-box>
+</div>
+<div class="col-md-{{ 12 - col_group}} col-sm-{{ 12 - col_group}}">
+    <collapse-box class="zb-form-common" title="${get_global_res('Note','Ghi chú')}">
+        <div class="col-sm-12">
+            <!--Ghi chú-->
+            <div class="form-group zb-form-group">
+                <div class="col-sm-12 no-padding">
+                    <input-textarea rows="3" ng-model="entity.note"></input-textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="padding-top: 16px;">
+            <div class="form-group zb-form-group">
+                <label for="DisplayInfo" class="col-sm-4 zb-form-label">${get_global_res('create_and_modify','Tạo | Sửa')}</label>
+                <div class="col-sm-8">
+                    <input-text value="{{ entity.created_on | date: $root.systemConfig.date_format}} {{entity.created_by}} | {{ entity.modified_on | date: $root.systemConfig.date_format}} {{entity.modified_by}}" ng-disabled="true">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group zb-form-group">
+                <!--Thứ tự-->
+                <label class="col-sm-4 zb-form-label">${get_res('ordinal','Thứ tự')}</label>
+                <div class="col-sm-8">
+                    <input-number ng-model="entity.ordinal">
+                </div>
+            </div>
+            <div class="form-group zb-form-group" >
+                <!--Ngưng sử dụng-->
+                <label class="col-sm-4 zb-form-label">${get_res('lock','Ngưng sử dụng')}</label>
+                <div class="col-sm-8">
+                    <input-checkbox ng-model="entity.lock">
+                </div>
+            </div>
+        </div>
+    </collapse-box>
+</div>
+</%block>
+
+<%block name="modal_script">
+<script>
+    (function (scope) {
+        var __default = {
+            factor_code: null,
+            factor_name: null,
+            factor_name2: null,
+            factor_group_code: scope.$parent.$$tree.treeCurrentNode.factor_group_code,
+            weight: null,
+            is_apply_all: false,
+            job_working: null,
+            note: null,
+            ordinal: null,
+            lock: false,
+            created_on: null,
+            created_by: null,
+            modified_on: null,
+            modified_by: null
+        };
+        scope.__mode = scope.$parent.mode;
+        scope.title = scope.$parent.headerTitle;
+        scope.col = 12;
+        scope.col_group = 6;
+        scope.entity = scope.__mode == 2 ? JSON.parse(JSON.stringify(scope.$parent.$$table.currentItem)) : __default;
+        scope.apply_jobworking = scope.entity.is_apply_all === true ? true : false ;
+        scope.onResizeDialog = onResizeDialog;
+        //Nút lưu và thêm
+        scope.saveNNext = saveNNext;
+        //Nút lưu
+        scope.saveNClose = saveNClose;
+
+        scope.checkJobWorking = checkJobWorking;
+
+        scope.set_job_working = function () {
+        var frm = lv.FormSearch(scope, "$$$job_working");
+        frm.JobWorking(scope.entity, "job_working", "${get_res('job_working','Áp dụng theo CDCV')}", true);
+        frm.openDialog;
+    }
+
+        function onResizeDialog() {
+            $dialog.fullScreen();
+            scope.col = scope.col == 12 ? 6 : 12;
+            scope.col_group = scope.col_group == 6 ? 8 : 6;
+        }
+
+        function insertFactorAppraisal() {
+            services.api("${get_api_key('app_main.api.TMLS_FactorAppraisal/insert_factor_appraisal')}")
+                .data({
+                    "job_w_code": scope.entity.job_working,
+                    "factor_code": scope.entity.factor_code
+                })
+                .done()
+                .then(function (res) {
+                    if (res.error == null) {
+                        scope.apply_jobworking = true;
+                    } else {
+                        $msg.message("${get_global_res('Internal_Server_Error','Có lỗi từ phía máy chủ')}", "${get_global_res('Please_Try_Again','Xin thử vui lòng thử lại')}", function () { });
+                    }
+                })
+        }
+
+        function checkJobWorking(val) {
+            if (scope.entity.is_apply_all) {
+                $msg.confirm("${get_global_res('Notification','Thông báo')}", "${get_global_res('checked_is_apply_all','Khi chọn Áp dụng toàn Cty, các thiết lập theo chức danh sẽ bị xóa. Bạn có muốn thực hiện tiếp?')}", function () {
+                    services.api("${get_api_key('app_main.api.TMLS_FactorAppraisal/delete_factor_appraisal')}")
+                        .data(
+                        {
+                            "factor_code": scope.entity.factor_code,
+                            "job_w_code": scope.entity.job_working
+                        }
+                        )
+                        .done()
+                        .then(function (res) {
+                            if (res.error == null) {
+                                scope.apply_jobworking = true;
+                                scope.entity.job_working = [];
+                                scope.$applyAsync();
+                            } else {
+                                $msg.message("${get_global_res('Internal_Server_Error','Có lỗi từ phía máy chủ')}", "${get_global_res('Please_Try_Again','Xin thử vui lòng thử lại')}", function () { });
+                            }
+                        })
+                }).deny(function () {
+                    scope.entity.is_apply_all = false;
+                    scope.$applyAsync();
+                });
+            } else {
+                scope.apply_jobworking = false;
+                scope.$apply();
+            }
+        }
+
+        function saveNClose() {
+            if (scope.entity != null) {
+                var rsCheck = checkError();//Kết quả check input
+                if (rsCheck.result) {
+                    $msg.message("${get_global_res('Input_Error','Nhập liệu sai')}", rsCheck.errorMsg, function () { });
+                    return;
+                }
+                beforeCallToServer();
+                editData(function (res) {
+                    if (res.error == null) {
+                        $dialog.closeDialog();//Đóng form input
+                        $msg.alert("${get_global_res('Handle_Success','Thao tác thành công')}", $type_alert.INFO);//Xuất thông báo thành cônng
+                        if (scope.__mode == 1 || scope.__mode == 3) {
+                            //Reload table data
+                            reloadData();
+                        } else if (scope.__mode == 2) {
+                            reloadData();
+                        }
+                    } else {
+                        $msg.message("${get_global_res('Internal_Server_Error','Có lỗi từ phía máy chủ')}", "${get_global_res('Please_Try_Again','Xin thử vui lòng thử lại')}", function () { });
+                    }
+                });
+            }
+        }
+
+        function saveNNext() {
+            if (scope.entity != null) {
+                var rsCheck = checkError();//Kết quả check input
+                if (rsCheck.result) {
+                    //Nhập sai: break khỏi hàm
+                    $msg.message("${get_global_res('Input_Error','Nhập liệu sai')}", rsCheck.errorMsg, function () { });
+                    return;
+                }
+                beforeCallToServer();
+                editData(function (res) {
+                    if (res.error == null) {
+                        if (scope.__mode == 1 || scope.__mode == 3)
+                            reloadData();
+                        else {
+                            reloadData();
+                        }
+                        $msg.alert("${get_global_res('Handle_Success','Thao tác thành công')}", $type_alert.INFO);
+                        scope.entity = null;
+                        scope.__mode = 1;
+                        scope.$parent.$apply();
+                    } else {
+                        $msg.message("${get_global_res('Notification','Thông báo')}", "${get_global_res('Internal_Server_Error','Có lỗi từ phía máy chủ')}", function () { });
+                    }
+                })
+            }
+        }
+
+        function editData(callback) {
+            var url = getUrl();
+            if (scope.__mode == 3) {
+
+            }
+            services.api(url)
+                .data(scope.entity)
+                .done()
+                .then(function (res) {
+                    callback(res);
+                })
+        }
+
+        function beforeCallToServer() {
+
+        }
+
+        function getUrl() {
+            return scope.__mode == 1 || scope.__mode == 3 ? "${get_api_key('app_main.api.TMLS_FactorAppraisal/insert')}" /*Mode 1: Tạo mới*/
+                : "${get_api_key('app_main.api.TMLS_FactorAppraisal/update')}" /*Mode 2: Cập nhật*/
+        }
+
+        function reloadData() {
+            var tableConfig = scope.$parent.$$table.$$tableConfig;
+            scope.$parent._tableData(tableConfig.iPage,
+                tableConfig.iPageLength, tableConfig.orderBy,
+                tableConfig.searchText, tableConfig.fnReloadData);
+        }
+
+        /**
+         * Function check input
+         */
+        function checkError() {
+            var errMsg;
+            var valid = null;
+            var rs = {
+                "result": false,
+                "errorMsg": ''
+            };
+            valid = lv.Validate(scope.entity.factor_code);
+            rs.result = valid.isNullOrWhiteSpace();
+            rs.errorMsg = rs.result === true ? "${get_res('factor_code_is_not_null','Mã yếu tố không được để trống')}" + '\n' : "";
+            if (rs.result === true) {
+                return rs;
+            }
+            valid = lv.Validate(scope.entity.factor_name);
+            rs.result = valid.isNullOrWhiteSpace();
+            rs.errorMsg = rs.result === true ? "${get_res('factor_name_is_not_null','Tên yếu tố không được để trống')}" + '\n' : "";
+            if (rs.result === true) {
+                return rs;
+            }
+            return rs;
+        }
+
+        function _getDataInitCombobox() {
+            scope.$root.$getInitComboboxData(scope,
+                [{
+                    "key": "${encryptor.get_key('cbb_tmls_factor_appraisal_group')}",
+                    "code": scope.entity
+                        && scope.entity.hasOwnProperty('factor_group_code')
+                        ? scope.entity.factor_group_code
+                        : null,
+                    "alias": "$$$cbb_tmls_factor_appraisal_group"
+                },
+                {
+                    "key": "${encryptor.get_key('init_data_hcsls_vw_job_working_factor_appraisal')}",
+                    "code": scope.entity
+                        && scope.entity.hasOwnProperty('job_working')
+                        ? scope.entity.job_working
+                        : null,
+                    "alias": "$$$job_working"
+                }
+                ]);
+        };
+
+        (function _init_() {
+            services.api("${get_api_key('app_main.api.TMLS_FactorAppraisal/get_factor_appraisal_by_factor_code')}")
+                .data({
+                    "factor_code": scope.entity.factor_code
+                })
+                .done()
+                .then(function (res) {
+                    if (res.error == null) {
+                        scope.entity.job_working = _.pluck(res, "job_w_code");
+                        _getDataInitCombobox();
+                    } else {
+                        $msg.message("${get_global_res('Internal_Server_Error','Có lỗi từ phía máy chủ')}", "${get_global_res('Please_Try_Again','Xin thử vui lòng thử lại')}", function () { });
+                    }
+                })
+        })();
+    });
+</script>
+
+</%block>

@@ -1,0 +1,153 @@
+﻿<div id="collapseTableProvince" class="row" style="margin-left: 30px;margin-right:15px">
+   <div class="information-header">
+       
+       
+        
+   </div>
+    <div class="information-body">
+                
+           <div class="row" >  
+               <div class="col-md-6" >
+                        <p class="detail-title">Relations</p>
+                </div>
+                   <div  class="col-md-6" style="text-align:end" >
+                    <a class="relation-content-row" ng-click="addRelations()" style="cursor: pointer;"  >
+                        [+]
+                    </a>
+                    <a class="relation-content-row" ng-click="delRelations()" style="cursor: pointer;" >
+                        [-]
+                    </a>
+                  </div>
+                
+            </div>
+        
+            <div class="row" style="padding-bottom:20px">                        
+                     <div class="col-sm-12 " ng-repeat="elem in list_relation track by $index">   
+                        <div class="col-md-6 row" style=" padding: 0">             
+                            <input-select ng-model="elem.ref_relation" data-list="cbbLMSLRelation" data-value="value" data-caption="caption" />
+                        </div>
+                        <div class="col-md-6 pull-right row" style=" padding: 0"> 
+                            <input-text id="inputEmp_Train_Mode_Name" ng-value="elem.intro_relation" disabled="disabled">
+                        </div>
+                        <br/>
+                    </div>
+                    <br/>
+                
+            </div>
+             
+             <div class="row">     
+                
+                <p class="detail-title">
+                   Related Courses:
+               </p>
+              
+            </div>
+                <div class="row"  style="border:1px solid grey;border-left:3px solid red;margin-bottom:5px" ng-repeat="item in list_courses track by $index">
+                    
+                    <div class=" related-courses" style="font-size:11px;color:darkblue">
+                        <div class="form-group zb-form-group">
+                             <div class="col-md-6 col-lg-6 col-sm-6 content-courses "> 
+                                <p>{{item.course_name}}</p>
+                            </div>        
+                            <div class="col-md-6 col-lg-6 col-sm-6 content-courses "> 
+                                <p style="color:red !important;cursor:pointer;float:right;margin-right:10px;" ng-click="delCourses($index)">X<p>
+                            </div>
+                         </div>
+                        <div class="form-group zb-form-group">
+                             <div class="col-md-6 col-lg-6 col-sm-6 content-courses "> 
+                                <p>Author: <a style="font-weight:bold">{{item.author}}</a></p>
+                            </div>        
+                            <div class="col-md-6 col-lg-6 col-sm-6 content-courses "> 
+                                <p style="float:right;margin-right:10px;">Status: <a style="font-weight:bold">{{item.status}}</a></p>
+                            </div>
+                         </div>
+                        <div class="form-group zb-form-group">
+                             <div class="col-md-6 col-lg-6 col-sm-6 content-courses "> 
+                                <p>Start Date <a style="font-weight:bold">{{item.startdate}}</a></p>
+                            </div>        
+                            <div class="col-md-6 col-lg-6 col-sm-6 content-courses"> 
+                                <p style="float:right;margin-right:10px;">End Date <a style="font-weight:bold;">{{item.enddate}}</a></p>
+                            </div>
+                         </div>    
+                    </div>
+                     
+                </div>
+               
+                 <div class="row"  >
+                     <a ng-click="addCourses()" style="cursor:pointer;text-underline-position:below;font-size:11px" >+Add new related course</a>
+                </div>
+    </div>
+</div>
+
+<style>
+   .relation-rows {
+    color: #23527c;
+    
+    }
+    .relation-rows:hover {
+    color: black;
+    }
+    .content-courses {
+    font-weight: normal;
+    height: 27px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 0.675rem !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    line-height: 13px !important;
+    text-align: left !important;
+    padding: 0px 0px 0px 5px;
+    overflow: hidden;  
+    }
+    .detail-title {
+        color:rgb(88, 172, 250);;
+        font-weight:bold;
+    }
+  
+
+</style>
+<script>
+    (function (scope) {
+        debugger
+        scope.list_temp_relation = [{ ref_relation: "1", intro_relation: "abc" }, { ref_relation: "2", intro_relation: "abc" }, { ref_relation: "3", intro_relation: "abc" }, { ref_relation: "4", intro_relation: "abc" }]
+
+		scope.list_temp_courses = [{ course_name: scope._currentItem.course_name, author: scope._currentItem.author_name, status: "hong hanh", startdate: scope._currentItem.valid_from, enddate: scope._currentItem.date_valid_to }];
+        scope.list_courses = scope.list_temp_courses;
+        scope.list_relation = [{}]
+        scope._currentItem = scope.$parent.currentItem;
+        (function getData() {
+            services.api("${get_api_key('app_main.api.LMSLS_MaterialManagement/get_data_info_details')}")
+                .data({
+                    "where": {
+                        'id': scope._currentItem['_id']
+                    }
+                })
+                .done()
+                .then(function (res) {
+                    
+                })
+        })();
+        
+        scope.addRelations = function () {
+            if (scope.list_relation.length < scope.list_temp_relation.length) {
+                scope.list_relation.push({});
+            }
+        }
+        scope.delRelations = function () {
+            if (scope.list_relation.length > 1) {
+                scope.list_relation.splice({}, 1);
+            }
+        }
+         scope.addCourses = function () {
+            if (scope.list_courses.length < scope.list_temp_relation.length) {
+                scope.list_courses.push({course_name:scope._currentItem.course_name, author:scope._currentItem.author_name, status:"hong hanh",startdate:scope._currentItem.date_valid_from.substring(0, 10),enddate:scope._currentItem.date_valid_to.substring(0, 10)});
+            }
+        }
+        scope.delCourses = function (index) {
+                scope.list_courses.splice(index, 1);
+        }
+        
+        
+    });
+</script>

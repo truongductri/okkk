@@ -1,0 +1,71 @@
+﻿<div class="hcs-container">
+    <div class="row hcs-profile-list">
+        <div class="hcs-left-side-department-content">
+            <div class="hcs-left-side-department-tree-tool-bar">
+                <div class="pull-left" style="padding-left:10px;">
+                    <div class="hcs-left-side-department-tree-tool-bar-div-search">
+                       <input class="hcs-left-side-department-tree-tool-bar-input-search" 
+                              placeholder="Filter" ng-model="$$tree.treeSearchText">
+                       <div class="hcs-left-side-department-tree-tool-bar-input-search-bot"></div>
+                       <div class="hcs-left-side-department-tree-tool-bar-input-search-bot-icon">
+                           <i class="glyphicon glyphicon-search"></i>
+                       </div>
+                    </div>
+                </div>
+                <div class="pull-left" style="padding-left:10px;">
+                    <button class="zb-btn hcs-left-side-department-tree-tool-bar-btn-custom-icon" ng-click="$treeCollapseAll()" style="text-align: center;">
+                        <span>
+                        <i class="bowtie-icon bowtie-chevron-up-all"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="pull-left" style="padding-left:5px;">
+                    <button class="zb-btn hcs-left-side-department-tree-tool-bar-btn-custom-icon" ng-click="$treeExpandAll()" style="text-align: center;">
+                        <span>
+                        <i class="bowtie-icon bowtie-chevron-down-all"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="hcs-left-side-department-tree" style="height: calc(100% - 38px);">
+                <tree-data data-source="$$tree.treeDataSource" 
+                           display-field="factor_group_name"
+                           parent-field="parent_code" 
+                           key-field="factor_group_code" 
+                           multi-select="$$tree.treeMultiSelect" 
+                           select-mode="$$tree.treeMode" 
+                           on-select="$$tree.selectTreeNode"
+                           current-node="$$tree.treeCurrentNode"
+                           selected-nodes="$$tree.treeSelectedNodes"
+                           selected-root-nodes="$$tree.treeSelectedRootNodes"
+                           search-text="$$tree.treeSearchText"
+                           check-all="$$tree.treeCheckAll"
+                           checked-field="is_selected"
+                           disabled="true"
+                           expand-all="$treeExpandAll"
+                           collapse-all="$treeCollapseAll"/>
+            </div>
+        </div>
+        <div class="hcs-right-side-department-content">
+                <div class="hcs-right-side-department-list" style="height:100%;">
+                    <table-data data-source="$$table.tableSource" 
+                                fields="$$table.tableFields" 
+                                type="MultiSelect" 
+                                paging="true" 
+                                page-length="100" 
+                                server-side="true" 
+                                press-enter="$$table.onSelectTableRow" 
+                                selected-items="$$table.selectedItems" 
+                                current-item="$$table.currentItem" 
+                                search-text="$$table.tableSearchText"
+                                refresh-row="$$table.refreshDataRow">
+                    </table-data>
+                </div>
+    </div>
+</div>
+</div>
+<div class="clearfix"></div>
+<script>
+    <%include file="scripts/factorappraisal.js"/>
+</script>

@@ -1,0 +1,163 @@
+﻿<div class="hcs-home-page-top-bar navbar-fixed-top">
+    <div class="hcs-home-page-top-bar-container">
+        <!--BEGIN LEFT-->
+        <div class="hcs-home-page-top-bar-left">
+            <span class="hcs-btn-header-menu" id="btnShowMenu">
+                <i class="bowtie-icon bowtie-menu"></i>
+            </span>
+            <div class="hcs-menu-list menu-hidden">
+                <div class="col-md-12 hcs-menu-list-title">
+                    <p class="hcs-menu-title-1">Trung tâm điều hành</p>
+                    <p class="hcs-menu-title-2" style="font-size: 17px;">Lao động thương binh & xã hội</p>
+                </div>
+                <div class="hcs-menu-list-group">
+                    <collapse-box ng-repeat="function in $functions" class="hcs-message-group" 
+                                  title="{{function.custom_name.replace('/', ' ')}}" ng-if="!function.parent_id">
+                        <div class="hcs-menu-group-content">
+                            <a ng-repeat="child in function.child_items" href="{{'#page=' + child.function_id}}">{{child.custom_name.replace('/', '')}}</a>
+                        </div>
+                    </collapse-box>
+                </div>
+            </div>
+            <a href="#" class="hcs-navbar-brand"><img src="{{$root.logo}}"></a>
+        </div>
+        <!--END LEFT-->
+        <div class="pull-left" id="hcs-top-bar-current-module" style="text-transform: uppercase;">
+            {{$root.currentModule.custom_name ? $root.currentModule.custom_name.split("/").join(" ") : $root.currentModule.default_name}}
+        </div>
+        <!--BEGIN RIGHT-->
+        <div class="hcs-home-page-top-bar-right">
+            <button class="btn btn-primary hcs-home-header-button" id="btnShowMessage">
+                <span class="message-heartbit"></span>
+                <span class="message-number">99</span>
+                <span><i class="bowtie-icon bowtie-comment-discussion"></i></span>
+            </button>
+            <div class="hcs-message-list message-hidden">
+                <div class="col-md-12 hcs-message-list-title">
+                    <span>Bạn có 99 tin nhắn mới</span>
+                </div>
+                <div class="hcs-message-list-group">
+                    <collapse-box class="hcs-message-group" title="Danh sách đến hạn">
+                        <div class="hcs-message-group-header">
+                            <div class="col-md-6">
+                                <span>Mới (14)</span>
+                            </div>
+                            <div class="col-md-6">
+                                <span>Đang thực hiện (25)</span>
+                            </div>
+                        </div>
+                        <div class="hcs-message-group-content">
+                            <div class="hcs-message-item" ng-repeat="item in [1,2,3,4,5,6,7]">
+                                <span class="message-title">EMP201807.1105</span>
+                                <span class="message-description">Nguyễn Trần Hoàng Lê Huỳnh Dương Lý</span>
+                                <span class="message-date">
+                                    <i class="bowtie-icon bowtie-calendar"></i>03/07/2018 AM
+                                </span>
+                            </div>
+                        </div>
+                    </collapse-box>
+                    <collapse-box class="hcs-message-group" title="Danh sách hết hạn">
+                        <div class="hcs-message-group-header">
+                            <div class="col-md-6">
+                                <span>Mới (14)</span>
+                            </div>
+                            <div class="col-md-6">
+                                <span>Đang thực hiện (25)</span>
+                            </div>
+                        </div>
+                        <div class="hcs-message-group-content">
+                            <div class="hcs-message-item" ng-repeat="item in [1,2,3,4,5,6,7]">
+                                <span class="message-title">EMP201807.1105</span>
+                                <span class="message-description">Nguyễn Trần Hoàng Lê Huỳnh Dương Lý</span>
+                                <span class="message-date">
+                                    <i class="bowtie-icon bowtie-calendar"></i>03/07/2018 AM
+                                </span>
+                            </div>
+                        </div>
+                    </collapse-box>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                 <button class="btn btn-primary hcs-home-header-button" type="button" data-toggle="dropdown" style="padding-right: 0">
+                    <span>     
+                        <img class="language-icon" src="${get_static('css/images/login/ic_vn.jpg')}" style="height: 20px;
+                            width: 20px;
+                            border-radius: 20px;
+                            margin-right: 5px;
+                            float: left;" />
+                    </span>
+                </button>
+                <!--<button class="btn btn-primary hcs-home-header-button" type="button" data-toggle="dropdown">
+                    <span><i class="bowtie-icon bowtie-locale-language"></i></span>
+                </button>-->
+                <ul class="dropdown-menu hcs-home-button-language-menu">
+                    <li>
+                        <span class="language-title">Ngôn ngữ</span>
+                    </li>
+                    <li>
+                        <a class="active">
+                            <img class="language-icon" src="${get_static('css/images/login/ic_vn.jpg')}" />
+                            <span>Tiếng Việt</span>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <img class="language-icon" src="${get_static('css/images/login/ic_en.jpg')}" />
+                            <span>English</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--<button class="btn btn-primary hcs-home-header-button">
+                <span><i class="bowtie-icon bowtie-view-full-screen"></i></span>
+            </button>-->
+            <div class="dropdown">
+                <button class="btn btn-primary hcs-home-button-user" type="button" data-toggle="dropdown">
+                    <!--<span class="glyphicon glyphicon-user"></span>-->
+                    <span class="img-user"><i class="bowtie-icon bowtie-user"></i></span>
+                    <span class="hcs-header-username">Bùi Hữu Tiến</span>
+                    <span class="hcs-header-chevron"><i class="bowtie-icon bowtie-chevron-down"></i></span>
+                </button>
+                <ul class="dropdown-menu hcs-home-button-user-menu">
+                    <li>
+                        <div class="lv-button-logout" ng-click="" role="button" tabindex="0">
+                            <i class="bowtie-icon bowtie-user"></i>
+                            <span>Hồ sơ</span>
+                        </div>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <div class="lv-button-logout" ng-click="" role="button" tabindex="0">
+                            <i class="bowtie-icon bowtie-status-info-outline"></i>
+                            <span>Trợ giúp</span>
+                        </div>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <div class="lv-button-logout" ng-click="$root.doLogout()" role="button" tabindex="0">
+                            <i class="bowtie-icon bowtie-status-failure-outline"></i>
+                            <span>Thoát</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--<div class="pull-right" role="navigation">
+            <div class="hcs-home-header-clock">
+                <span class="hcs-home-header-clock-ampm ng-binding">{{$root.timer.meridiem}}</span>
+                <span class="hcs-home-header-clock-time ng-binding">{{$root.timer.clock}}</span>
+                <br>
+                <span class="hcs-home-header-clock-date ng-binding">{{$root.timer.date}}</span>
+            </div>
+        </div>-->
+        <!-- END RIGHT-->
+    </div>
+</div>
+<script>
+    $('#hcs-top-bar-menu ul li ul').css('display', 'none');
+    $('.dropdown-menu').click(function (event) {
+        event.stopPropagation();
+    });
+</script>

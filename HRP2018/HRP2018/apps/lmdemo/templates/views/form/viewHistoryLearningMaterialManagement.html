@@ -1,0 +1,29 @@
+﻿
+<%!
+    #_style="width:200px;"
+%>
+<%inherit file="../commons/dialog_save_close.html"/>
+
+<%block name="modal_body">
+<div class="tab-pane" style="padding-right:unset; height: 100%; overflow-y:hidden; overflow:auto; background-color:#fff;">
+    <nav-tabs min-height="82vh" max-height="82vh">
+        <tab-content name="tab1" title="${get_res('tab_versions','Versions History')}">
+            <%include file = "versionHistoryLearningMaterial.html" />
+        </tab-content>
+        <tab-content name="tab2" title="${get_res('tab_download','Download History')}">
+            <%include file = "downloadHistoryLearningMaterial.html" />
+        </tab-content>
+        <tab-content name="tab3" title="${get_res('tab_sharing','Sharing History')}">
+            <%include file = "shareHistoryLearningMaterial.html" />
+        </tab-content>
+    </nav-tabs>
+</div>
+</%block>
+
+<%block name="modal_script">
+<script>
+    (function (scope) {
+        
+    });
+</script>
+</%block>

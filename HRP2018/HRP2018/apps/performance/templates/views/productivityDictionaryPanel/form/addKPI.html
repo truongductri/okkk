@@ -1,0 +1,412 @@
+﻿
+<%!
+    #_style="width:300px;"
+%>
+<%inherit file="../../commons/dialog_save_close.html"/>
+
+<%block name="modal_body">
+<div class="col-md-{{col_group}} col-sm-{{col_group}}">
+    <collapse-box class="zb-form-common" title="${get_global_res('Common_Information','Thông tin chung')}">
+        <div class="col-md-{{col}}">
+            <div class="form-group zb-form-group">
+                <!--Mã chỉ tiêu-->
+                <label class="col-sm-5 zb-form-label">${get_res('kpi_code','Mã chỉ tiêu')}</label>
+                <div class="col-sm-7">
+                    <input-text ng-model="entity.kpi_code" ng-disabled="{{ __mode === 2 ? 'true' : 'false' }}" required>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-{{col}}">
+                <div class="form-group zb-form-group">
+                    <!--Tên chỉ tiêu-->
+                    <label class="col-sm-5 zb-form-label">${get_res('kpi_name','Tên chỉ tiêu')}</label>
+                    <div class="col-sm-7">
+                        <input-text ng-model="entity.kpi_name" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-{{col}}">
+                <div class="form-group zb-form-group">
+                    <!--Tên khác-->
+                    <label class="col-sm-5 zb-form-label">${get_res('kpi_name2','Tên khác')}</label>
+                    <div class="col-sm-7">
+                        <input-text ng-model="entity.kpi_name2">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-{{col}}">
+                <div class="form-group zb-form-group">
+                    <!--Thuộc nhóm-->
+                    <label class="col-sm-5 zb-form-label">${get_res('kpi_group_code','Thuộc nhóm chỉ tiêu')}</label>
+                    <div class="col-sm-7">
+                         <tree-combobox
+                            load-data="$root.$getComboboxData" 
+                            ng-model="entity.kpi_group_code"
+                            placeholder=""
+                            init-data="$$$cbb_hcsls_kpi_group.value"
+                            caption-field="{{$$$cbb_hcsls_kpi_group.caption_field}}"
+                            key-field="{{$$$cbb_hcsls_kpi_group.value_field}}"
+                            parent-field="{{$$$cbb_hcsls_kpi_group.parent_field}}"
+                            multi-select="false"
+                            on-accept=""
+                            params="{key:'${encryptor.get_key('cbb_hcsls_kpi_group')}', value:[{ '@lock': true }]}">
+                    </tree-combobox>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-{{col}}">
+                <div class="form-group zb-form-group">
+                    <label class="col-sm-5 zb-form-label">${get_res('unit_code','Đơn vị tính')}</label>
+                     <div class="col-sm-7">
+                        <combobox load-data="$root.$getComboboxData" 
+                                ng-model="entity.unit_code"
+                                params="{key:'${encryptor.get_key('cbb_HCSLS_Unit')}', value:[{ '@lock': true }]}"
+                                on-search-change="false"
+                                on-search-press="true"
+                                placeholder=""
+                                init-data="$$$cbb_HCSLS_Unit.value"
+                                caption-field="{{$$$cbb_HCSLS_Unit.caption_field}}" 
+                                paging="true"
+                                close-on-select="true"
+                                template-fields="$$$cbb_HCSLS_Unit.display_fields"
+                                reload="false">
+                        </combobox>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-{{col}}">
+                <div class="form-group zb-form-group">
+                    <label class="col-sm-5 zb-form-label">${get_res('cycle_type','Chu kỳ')}</label>
+                     <div class="col-sm-7">
+                        <input-select data-list="cbbLCycleType" 
+                                   ng-model="entity.cycle_type" data-value="value" 
+                                   data-caption="caption"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-{{col}}">
+                <div class="form-group zb-form-group">
+                    <label class="col-sm-5 zb-form-label">${get_res('kpi_ref','Nguồn dữ liệu')}</label>
+                    <div class="col-sm-7">
+                        <input-text ng-model="entity.kpi_ref">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-{{col}}">
+                <div class="form-group zb-form-group">
+                    <!--Trọng số-->
+                    <label class="col-sm-5 zb-form-label">${get_res('weight','Trọng số')}</label>
+                    <div class="col-sm-7">
+                        <input-number ng-model="entity.weight">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-{{col}}">
+                <div class="form-group zb-form-group">
+                    <!--Trọng số-->
+                    <label class="col-sm-5 zb-form-label">${get_res('benchmark','Điểm chuẩn')}</label>
+                    <div class="col-sm-7">
+                        <input-number ng-model="entity.benchmark">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-{{col}}">
+                <div class="form-group zb-form-group">
+                    <label class="col-sm-5 zb-form-label">${get_res('kpi_formula','Công thức tính năng suất')}</label>
+                     <div class="col-sm-7">
+                        <combobox load-data="$root.$getComboboxData" 
+                                ng-model="entity.kpi_formula"
+                                params="{key:'${encryptor.get_key('cbb_HCSLS_Unit')}', value:[{ '@lock': true }]}"
+                                on-search-change="false"
+                                on-search-press="true"
+                                placeholder=""
+                                init-data="$$$cbb_HCSLS_Unit.value"
+                                caption-field="{{$$$cbb_HCSLS_Unit.caption_field}}" 
+                                paging="true"
+                                close-on-select="true"
+                                template-fields="$$$cbb_HCSLS_Unit.display_fields"
+                                reload="false">
+                        </combobox>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-{{col}}">
+                <div class="form-group zb-form-group">
+                    <label class="col-sm-5 zb-form-label">${get_res('value_cal_type_name','Cách tính cột "Thực hiện"')}</label>
+                     <div class="col-sm-7">
+                        <input-select data-list="cbbValueCalType" 
+                                   ng-model="entity.value_cal_type" data-value="value" 
+                                   data-caption="caption" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-{{col}}">
+                <div class="form-group zb-form-group">
+                    <label class="col-sm-5 zb-form-label">${get_res('input_type','Cách nhập dữ liệu')}</label>
+                     <div class="col-sm-7">
+                        <input-select data-list="cbbSYS_InputType" 
+                                   ng-model="entity.input_type" data-value="value" 
+                                   data-caption="caption"/>
+                    </div>
+                </div>
+           </div>
+           <div class="col-md-{{col}}">
+             <div class="form-group zb-form-group">
+                   <!--Ngưng sử dụng-->
+                <label class="col-sm-5 zb-form-label">${get_res('is_kpi_not_weight','KPI không xét trọng số')}</label>
+                <div class="col-sm-7">
+                    <input-checkbox ng-model="entity.is_kpi_not_weight">
+                </div>
+             </div>
+           </div>
+           <div class="col-md-{{col}}">
+             <div class="form-group zb-form-group">
+                   <!--Ngưng sử dụng-->
+                <label class="col-sm-5 zb-form-label">${get_res('lock','Ngưng sử dụng')}</label>
+                <div class="col-sm-7">
+                    <input-checkbox ng-model="entity.lock">
+                </div>
+             </div>
+           </div>
+    </collapse-box>
+</div>
+<div class="col-md-{{ 12 - col_group}} col-sm-{{ 12 - col_group}}">
+    <collapse-box class="zb-form-common" title="${get_global_res('kpi_desc','Mô tả chỉ tiêu')}">
+        <div class="col-sm-12">
+            <!--Ghi chú-->
+            <div class="form-group zb-form-group">
+                <div class="col-sm-12 no-padding">
+                    <input-textarea rows="5" ng-model="entity.kpi_desc"></input-textarea>
+                </div>
+            </div>
+        </div>
+    </collapse-box>
+</div>
+<div class="col-md-{{ 12 - col_group}} col-sm-{{ 12 - col_group}}">
+    <collapse-box class="zb-form-common" title="${get_global_res('kpi_desc','Mô tả chỉ tiêu')}">
+        <div class="col-sm-12">
+            <!--Ghi chú-->
+            <div class="form-group zb-form-group">
+                <div class="col-sm-12 no-padding">
+                    <input-textarea rows="5" ng-model="entity.kpi_desc"></input-textarea>
+                </div>
+            </div>
+        </div>
+    </collapse-box>
+</div>
+<div class="col-md-{{ 12 - col_group}} col-sm-{{ 12 - col_group}}">
+    <collapse-box class="zb-form-common" title="${get_global_res('Note','Ghi chú')}">
+        <div class="col-sm-12">
+            <!--Ghi chú-->
+            <div class="form-group zb-form-group">
+                <div class="col-sm-12 no-padding">
+                    <input-textarea rows="5" ng-model="entity.note"></input-textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="padding-top: 16px;">
+            <div class="form-group zb-form-group">
+                <label for="DisplayInfo" class="col-sm-4 zb-form-label">${get_global_res('create_and_modify','Tạo | Sửa')}</label>
+                <div class="col-sm-8">
+                    <input-text value="{{ entity.created_on | date: $root.systemConfig.date_format}} {{entity.created_by}} | {{ entity.modified_on | date: $root.systemConfig.date_format}} {{entity.modified_by}}" ng-disabled="true">
+                </div>
+            </div>
+        </div>     
+       
+    </collapse-box>
+</div>
+</%block>
+
+<%block name="modal_script">
+<script>
+    (function (scope) {
+        var __default = {
+            kpi_code: null,
+            kpi_name: null,
+            kpi_name2: null,
+            kpi_group_code: scope.$parent.$$tree.treeCurrentNode.kpi_group_code,
+            unit_code: null,
+            cycle_type: 1,
+            kpi_desc: null,
+            kpi_ref: null,
+            weight: null,
+            benchmark: null,
+            kpi_formula: null,
+            value_cal_type: null,
+            input_type: 1,
+            is_apply_all: null,
+            kpi_years: null,
+            is_kpi_not_weight: null,
+            note: null,
+            lock: null,
+            created_on: null,
+            created_by: null,
+            modified_on: null,
+            modified_bys:null
+        };
+        scope.__mode = scope.$parent.mode;
+        scope.title = scope.$parent.headerTitle;
+        scope.col = 12;
+        scope.col_group = 6;
+        scope.entity = scope.__mode == 2 ? scope.$parent.$$table.currentItem : __default;
+        scope.onResizeDialog = onResizeDialog;
+        //Nút lưu và thêm
+        scope.saveNNext = saveNNext;
+        //Nút lưu
+        scope.saveNClose = saveNClose;
+
+        function onResizeDialog() {
+            $dialog.fullScreen();
+            scope.col = scope.col == 12 ? 6 : 12;
+            scope.col_group = scope.col_group == 6 ? 8 : 6;
+        }
+
+        function saveNClose() {
+            if (scope.entity != null) {
+                var rsCheck = checkError();//Kết quả check input
+                if (rsCheck.result) {
+                    $msg.message("${get_global_res('Input_Error','Nhập liệu sai')}", rsCheck.errorMsg, function () { });
+                    return;
+                }
+                beforeCallToServer();
+                editData(function (res) {
+                    if (res.error == null) {
+                        $dialog.closeDialog();//Đóng form input
+                        $msg.alert("${get_global_res('Handle_Success','Thao tác thành công')}", $type_alert.INFO);//Xuất thông báo thành cônng
+                        if (scope.__mode == 1 || scope.__mode == 3) {
+                            //Reload table data
+                            reloadData();
+                        } else if (scope.__mode == 2) {
+                            reloadData();
+                        }
+                    } else {
+                        $msg.message("${get_global_res('Internal_Server_Error','Có lỗi từ phía máy chủ')}", "${get_global_res('Please_Try_Again','Xin thử vui lòng thử lại')}", function () { });
+                    }
+                });
+            }
+        }
+
+        function saveNNext() {
+            if (scope.entity != null) {
+                var rsCheck = checkError();//Kết quả check input
+                if (rsCheck.result) {
+                    //Nhập sai: break khỏi hàm
+                    $msg.message("${get_global_res('Input_Error','Nhập liệu sai')}", rsCheck.errorMsg, function () { });
+                    return;
+                }
+                beforeCallToServer();
+                editData(function (res) {
+                    if (res.error == null) {
+                        if (scope.__mode == 1 || scope.__mode == 3)
+                            reloadData();
+                        else {
+                            reloadData();
+                        }
+                        $msg.alert("${get_global_res('Handle_Success','Thao tác thành công')}", $type_alert.INFO);
+                        scope.entity = null;
+                        scope.__mode = 1;
+                        scope.$parent.$apply();
+                    } else {
+                        $msg.message("${get_global_res('Notification','Thông báo')}", "${get_global_res('Internal_Server_Error','Có lỗi từ phía máy chủ')}", function () { });
+                    }
+                })
+            }
+        }
+
+        function editData(callback) {
+            var url = getUrl();
+            if (scope.__mode == 3) {
+
+            }
+            services.api(url)
+                .data(scope.entity)
+                .done()
+                .then(function (res) {
+                    callback(res);
+                })
+        }
+
+        function beforeCallToServer() {
+
+        }
+
+        function getUrl() {
+            return scope.__mode == 1 || scope.__mode == 3 ? "${get_api_key('app_main.api.TMLS_KPI/insert')}" /*Mode 1: Tạo mới*/
+                    : "${get_api_key('app_main.api.TMLS_KPI/update')}" /*Mode 2: Cập nhật*/
+        }
+
+        function reloadData() {
+            var tableConfig = scope.$parent.$$table.$$tableConfig;
+            scope.$parent._tableData(tableConfig.iPage,
+            tableConfig.iPageLength, tableConfig.orderBy,
+            tableConfig.searchText, tableConfig.fnReloadData);
+        }
+
+        /**
+         * Function check input
+         */
+        function checkError() {
+            var errMsg;
+            var valid = null;
+            var rs = {
+                "result": false,
+                "errorMsg": ''
+            };
+            valid = lv.Validate(scope.entity.kpi_code);
+            rs.result = valid.isNullOrWhiteSpace();
+            rs.errorMsg = rs.result === true ? "${get_res('kpi_code_is_not_null','Mã chỉ tiêu không được để trống')}" + '\n' : "" ;
+            if(rs.result === true){
+                return rs;
+            }
+            valid = lv.Validate(scope.entity.kpi_name);
+            rs.result = valid.isNullOrWhiteSpace();
+            rs.errorMsg = rs.result === true ? "${get_res('kpi_name_is_not_null','Tên chỉ tiêu không được để trống')}" + '\n' : "" ;
+            if(rs.result === true){
+                return rs;
+            }
+            return rs;
+        }
+        (function _getDataInitCombobox() {
+            //valuelist
+             services.api("${get_api_key('app_main.api.SYS_ValueList/get_list')}")
+            .data({
+                "name": [
+                    "LCycleType",
+                    "cbbValueCalType",
+                    "SYS_InputType"
+                ]
+            })
+            .done()
+            .then(function (res) {
+                scope.cbbLCycleType = getValue(res.values, "LCycleType");
+                scope.cbbValueCalType = getValue(res.values, "cbbValueCalType");
+                scope.cbbSYS_InputType = getValue(res.values, "SYS_InputType");
+                scope.$applyAsync();
+                function getValue(response, listName) {
+                    return _.findWhere(response, { "list_name": listName }) ? _.findWhere(response, { "list_name": listName }).values : [];
+                }
+                })
+            //combobox
+            scope.$root.$getInitComboboxData(scope,
+                [{
+                    "key": "${encryptor.get_key('cbb_hcsls_kpi_group')}",
+                    "code": scope.entity
+                        && scope.entity.hasOwnProperty('kpi_group_code')
+                        ? scope.entity.kpi_group_code
+                        : null,
+                    "alias": "$$$cbb_hcsls_kpi_group"
+                },
+                {
+                    "key": "${encryptor.get_key('cbb_HCSLS_Unit')}",
+                    "code": scope.entity
+                        && scope.entity.hasOwnProperty('kpi_group_code')
+                        ? scope.entity.kpi_group_code
+                        : null,
+                    "alias": "$$$cbb_HCSLS_Unit"
+                }]
+            );
+        })();
+    });
+</script>
+
+</%block>

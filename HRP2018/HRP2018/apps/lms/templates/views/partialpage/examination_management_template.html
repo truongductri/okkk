@@ -1,0 +1,65 @@
+﻿<div class="hcs-container" style="height: 100%">
+    <page-sidebar on-add="onAdd" 
+                  on-edit="onEdit" 
+                  on-delete="onDelete" 
+                  on-save="onSave" 
+                  on-import="onImport" 
+                  on-export="onExport"
+                  on-search-press="onSearch"
+                  source="mapName" 
+                  key-field="function_id" 
+                  display-field="default_name" 
+                  icon-field="icon" 
+                  selected-key="selectedFunction"
+                  reload-on-change="true"
+                  >
+        <site-map>
+            <a><span>{{$root.currentFunction.default_name}}</span></a>
+            <span><i class="bowtie-icon bowtie-chevron-right"></i></span>
+            <span>{{currentFunction.default_name}}</span></site-map>
+        <extend-toolbar >
+            <div style="display:-webkit-inline-box; grid-template-columns: {{$root.isDisplay ? 'auto 1fr 1fr' : '1fr 1fr'}} ">
+                <div class="col-md-6" style="padding-right: 0; top: 2px;">
+                    <!--<input-text-icon id="tableSearchText" on-click="objSearch.onSearch" ng-model="objSearch.$$$modelSearch"></input-text-icon>-->
+                     <div class="hcs-left-side-department-tree-tool-bar-div-search">
+                        <input class="hcs-left-side-department-tree-tool-bar-input-search" ng-model="objSearch.$$$modelSearch">
+                        <div class="hcs-left-side-department-tree-tool-bar-input-search-bot"></div>
+                        <div class="hcs-left-side-department-tree-tool-bar-input-search-bot-icon" ng-click="onSearchText()">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-left: 12px;">
+                   
+                    <button class="zb-btn zb-btn-o-green" ng-click="createTemplate()">
+                            <i class="bowtie-icon bowtie-math-plus"></i>
+                    </button>
+                    <button class="zb-btn zb-btn-o-blue" ng-click="editTemplate()">
+                            <i class="bowtie-icon bowtie-edit-outline"></i>
+                        </button>
+                    <button class="zb-btn zb-btn-o-red" ng-click="delTemplate()">
+                            <i class="bowtie-icon bowtie-edit-remove"></i>
+                    </button>
+                    <button class="zb-btn" ng-click="importTemplate()">
+                            <i class="bowtie-icon bowtie-transfer-upload"></i>
+                        </button>
+                    <button class="zb-btn" ng-click="exportTemplate()">
+                            <i class="bowtie-icon bowtie-transfer-download"></i>
+                        </button>
+                    <button class="zb-btn" ng-click="$root.refresh()">
+                            <i class="bowtie-icon bowtie-navigate-refresh"></i>
+                        </button>
+
+                </div>
+            </div>
+        </extend-toolbar>
+        <content>
+            <div c-template url="${get_app_url('')}/pages/{{$partialpage}}" 
+                 style="position: absolute; top: 0; bottom: 0; left: 0; right: 0;"></div>
+        </content>
+    </page-sidebar>
+</div>
+<script>
+    <%include file="../../scripts/partialscript/examination_management_template.js"/>
+</script>
+

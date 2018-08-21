@@ -1,0 +1,191 @@
+﻿<style>
+    .zb-content {
+        background:#F9F9F9 !important;
+    }
+</style>
+<div class="tab-pane" style="padding-right:unset; height: 100%;">
+    <div class="col-md-12">
+        <collapse-box class="zb-form-common" title="${get_global_res('Common_Information','Thông tin chung')}">
+            <div class="col-md-6">
+                <div class="form-group zb-form-group">
+                    <!--Mã chức danh-->
+                    <label class="col-sm-5 zb-form-label">${get_res('job_w_code','Mã chức danh')}</label>
+                    <div class="col-sm-7">
+                        <input-text ng-model="entity.job_w_code" ng-disabled="{{ __mode === 2 ? 'true' : 'false' }}" required>
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--Tên chức danh-->
+                    <label class="col-sm-5 zb-form-label">${get_res('job_w_name','Tên chức danh')}</label>
+                    <div class="col-sm-7">
+                        <input-text ng-model="entity.job_w_name" required>
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--Tên khác-->
+                    <label class="col-sm-5 zb-form-label">${get_res('job_w_name2','Tên khác')}</label>
+                    <div class="col-sm-7">
+                        <input-text ng-model="entity.job_w_name2">
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--Nhóm chức danh-->
+                    <label class="col-sm-5 zb-form-label">${get_res('gjw_code','Nhóm chức danh')}</label>
+                    <div class="col-sm-7">
+                        <!--<input-text ng-model="entity.gjw_code" required>-->
+                        <tree-combobox
+                                load-data="$root.$getComboboxData" 
+                                ng-model="entity.gjw_code"
+                                placeholder=""
+                                init-data="$$$cbb_job_working_group.value"
+                                caption-field="{{$$$cbb_job_working_group.caption_field}}"
+                                key-field="{{$$$cbb_job_working_group.value_field}}"
+                                parent-field="{{$$$cbb_job_working_group.parent_field}}"
+                                on-accept=""
+                                params="{key:'${encryptor.get_key('cbb_job_working_group')}', value:[{ '@lock': true }]}"
+                                required>
+                        </tree-combobox>
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--Ngày hiệu lực-->
+                    <label class="col-sm-5 zb-form-label">${get_res('effect_date','Ngày hiệu lực')}</label>
+                    <div class="col-sm-7">
+                        <date-picker ng-model="entity.effect_date" data-format="{{$root.systemConfig.date_format}}" />
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--Chức vụ-->
+                    <label class="col-sm-5 zb-form-label">${get_res('job_pos_code','Chức vụ')}</label>
+                    <div class="col-sm-7">
+                        <!--<input-text ng-model="entity.job_pos_code">-->
+                        <combobox load-data="$root.$getComboboxData" 
+                                  ng-model="entity.job_pos_code"
+                                  params="{key:'${encryptor.get_key('cbb_position')}', value:[{ '@lock': true }]}"
+                                  on-search-change="false"
+                                  on-search-press="true"
+                                  placeholder=""
+                                  init-data="$$$cbb_position.value"
+                                  caption-field="{{$$$cbb_position.caption_field}}"
+                                  paging="true"
+                                  close-on-select="true"
+                                  template-fields="$$$cbb_position.display_fields"
+                                  reload="false">
+                        </combobox>
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--Là vị trí chủ chốt-->
+                    <label class="col-sm-5 zb-form-label">${get_res('is_job_w_main_staff','Là vị trí chủ chốt')}</label>
+                    <div class="col-sm-7">
+                        <input-checkbox ng-model="entity.is_job_w_main_staff">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group zb-form-group">
+                    <!--Báo cáo cho-->
+                    <label class="col-sm-5 zb-form-label">${get_res('report_to_job_w','Báo cáo cho')}</label>
+                    <div class="col-sm-7">
+                        <!--<input-text ng-model="entity.report_to_job_w">-->
+                        <!--<input-text-icon ng-model="$$$job_working_report_to_job_w.value.job_w_name" on-click="set_report_to_job_w()">-->
+                        <form-search ng-model="entity.report_to_job_w" open="set_report_to_job_w()" init-data="$$$job_working_report_to_job_w" multi="false"></form-search>
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--Phòng ban liên hệ-->
+                    <label class="col-sm-5 zb-form-label">${get_res('dept_contact','Phòng ban liên hệ')}</label>
+                    <div class="col-sm-7">
+                        <!--<input-text ng-model="entity.dept_contact">-->
+                        <tree-combobox
+                            load-data="$root.$getComboboxData" 
+                            ng-model="entity.dept_contact"
+                            placeholder=""
+                            init-data="$$$cbb_departments_multi_select.value"
+                            caption-field="{{$$$cbb_departments_multi_select.caption_field}}"
+                            key-field="{{$$$cbb_departments_multi_select.value_field}}"
+                            parent-field="{{$$$cbb_departments_multi_select.parent_field}}"
+                            multi-select="$$$cbb_departments_multi_select.multi_select"
+                            on-accept=""
+                            params="{key:'${encryptor.get_key('cbb_departments_multi_select')}', value:[{ '@lock': true }]}"
+                            required>
+                        </tree-combobox>
+                    </div>
+                </div>
+                <div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--Phòng ban áp dụng-->
+                    <label class="col-sm-5 zb-form-label">${get_res('dept_apply','Phòng ban áp dụng')}</label>
+                    <div class="col-sm-7">
+                        <!--<input-text ng-model="entity.dept_apply">-->
+                        <tree-combobox
+                            load-data="$root.$getComboboxData" 
+                            ng-model="entity.dept_apply"
+                            placeholder=""
+                            init-data="$$$dept_apply.value"
+                            caption-field="{{$$$dept_apply.caption_field}}"
+                            key-field="{{$$$dept_apply.value_field}}"
+                            parent-field="{{$$$dept_apply.parent_field}}"
+                            multi-select="$$$dept_apply.multi_select"
+                            on-accept=""
+                            params="{key:'${encryptor.get_key('cbb_departments_multi_select')}', value:[{ '@lock': true }]}"
+                            required>
+                        </tree-combobox>
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--CDCV thuyên chuyển-->
+                    <label class="col-sm-5 zb-form-label">${get_res('job_w_next','CDCV thuyên chuyển')}</label>
+                    <div class="col-sm-7">
+                        <!--<input-text ng-model="entity.job_w_next">-->
+                        <!--<input-text-icon ng-model="$$$job_working_next.value.job_w_name" on-click="set_job_w_next()">-->
+                        <form-search ng-model="entity.job_w_next" open="set_job_w_next()" init-data="$$$job_working_next" multi="false"></form-search>
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--CDCV có thể thuyên chuyển-->
+                    <label class="col-sm-5 zb-form-label">${get_res('job_w_change','CDCV có thể thuyên chuyển')}</label>
+                    <div class="col-sm-7">
+                        <!--<input-text ng-model="entity.job_w_change">-->
+                        <!--<input-text-icon ng-model="$$$job_working.value.job_w_name" on-click="set_job_w_change()">-->
+                        <form-search ng-model="entity.job_w_change" placeholder="" open="set_job_w_change()" init-data="$$$job_working" multi="true"></form-search>
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--Thứ tự-->
+                    <label class="col-sm-5 zb-form-label">${get_res('ordinal','Thứ tự')}</label>
+                    <div class="col-sm-7">
+                        <input-number ng-model="entity.ordinal">
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--Ngưng sử dụng-->
+                    <label class="col-sm-5 zb-form-label">${get_res('lock','Ngưng sử dụng')}</label>
+                    <div class="col-sm-7">
+                        <input-checkbox ng-model="entity.lock">
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <label for="DisplayInfo" class="col-sm-5 zb-form-label">${get_global_res('create_and_modify','Tạo | Sửa')}</label>
+                    <div class="col-sm-7">
+                        <input-text value="{{ entity.created_on | date: $root.systemConfig.date_format}} {{entity.created_by}} | {{ entity.modified_on | date: $root.systemConfig.date_format}} {{entity.modified_by}}" ng-disabled="true">
+                    </div>
+                </div>
+            </div>
+        </collapse-box>
+        <collapse-box class="zb-form-common" title="${get_global_res('job_goals','Mục tiêu công việc')}">
+            <div class="col-sm-12">
+                <input-textarea rows="4" ng-model="entity.description"></input-textarea>
+            </div>
+        </collapse-box>
+        <collapse-box class="zb-form-common" title="${get_global_res('permissions_and_responsibilities','Quyền hạn và trách nhiệm')}">
+            <div class="col-sm-12">
+                <input-textarea rows="4" ng-model="entity.job_w_duty"></input-textarea>
+            </div>
+        </collapse-box>
+    </div>
+</div>
+<script>
+    <%include file="scripts/jobdescription.js"/>
+</script>

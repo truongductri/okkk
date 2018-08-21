@@ -1,0 +1,364 @@
+﻿<div class="hcs-body">
+    <style>
+        .lms-dashboard {
+        padding: 30px;
+    }
+
+    .lms-dashboard-header-box {
+        height: 150px;
+    }
+
+    .lms-dashboard-header-box-tx {
+        display: flex;
+        height: 80%;
+        border: 1px solid #0094ff;
+        background: #b6e0ff;
+    }
+
+    .lms-dashboard-header-box-mo {
+        text-align: center;
+        height: 20%;
+        border-bottom: 1px solid #0094ff;
+        border-left: 1px solid #0094ff;
+        border-right: 1px solid #0094ff;
+        background: #6ec1ff;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .lms-dashboard-categories {
+        border: 1px solid #548235;
+        background: #A9D08E;
+    }
+
+    .lms-dashboard-categories-bot {
+        background: #70AD47;
+        border-bottom: 1px solid #548235;
+        border-left: 1px solid #548235;
+        border-right: 1px solid #548235;
+    }
+
+    .lms-dashboard-peding {
+        border: 1px solid #C65911;
+        background: #F4B084;
+    }
+
+    .lms-dashboard-peding-bot {
+        background: #ED7D31;
+        border-bottom: 1px solid #C65911;
+        border-left: 1px solid #C65911;
+        border-right: 1px solid #C65911;
+    }
+
+    .lms-dashboard-download {
+        border: 1px solid #BF8F00;
+        background: #FFD966;
+    }
+
+    .lms-dashboard-download-bot {
+        background: #FFC000;
+        border-bottom: 1px solid #BF8F00;
+        border-left: 1px solid #BF8F00;
+        border-right: 1px solid #BF8F00;
+        cursor: pointer;
+    }
+    
+    .lms-dashboard-header-box-mo span {
+        /*line-height: 2.1;*/
+        font-size: 90%;
+    }
+    .lms-dashboard-header-box-mo i {
+        padding-right: 10px;
+        font-size: 1.3rem;
+    }
+    .lms-dashboard-header-box-tx-info {
+        width: 70%;
+        margin: 10px;
+        overflow: hidden;
+    }
+    .lms-dashboard-header-box-tx-icon {
+        width: 30%;
+        padding: 15px 10px 15px 0;
+    }
+
+    .lms-dashboard-header-box-tx-icon img{
+        
+    }
+    .lms-dashboard-count {
+        font-size: 23px;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 0;
+    }
+    .lms-dashboard-info {
+        font-size: 15px;
+        font-weight: 600;
+        color: #fff;
+    }
+    .lms-dashboard-chart {
+        padding-top: 10px;
+    }
+
+
+        .hcs-padding {
+            padding: 0 5px;
+        }
+        .hcs-box-custom {
+            height: 100%;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .hcs-box {
+            height: calc((100% - 30px) / 3);
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .hcs-box-info{
+            position: absolute;
+            bottom: 0;
+            width: calc(100% - 20px);
+            padding-bottom: 15px;
+        }
+
+        .hcs-color-1 {
+            background: #00CC99;
+        }
+        .hcs-color-2 {
+            background: #00CC99;
+        }
+        .hcs-color-3 {
+            background: #00CC99;
+        }
+        .hcs-box-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .hcs-demo-body {
+            width: 100%;
+            float:left;
+            height: calc(100% - (100% / 4));
+        }
+        .hcs-demo-list {
+            width: 100%;
+            float:left;
+            height: calc(100% / 4);
+        }
+
+        .hcs-list-item {
+            text-align: center;
+            display: table;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hcs-list-item span {
+            vertical-align: middle;
+            display: table-cell;
+            color: #000;
+        }
+        .hcs-list-functions {
+            height: calc(100%);
+            cursor:pointer;
+        }
+        /*jssor slider loading skin spin css*/
+        .jssorl-009-spin img {
+            animation-name: jssorl-009-spin;
+            animation-duration: 1.6s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        @keyframes jssorl-009-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /*jssor slider bullet skin 053 css*/
+        .jssorb053 .i {position:absolute;cursor:pointer;}
+        .jssorb053 .i .b {fill:#fff;fill-opacity:0.5;}
+        .jssorb053 .i:hover .b {fill-opacity:.7;}
+        .jssorb053 .iav .b {fill-opacity: 1;}
+        .jssorb053 .i.idn {opacity:.3;}
+
+        /*jssor slider arrow skin 093 css*/
+        .jssora093 {display:block;position:absolute;cursor:pointer;}
+        .jssora093 .c {fill:none;stroke:#fff;stroke-width:400;stroke-miterlimit:10;}
+        .jssora093 .a {fill:none;stroke:#fff;stroke-width:400;stroke-miterlimit:10;}
+        .jssora093:hover {opacity:.8;}
+        .jssora093.jssora093dn {opacity:.6;}
+        .jssora093.jssora093ds {opacity:.3;pointer-events:none;}
+        .hcs-body {
+            padding: 15px;
+        }
+    </style>
+    <div class="hcs-demo-body">
+        <div class="col-md-2 hcs-padding" style="height: calc(100%);">
+            <div class="lms-dashboard-header-box hcs-box">
+                <div class="lms-dashboard-header-box-tx" style="height:100%;">
+                    <div class="lms-dashboard-header-box-tx-info">
+                        <p class="lms-dashboard-count">12</p>
+                        <p class="lms-dashboard-info">Số đơn vị chậm báo cáo</p>
+                    </div>
+                    <div class="lms-dashboard-header-box-tx-icon">
+                        <img src="https://image.flaticon.com/icons/svg/196/196759.svg">
+                    </div>
+                </div>
+                <!--<div class="lms-dashboard-header-box-mo lms-dashboard-peding-bot">
+                    <div class="hcs-list-item">
+                        <span>
+                                More Info
+                            <i class="bowtie-icon bowtie-navigate-forward-circle"></i>
+                        </span>
+                    </div>
+                </div>-->
+            </div>
+            <div class="lms-dashboard-header-box hcs-box">
+                <div class="lms-dashboard-header-box-tx lms-dashboard-categories" style="height:100%;">
+                    <div class="lms-dashboard-header-box-tx-info">
+                        <p class="lms-dashboard-count">5673</p>
+                        <p class="lms-dashboard-info">Kho tài liệu số</p>
+                    </div>
+                    <div class="lms-dashboard-header-box-tx-icon">
+                        <img src="https://image.flaticon.com/icons/svg/265/265695.svg">
+                    </div>
+                </div>
+                <!--<div class="lms-dashboard-header-box-mo lms-dashboard-peding-bot">
+                    <div class="hcs-list-item">
+                        <span>
+                                More Info
+                            <i class="bowtie-icon bowtie-navigate-forward-circle"></i>
+                        </span>
+                    </div>
+                </div>-->
+            </div>
+            <div class="lms-dashboard-header-box hcs-box">
+                <div class="lms-dashboard-header-box-tx lms-dashboard-peding" style="height:100%;"> 
+                    <div class="lms-dashboard-header-box-tx-info">
+                        <p class="lms-dashboard-count">3290</p>
+                        <p class="lms-dashboard-info">Việc làm cần tuyển</p>
+                    </div>
+                    <div class="lms-dashboard-header-box-tx-icon">
+                        <img src="https://image.flaticon.com/icons/svg/942/942779.svg">
+                    </div>
+                </div>
+                <!--<div class="lms-dashboard-header-box-mo lms-dashboard-peding-bot">
+                    <div class="hcs-list-item">
+                        <span>
+                                More Info
+                            <i class="bowtie-icon bowtie-navigate-forward-circle"></i>
+                        </span>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+        <div class="col-md-10 hcs-padding hcs-slider-jssor" style="height: calc(100% - 10px);">
+            <!--<div style="height: 100%; overflow: hidden;">
+                <img src="http://www.molisa.gov.vn/Images/Tintuc/la7e57672-db92-4175-a280-5ceb888dfaa9.jpg" style="width: 100%;"/>
+            </div>-->
+            <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 100%; height: 100%; overflow: hidden;">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                  <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                  <li data-target="#myCarousel" data-slide-to="1"></li>
+                  <li data-target="#myCarousel" data-slide-to="2"></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" style="height: 100%">
+                  <div class="item active" style="background: url(../../demo/static/css/images/3.png);
+                                                    height: 100% !important;
+                                                    width: 100%;
+                                                    background-repeat: inherit;
+                                                    background-size: 100% 100%;">
+                    <div class="hcs-list-item" style="position: absolute;
+                                                height: 50px;
+                                                background: #00000073;
+                                                font-size: 19px;">
+                        <span style="color: #fff; padding: 20px;">
+                            Lễ tuyên dương Đoàn Thành phố Hồ Chí Minh dự Kỳ thi tay nghề quốc gia lần X năm 2018
+                        </span>
+                    </div>
+                  </div>
+
+                  <div class="item" style="background: url(../../demo/static/css/images/2.png);
+                                                    height: 100% !important;
+                                                    width: 100%;
+                                                    background-repeat: inherit;
+                                                    background-size: 100% 100%;">
+                      <div class="hcs-list-item" style="position: absolute;
+                                                height: 50px;
+                                                background: #00000073;
+                                                font-size: 19px;">
+                        <span style="color: #fff; padding: 20px;">
+                            DIỄN ĐÀN LẮNG NGHE TIẾNG NÓI TRẺ EM CẤP THÀNH PHỐ NĂM 2018 Chủ đề “Vì cuộc sống an toàn, lành mạnh cho trẻ em trong thế giới công nghệ số”
+                        </span>
+                    </div>
+                  </div>
+    
+                  <div class="item" style="background: url(../../demo/static/css/images/1.png);
+                                                    height: 100% !important;
+                                                    width: 100%;
+                                                    background-repeat: inherit;
+                                                    background-size: 100% 100%;"> 
+                      <div class="hcs-list-item" style="position: absolute;
+                                                height: 50px;
+                                                background: #00000073;
+                                                font-size: 19px;">
+                        <span style="color: #fff; padding: 20px;">
+                            THÀNH PHỐ HỒ CHÍ MINH TỔ CHỨC LỄ RA QUÂN HƯỞNG ỨNG THÁNG HÀNH ĐỘNG PHÒNG, CHỐNG MA TÚY NĂM 2018
+                        </span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev" style="width: 5% !important;">
+                  <span class="glyphicon glyphicon-chevron-left bowtie-navigate-back-circle bowtie-icon"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next" style="width: 5% !important;">
+                  <span class="bowtie-navigate-forward-circle bowtie-icon glyphicon glyphicon-chevron-right"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
+        </div>
+    </div>
+    <div class="hcs-demo-list">
+        <div class="col-md-2 hcs-list-functions hcs-padding" ng-repeat="function in $functions" ng-click="handleEvent.redirectPage(function)">
+            <!--<div class="hcs-list-item" style="background: #FFD966" ng-click="handleEvent.redirectPage(function)">
+                <span>{{function.default_name}}</span>
+            </div>-->
+            <div class="lms-dashboard-header-box hcs-box-custom">
+                <div class="lms-dashboard-header-box-tx lms-dashboard-download">
+                    <div class="lms-dashboard-header-box-tx-info">
+                        <p class="lms-dashboard-info" style="color: #000000; text-transform: uppercase;">{{function.default_name}}</p>
+                    </div>
+                    <div class="lms-dashboard-header-box-tx-icon">
+                        <img ng-src="{{function.image}}">
+                    </div>
+                </div>
+                <div class="lms-dashboard-header-box-mo lms-dashboard-download-bot">
+                    <div class="hcs-list-item">
+                        <span style="color: #000000; text-align: right">
+                            <i class="bowtie-icon bowtie-navigate-forward-circle"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <!--<div class="col-md-12 hcs-padding" style="padding-top: 0;height: 5%;">
+            <div class="hcs-list-item" style=" background: #FFD966; border: 1px solid #BF8F00; 
+            font-weight: 510;">
+                <span> 
+                    <a href="/lv/demo_admin/" style="color: #000; text-decoration: none;" target="_blank">Hệ thống quản trị</a>
+                </span>
+            </div>
+        </div>-->
+</div>
+
+<script>
+    <%include file="../scripts/home.js"/>
+</script>

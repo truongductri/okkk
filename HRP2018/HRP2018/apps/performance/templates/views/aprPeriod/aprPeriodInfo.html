@@ -1,0 +1,155 @@
+﻿<div class="tab-pane" style="padding-right:unset; height: 100%; overflow-y:hidden; overflow:auto; background-color:#fff;">
+    <!--<nav-tabs min-height="82vh" max-height="82vh">-->
+	<div class="col-md-12">
+		 <div class="col-md-6">
+                <collapse-box class="zb-form-common" title="${get_res('aproval_period','Kỳ đánh giá')}">
+                     <div class="col-md-12">
+                         <div class="form-group zb-form-group">
+                             <!--Kỳ-->
+                             <label class="col-sm-4 zb-form-label">${get_res('apr_period','Kỳ')}</label>
+                             <div class="col-sm-8">
+                                 <input-select data-list="cbbApprovalPeriod" ng-model="entity.apr_period" data-value="value" data-caption="caption" required/>
+                             </div>
+                         </div>
+                         <div class="form-group zb-form-group">
+                             <!--Năm-->
+                             <label for="inputLastName" class="col-sm-4 zb-form-label">${get_res('apr_year','Năm')}</label>
+                             <div class="col-sm-8">
+                                 <input-number ng-model="entity.apr_year" required>
+                             </div>
+                         </div>
+                     </div>
+                 </collapse-box>
+            </div>
+            <div class="col-md-6">
+                <collapse-box class="zb-form-common" title="${get_res('give_target','Giao chỉ tiêu')}">
+                     <div class="col-md-12">
+                         <div class="form-group zb-form-group">
+                             <!--Giao chỉ tiêu từ-->
+                             <label class="col-sm-4 zb-form-label">${get_res('give_target_from','Từ')}</label>
+                             <div class="col-sm-8">
+                                   <date-picker ng-model="entity.give_target_from" data-format="{{$root.systemConfig.date_format}}"/>
+                             </div>
+                         </div>
+                         <div class="form-group zb-form-group">
+                             <!--Giao chỉ tiêu đến-->
+                             <label for="inputLastName" class="col-sm-4 zb-form-label">${get_res('give_terget_to','Đến')}</label>
+                             <div class="col-sm-8">
+                                <date-picker ng-model="entity.give_target_to"  data-format="{{$root.systemConfig.date_format}}"/>
+                             </div>
+                         </div>
+                     </div>
+                 </collapse-box>
+            </div>
+	</div>
+
+	<div class="col-md-12">
+		<div class="col-md-6">
+                <collapse-box class="zb-form-common" title="${get_res('review_mid_period','Xem xét giữa kỳ')}">
+                     <div class="col-md-12">
+                         <div class="form-group zb-form-group">
+                             <!--Giao chỉ tiêu từ-->
+                             <label class="col-sm-4 zb-form-label">${get_res('review_mid_from','Từ')}</label>
+                             <div class="col-sm-8">
+                                   <date-picker ng-model="entity.review_mid_from"  data-format="{{$root.systemConfig.date_format}}"/>
+                             </div>
+                         </div>
+                         <div class="form-group zb-form-group">
+                             <!--Giao chỉ tiêu đến-->
+                             <label for="inputLastName" class="col-sm-4 zb-form-label">${get_res('review_mid_to','Đến')}</label>
+                             <div class="col-sm-8">
+                                <date-picker ng-model="entity.review_mid_to"  data-format="{{$root.systemConfig.date_format}}"/>
+                             </div>
+                         </div>
+                     </div>
+                 </collapse-box>
+            </div>
+            <div class="col-md-6">
+                <collapse-box class="zb-form-common" title="${get_res('approval_mid_period','Xét duyệt giữa kỳ')}">
+                     <div class="col-md-12">
+                         <div class="form-group zb-form-group">
+                             <!--Giao chỉ tiêu từ-->
+                             <label class="col-sm-4 zb-form-label">${get_res('approval_mid_from','Từ')}</label>
+                             <div class="col-sm-8">
+                                   <date-picker ng-model="entity.approval_mid_from"  data-format="{{$root.systemConfig.date_format}}"/>
+                             </div>
+                         </div>
+                         <div class="form-group zb-form-group">
+                             <!--Giao chỉ tiêu đến-->
+                             <label for="inputLastName" class="col-sm-4 zb-form-label">${get_res('approval_mid_to','Đến')}</label>
+                             <div class="col-sm-8">
+                                <date-picker ng-model="entity.approval_mid_to"  data-format="{{$root.systemConfig.date_format}}"/>
+                             </div>
+                         </div>
+                     </div>
+                 </collapse-box>
+            </div>
+	</div>
+
+	<div class="col-md-12">
+		<div class="col-md-6">
+                <collapse-box class="zb-form-common" title="${get_res('emp_final_approval','Nhân viên đánh giá cuối kỳ')}">
+                     <div class="col-md-12">
+                         <div class="form-group zb-form-group">
+                             <!--Giao chỉ tiêu từ-->
+                             <label class="col-sm-4 zb-form-label">${get_res('emp_final_from','Từ')}</label>
+                             <div class="col-sm-8">
+                                   <date-picker ng-model="entity.emp_final_from"  data-format="{{$root.systemConfig.date_format}}"/>
+                             </div>
+                         </div>
+                         <div class="form-group zb-form-group">
+                             <!--Giao chỉ tiêu đến-->
+                             <label for="inputLastName" class="col-sm-4 zb-form-label">${get_res('emp_final_to','Đến')}</label>
+                             <div class="col-sm-8">
+                                <date-picker ng-model="entity.emp_final_to"  data-format="{{$root.systemConfig.date_format}}"/>
+                             </div>
+                         </div>
+                     </div>
+                 </collapse-box>
+                <collapse-box class="zb-form-common" title="${get_res('approval_final_period','Xét duyệt cuối kỳ')}">
+                     <div class="col-md-12">
+                         <div class="form-group zb-form-group">
+                             <!--Giao chỉ tiêu từ-->
+                             <label class="col-sm-4 zb-form-label">${get_res('approval_final_from','Từ')}</label>
+                             <div class="col-sm-8">
+                                   <date-picker ng-model="entity.approval_final_from"  data-format="{{$root.systemConfig.date_format}}"/>
+                             </div>
+                         </div>
+                         <div class="form-group zb-form-group">
+                             <!--Giao chỉ tiêu đến-->
+                             <label for="inputLastName" class="col-sm-4 zb-form-label">${get_res('approval_final_to','Đến')}</label>
+                             <div class="col-sm-8">
+                                <date-picker ng-model="entity.approval_final_to"  data-format="{{$root.systemConfig.date_format}}"/>
+                             </div>
+                         </div>
+                     </div>
+                 </collapse-box>
+		</div>
+			 <div class="col-md-6">
+                <collapse-box class="zb-form-common"
+                              title="${get_global_res('note','Ghi chú')}">
+                    <div class="form-group zb-form-group">
+                        <div class="col-sm-12 no-padding">
+                            <input-textarea rows="5" ng-model="entity.note" style="padding-bottom:31px;"></input-textarea>
+                        </div>
+                    </div>
+                        <div class="form-group zb-form-group">
+                            <label for="DisplayInfo" class="col-sm-3 zb-form-label">${get_global_res('create_and_modify','Tạo | Sửa')}</label>
+                            <div class="col-sm-9">
+                                <input-text value="{{ entity.created_on | date: $root.systemConfig.date_format}} {{entity.created_by}} | {{ entity.modified_on | date: $root.systemConfig.date_format}} {{entity.modified_by}}" ng-disabled="true">
+                            </div>
+                        </div>
+                </collapse-box>
+            </div>
+	</div>
+
+		
+	</div>
+
+
+      
+    <!--</nav-tabs>-->
+</div>
+<script>
+<%include file = "scripts/aprPeriodInfo.js" />
+</script>

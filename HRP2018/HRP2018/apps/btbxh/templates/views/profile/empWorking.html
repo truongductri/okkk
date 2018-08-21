@@ -1,0 +1,63 @@
+﻿<div class="tab-pane" style="padding-right:unset; height: 100%; overflow-y:hidden; overflow:auto; background-color:#fff;">
+    <nav-tabs min-height="82vh" max-height="82vh">
+        
+        
+    </nav-tabs>
+    <tab-content name="tab2" title="${get_res('emp_working','Bổ nhiệm - điều chuyển')}">
+           <collapse-box class="zb-datatable">
+           <toolbar class="eeeeee">
+                <input-text-icon icon="bowtie-icon bowtie-search"
+                                    on-click="onSearch"></input-text-icon>
+                <button ng-click="event.empWorking.onAdd()" class="zb-btn zb-btn-o-green">
+                    <i class="bowtie-icon bowtie-math-plus"></i>
+                </button>
+                <button ng-click="event.empWorking.onEdit()" class="zb-btn zb-btn-o-blue">
+                    <i class="bowtie-icon bowtie-edit-outline"></i>
+                </button>
+                <button ng-click="event.empWorking.onDelete()" class="zb-btn zb-btn-o-red">
+                    <i class="bowtie-icon bowtie-trash"></i>
+                </button>
+                <button ng-click="event.empWorking.onRefresh()" class="zb-btn">
+                    <i class="bowtie-icon bowtie-navigate-refresh"></i>
+                </button>
+            </toolbar>
+            <table-data data-source="$tableEmpWorking.tableSource" fields="$tableEmpWorking.tableField" type="MultiSelect" 
+                        paging="true" page-length="100" server-side="true" 
+                        press-enter="$tableEmpWorking.onSelectTableRow" selected-items="$tableEmpWorking.selectedItems" 
+                        current-item="$tableEmpWorking.currentItem" search-text="$tableEmpWorking.tableSearchText"
+                        refresh-row="$tableEmpWorking.refreshDataRow"
+                        selected-field="">
+            </table-data>
+            </collapse-box>
+        </tab-content>
+        <tab-content name="tab3" title="${get_res('emp_experience','Kinh nghiệm trước đây')}" select="triggerResize()">
+           <collapse-box class="zb-datatable">
+             <toolbar class="eeeeee">
+                <input-text-icon icon="bowtie-icon bowtie-search"
+                                    on-click="onSearchExperience"></input-text-icon>
+                <button ng-click="event.empExperience.onAdd()" class="zb-btn zb-btn-o-green">
+                    <i class="bowtie-icon bowtie-math-plus"></i>
+                </button>
+                <button ng-click="event.empExperience.onEdit()" class="zb-btn zb-btn-o-blue">
+                    <i class="bowtie-icon bowtie-edit-outline"></i>
+                </button>
+                <button ng-click="event.empExperience.onDelete()" class="zb-btn zb-btn-o-red">
+                    <i class="bowtie-icon bowtie-trash"></i>
+                </button>
+                <button ng-click="event.empExperience.onRefresh()" class="zb-btn">
+                    <i class="bowtie-icon bowtie-navigate-refresh"></i>
+                </button>
+            </toolbar>
+            <table-data data-source="$tableEmpExperience.tableSource" fields="$tableEmpExperience.tableField" type="MultiSelect" 
+                        paging="true" page-length="100" server-side="true" 
+                        press-enter="$tableEmpExperience.onSelectTableRow" selected-items="$tableEmpExperience.selectedItems" 
+                        current-item="$tableEmpExperience.currentItem" search-text="$tableEmpExperience.tableSearchText"
+                        refresh-row="$tableEmpExperience.refreshDataRow"
+                        selected-field="">
+            </table-data>
+            </collapse-box>
+        </tab-content>
+</div>
+<script>
+<%include file = "scripts/empWorking.js" />
+</script>

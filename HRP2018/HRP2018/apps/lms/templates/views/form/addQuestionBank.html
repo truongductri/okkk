@@ -1,0 +1,927 @@
+﻿
+<%!
+    #_style="width:200px;"
+%>
+<%inherit file="../commons/dialog_save_close.html"/>
+<%block name="modal_body">
+<style>
+    .radio {
+    padding-left: 20px;
+}
+
+.radio label {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    padding-left: 5px;
+}
+
+.radio label .relative {
+    color: #00b9f2;
+}
+
+.radio label a:hover {
+    text-decoration: none;
+}
+
+.radio label::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    left: 0;
+    top:3px;
+    margin-left: -20px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    background-color: #fff;
+    -webkit-transition: border .3s ease-in-out;
+    transition: border .3s ease-in-out;
+}
+
+.radio label::after {
+    display: inline-block;
+    position: absolute;
+    content: " ";
+    width: 11px;
+    height: 11px;
+    left: 3px;
+    top: 6px;
+    margin-left: -20px;
+    border-radius: 50%;
+    background-color: #777;
+    -webkit-transform: scale(0,0);
+    -ms-transform: scale(0,0);
+    transform: scale(0,0);
+    -webkit-transition: -webkit-transform .3s cubic-bezier(.8,-.33,.2,1.33);
+    -moz-transition: -moz-transform .3s cubic-bezier(.8,-.33,.2,1.33);
+    -o-transition: -o-transform .3s cubic-bezier(.8,-.33,.2,1.33);
+    transition: transform .3s cubic-bezier(.8,-.33,.2,1.33);
+}
+
+.radio input[type=radio] {
+    opacity: 0;
+    z-index: 1;
+}
+
+.radio input[type=radio]:checked+label::after {
+    -webkit-transform: scale(1,1);
+    -ms-transform: scale(1,1);
+    transform: scale(1,1);
+}
+
+.radio input[type=radio]:disabled+label {
+    opacity: .65;
+}
+
+.radio input[type=radio]:disabled+label::before {
+    cursor: not-allowed;
+}
+
+.radio.radio-inline {
+    margin-top: 0;
+}
+
+.radio-primary input[type=radio]+label::after {
+    background-color: #f7941d;
+}
+
+.radio-primary input[type=radio]:checked+label::before {
+    border-color: #f7941d;
+}
+
+.radio-primary input[type=radio]:checked+label::after {
+    background-color: #f7941d;
+}
+
+.radio-danger input[type=radio]+label::after {
+    background-color: #ef474f;
+}
+
+.radio-danger input[type=radio]:checked+label::before {
+    border-color: #ef474f;
+}
+
+.radio-danger input[type=radio]:checked+label::after {
+    background-color: #ef474f;
+}
+
+.radio-info input[type=radio]+label::after {
+    background-color: #00b9f2;
+}
+
+.radio-info input[type=radio]:checked+label::before {
+    border-color: #00b9f2;
+}
+
+.radio-info input[type=radio]:checked+label::after {
+    background-color: #00b9f2;
+}
+
+.radio-warning input[type=radio]+label::after {
+    background-color: #f0ad4e;
+}
+
+.radio-warning input[type=radio]:checked+label::before {
+    border-color: #f0ad4e;
+}
+
+.radio-warning input[type=radio]:checked+label::after {
+    background-color: #f0ad4e;
+}
+
+.radio-success input[type=radio]+label::after {
+    background-color: #5cb85c;
+}
+
+.radio-success input[type=radio]:checked+label::before {
+    border-color: #5cb85c;
+}
+
+.radio-success input[type=radio]:checked+label::after {
+    background-color: #5cb85c;
+}
+
+.radio-success input[type=file] {
+    display: inline;
+    width: 0;
+    opacity: 0;
+}
+
+input[type=checkbox].styled:checked+label:after,input[type=radio].styled:checked+label:after {
+    font-family: FontAwesome;
+    content: "";
+}
+
+input[type=checkbox] .styled:checked+label::before,input[type=radio] .styled:checked+label::before {
+    color: #fff;
+}
+
+input[type=checkbox] .styled:checked+label::after,input[type=radio] .styled:checked+label::after {
+    color: #fff;
+}
+
+
+
+    .hcs-input-choose-file {
+        color: #333;
+        border: none;
+        border-radius: 0;
+        border-bottom: 1px solid #cbcbcb !important;
+        background: transparent;
+        font-size: .875rem;
+        padding-bottom: 0;
+        box-shadow: none !important;
+        padding: 0 5px 0 1px;
+        vertical-align: bottom;
+    }
+
+    .hcs-button-choose-file {
+        padding: 10px 3px 3px 0 !important;
+        color: #333;
+        border: none;
+        border-radius: 0;
+        border-bottom: 1px solid #cbcbcb !important;
+        background: transparent;
+        font-size: .875rem;
+        padding-bottom: 0;
+        box-shadow: none !important;
+        vertical-align: bottom;
+    }
+
+    .btn-default.btn-choose.hcs-button-choose-file:hover,
+    .btn-default.btn-choose.hcs-button-choose-file:active, 
+    .btn-default.btn-choose.hcs-button-choose-file:focus{
+        color: #333;
+        background-color: #fff !important;
+        border-color: #ccc !important;
+    }
+    
+    button.btn.btn-default.btn-choose.hcs-button-choose-file {
+        outline: unset;        
+    }
+
+    .radio + .radio {
+        margin-top: 10px;
+    }
+
+    .bootstrap-tagsinput {
+        color: #333;
+        border: none;
+        border-radius: 0;
+        border-bottom: 1px solid #cbcbcb !important;
+        background: transparent;
+        font-size: .875rem;
+        width: 100%;
+    }
+
+    .bootstrap-tagsinput span {
+        background: #ccc;
+        border: 1px solid #ccc;
+    }
+</style>
+<div class="col-md-12 col-sm-12" style="padding-bottom: 20px;">
+    <collapse-box class="zb-form-common" title="${get_res('add_question','Add a Question')}">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-group zb-form-group">
+                <!--Mã Tài liệu, ID-->
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">${get_res('ques_id','Question ID')}</label>
+                <div class="col-sm-4">
+                    <input-text id="inputEmp_Train_Mode_Name" ng-model="entity.ques_id" required>
+                </div>
+            </div>
+
+            <div class="form-group zb-form-group">
+                <!--Tên Tài liệu-->
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">${get_res('ques_category','Question Category')}</label>
+                <div class="col-sm-4">
+                    <!--<input-text id="inputEmp_Train_Mode_Name" ng-model="entity.ques_category" required>-->
+                    <combobox load-data="$root.$getComboboxData" 
+                            ng-model="entity.ques_category" 
+                            params="{key:'${encryptor.get_key('lms_cbb_exQuestionCategory')}', value:[]}" 
+                            on-search-change="false" on-search-press="true" placeholder="" 
+                            init-data="cbb_excategory.value" paging="true" 
+                            close-on-select="true" template-fields="cbb_excategory.display_fields" 
+                            reload="false" required>
+                    </combobox>
+                </div>
+            </div>
+            <div class="form-group zb-form-group">
+                <!--Tên Tài liệu-->
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">${get_res('ques_type','Question Type')}</label>
+                <div class="col-sm-4">
+                    <input-select ng-model="entity.ques_type" 
+                                  data-list="vll_LMSEx_ques_type" 
+                                  data-value="value" 
+                                  data-caption="caption" required/>
+                </div>
+            </div>
+            <div class="form-group zb-form-group">
+                <!--Nguon dinh danh Tài liệu-->
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">${get_res('ques_level','Question Level')}</label>
+                <div class="col-sm-4">
+                    <input-select ng-model="entity.ques_level" 
+                                  data-list="vll_LMSEx_ques_level" 
+                                  data-value="value" 
+                                  data-caption="caption" required/>
+                </div>
+            </div>
+            <div class="form-group zb-form-group">
+                <!--Mô tả tài liệu-->
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">${get_res('file_view','File View')}</label>
+                <div class="col-sm-5">
+		            <input-select-file ng-model="entity.ques_file"></input-select-file>
+                </div>
+            </div>
+            <div class="form-group zb-form-group">
+                <!--Tên Khóa học-->
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">${get_res('ques_detail_1','Question Detail 1')}</label>
+                <div class="col-sm-10">
+                    <div class="clearblock" style="display:inline-block"></div>
+                    <c-html-box style="height: 100px;" data-rows="6" ng-model="entity.ques_detail_1"></c-html-box>
+                </div>
+            </div>
+            <div class="form-group zb-form-group">
+                <!--Tên Khóa học-->
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">${get_res('ques_detail_2','Question Detail 2')}</label>
+                <div class="col-sm-10">
+                    <div class="clearblock" style="display:inline-block"></div>
+                    <c-html-box style="height: 100px;" data-rows="6" ng-model="entity.ques_detail_2"></c-html-box>
+                </div>
+            </div>
+            <div class="form-group zb-form-group">
+                <!--Tên Khóa học-->
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">${get_res('ques_hint','Hint')}</label>
+                <div class="col-sm-10">
+                    <div style="display: inline-flex;">
+                        <div class="radio radio-success">
+					        <input type="radio" name="resumeApply" ng-value="dt_true" id="rad1" 
+                                   ng-model="entity.ques_hint.ishintEnable">
+					        <label for="rad1">
+						        <span>${get_res('ques_enable','Enable')}</span>
+					        </label>
+				        </div>
+                        <div class="radio radio-success" style="margin-left: 20px;">
+					        <input type="radio" name="resumeApply" ng-value="dt_false" id="rad2" 
+                                   ng-model="entity.ques_hint.ishintEnable">
+					        <label for="rad2">
+						        <span>${get_res('ques_disable','Disable')}</span> 
+					        </label>
+				        </div>
+                    </div>
+                    <div>
+                        <input-select-file ng-model="entity.ques_hint.file"></input-select-file>
+                    </div>
+                    <div>
+                        <div class="clearblock" style="display:inline-block"></div>
+                        <c-html-box style="height: 100px;" data-rows="6" ng-model="entity.ques_hint.note"></c-html-box>
+                    </div>
+                </div>
+            </div>
+            <!-- trường hợp chọn Question Type = 1, 2, 3 -->
+            <div class="form-group zb-form-group" 
+                ng-if="entity.ques_type == 1 || entity.ques_type == 2 || entity.ques_type == 3">
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">
+                    ${get_res('ques_answers','Answers')}
+                </label>
+                <div class="col-sm-10">
+                    <div class="col-md-12" ng-repeat="entry in entity.ques_answers track by $index" style="padding-left: 0;">
+                        <div class="col-md-6" style="padding-left: 0;">
+                            <div class="radio radio-success">
+					            <input type="radio" name="answers" ng-value="dt_true" 
+                                       ng-change="entryChange(entity.ques_answers, $index)"
+                                       ng-model="entry.isCorrect" id="rad_ans_{{$index}}">
+
+					            <label for="rad_ans_{{$index}}" style="display: grid; grid-template-columns: 30px 1fr;">
+						            <span>
+                                        {{entry.text}}
+                                    </span> 
+                                    <span class="bowtie-check bowtie-icon" 
+                                          ng-if="entry.isCorrect"
+                                          style="color: #3c763d; padding-top: 3px; padding-left: 5px;">
+                                        ${get_res('ques_correct_answers','Correct Answer')}
+                                    </span>
+					            </label>
+				            </div>
+                            
+                            <input-textarea rows="4" ng-model="entry.answers"></input-textarea>
+                        </div>
+                        <div class="col-md-6" style="padding-top: 30px;">
+                            <div class="form-group zb-form-group">
+                                <label for="inputEmp_Train_Mode_Name" class="col-sm-6 zb-form-label">
+                                    ${get_res('ques_if_correct','If Correct')}
+                                </label>
+                                <div class="col-sm-6">
+                                    <input-text id="inputEmp_Train_Mode_Name" ng-model="entry.if_correct">
+                                </div>
+                            </div>
+                            <div class="form-group zb-form-group">
+                                <label for="inputEmp_Train_Mode_Name" class="col-sm-6 zb-form-label">
+                                    ${get_res('ques_if_incorrect','If Incorrect')}
+                                </label>
+                                <div class="col-sm-6">
+                                    <input-text id="inputEmp_Train_Mode_Name" ng-model="entry.if_incorrect">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding-top: 10px;">
+                        <span class="bowtie-math-plus-light bowtie-icon text-success" style="cursor: pointer"
+                              ng-click="fnAddRowAnswers()">
+                            ${get_res('ques_add_new_option','Add New Option')}
+                        </span>
+                        <span class="bowtie-math-minus-light bowtie-icon text-danger" style="cursor: pointer"
+                              ng-click="fnMinusRowAnswers()">
+                            ${get_res('ques_remove_option','Remove')}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!-- end trường hợp chọn Question Type = 1, 2, 3 -->
+            <!-- trường hợp chọn Question Type = 8, 9 -->
+            <div class="form-group zb-form-group" 
+                ng-if="entity.ques_type == 8 || entity.ques_type == 9">
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">
+                    ${get_res('ques_answers','Answers')}
+                </label>
+                <div class="col-sm-10">
+                    <div class="col-md-12" ng-repeat="entry in entity.ques_answers track by $index" style="padding-left: 0;">
+                        <div class="col-md-6" style="padding-left: 0;">
+                            <div class="radio radio-success">
+					            <input type="radio" name="answers" ng-value="dt_true" 
+                                       ng-change="entryChange(entity.ques_answers, $index)"
+                                       ng-model="entry.isCorrect" id="rad_ans_{{$index}}">
+
+					            <label for="rad_ans_{{$index}}" style="display: grid; grid-template-columns: 30px 1fr;">
+						            <span>
+                                        {{entry.text}}
+                                    </span> 
+                                    <span class="bowtie-check bowtie-icon" 
+                                          ng-if="entry.isCorrect"
+                                          style="color: #3c763d; padding-top: 3px; padding-left: 5px;">
+                                        ${get_res('ques_correct_answers','Correct Answer')}
+                                    </span>
+					            </label>
+				            </div>
+                            
+                            <input-textarea rows="4" ng-model="entry.answers"></input-textarea>
+                        </div>
+                        <div class="col-md-6" style="padding-top: 30px;">
+                            <div class="form-group zb-form-group">
+                                <label for="inputEmp_Train_Mode_Name" class="col-sm-6 zb-form-label">
+                                    ${get_res('ques_if_correct','If Correct')}
+                                </label>
+                                <div class="col-sm-6">
+                                    <input-text id="inputEmp_Train_Mode_Name" ng-model="entry.if_correct">
+                                </div>
+                            </div>
+                            <div class="form-group zb-form-group">
+                                <label for="inputEmp_Train_Mode_Name" class="col-sm-6 zb-form-label">
+                                    ${get_res('ques_if_incorrect','If Incorrect')}
+                                </label>
+                                <div class="col-sm-6">
+                                    <input-text id="inputEmp_Train_Mode_Name" ng-model="entry.if_incorrect">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end trường hợp chọn Question Type = 8, 9 -->
+            <!-- trường hợp chọn Question Type = 4, 10, 11 -->
+            <div class="form-group zb-form-group" 
+                ng-if="entity.ques_type == 4 || entity.ques_type == 10 || entity.ques_type == 11">
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">
+                    ${get_res('ques_answers','Answers')}
+                </label>
+                <div class="col-sm-10">
+                    <div class="col-md-12" ng-repeat="entry in entity.ques_answers track by $index" style="padding-left: 0;">
+                        <div class="col-md-6" style="padding-left: 0; padding-bottom: 10px;">
+                            <input-textarea rows="4" ng-model="entry.answers"></input-textarea>
+                        </div>
+                    </div>
+                    <div style="padding-top: 10px;">
+                        <span class="bowtie-math-plus-light bowtie-icon text-success" style="cursor: pointer"
+                              ng-click="fnAddRowAnswers()">
+                            ${get_res('ques_add_new_option','Add New Option')}
+                        </span>
+                        <span class="bowtie-math-minus-light bowtie-icon text-danger" style="cursor: pointer"
+                              ng-click="fnMinusRowAnswers()">
+                            ${get_res('ques_remove_option','Remove')}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!-- end trường hợp chọn Question Type = 4, 10, 11 -->
+            <!-- trường hợp chọn Question Type = 7 -->
+            <div class="form-group zb-form-group" 
+                ng-if="entity.ques_type == 7"> 
+                    <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">
+                        ${get_res('ques_limit_on_text','Limitation on text range')}
+                    </label>
+                    <div class="col-sm-10">
+                        <input-select ng-model="entity.ques_limit_on_text" 
+                                  data-list="vll_LMSEx_ques_level" 
+                                  data-value="value" 
+                                  data-caption="caption" required/>
+                    </div>
+            </div>
+            <div class="form-group zb-form-group" 
+                ng-if="entity.ques_type == 7"> 
+                    <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">
+                        ${get_res('ques_specify_limit','Specify Limit')}
+                    </label>
+                    <div class="col-sm-10">
+                        <input-select ng-model="entity.ques_specify_limit" 
+                                  data-list="vll_LMSEx_ques_level" 
+                                  data-value="value" 
+                                  data-caption="caption" required/>
+                    </div>
+            </div>
+            <!-- end trường hợp chọn Question Type = 7 -->
+            <!-- trường hợp chọn Question Type = 5, 6 -->
+            <div class="form-group zb-form-group" 
+                ng-if="entity.ques_type == 5 || entity.ques_type == 6">
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">
+                    ${get_res('ques_answers','Answers')}
+                </label>
+                <div class="col-sm-10">
+                    <div class="col-md-12" ng-repeat="entry in entity.ques_answers track by $index" style="padding-left: 0;">
+                            
+                        <div class="col-md-6" style="padding-left: 0; padding-bottom: 10px;">
+                            <div>
+                                <span>
+                                    {{entry.text}}
+                                </span> 
+                            </div>
+                            <input-textarea rows="4" ng-model="entry.answers"></input-textarea>
+                            <input-text id="inputEmp_Train_Mode_Name" ng-model="entry.question">
+                        </div>
+                    </div>
+                    <div style="padding-top: 10px;">
+                        <span class="bowtie-math-plus-light bowtie-icon text-success" style="cursor: pointer"
+                              ng-click="fnAddRowAnswers()">
+                            ${get_res('ques_add_new_option','Add New Option')}
+                        </span>
+                        <span class="bowtie-math-minus-light bowtie-icon text-danger" style="cursor: pointer"
+                              ng-click="fnMinusRowAnswers()">
+                            ${get_res('ques_remove_option','Remove')}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!-- end trường hợp chọn Question Type = 5, 6 -->
+            <div class="form-group zb-form-group" ng-if="entity.ques_type != 7">
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">
+                    ${get_res('ques_total_marks','Total Marks')}
+                </label>
+                <div class="col-md-10">
+                    <div class="clearblock" style="padding-top: 20px;"></div>
+                    <div class="form-group zb-form-group col-md-6" style="padding-left: 0">
+                        <label for="inputEmp_Train_Mode_Name" class="col-sm-4 zb-form-label">
+                            ${get_res('ques_right_marks','Right Marks')}
+                        </label>
+                        <div class="col-md-8">
+                            <input-text id="inputEmp_Train_Mode_Name" ng-model="entity.ques_total_marks.right_mark">
+                        </div>
+                    </div>
+                    <div class="form-group zb-form-group col-md-6">
+                        <label for="inputEmp_Train_Mode_Name" class="col-sm-4 zb-form-label">
+                            ${get_res('ques_negative_marks','Negative Marks')}
+                        </label>
+                        <div class="col-md-8">
+                            <input-text id="inputEmp_Train_Mode_Name" ng-model="entity.ques_total_marks.negative_mark">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group zb-form-group">
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">
+                    ${get_res('ques_attach_file','Attach File')}
+                </label>
+                <div class="col-md-10">
+                    <div class="clearblock" style="padding-top: 20px;"></div>
+                    <div class="form-group zb-form-group col-md-6" style="padding-left: 0">
+                        <div class="radio radio-success">
+					        <input type="radio" name="rad_disable" id="rad_enable" ng-value="dt_true"
+                                   ng-model="entity.ques_attach_file">
+					        <label for="rad_enable">
+						        <span>${get_res('ques_enable','Enable')}</span> 
+					        </label>
+				        </div>
+                    </div>
+                    <div class="form-group zb-form-group col-md-6">
+                        <div class="radio radio-success">
+					        <input type="radio" name="rad_disable" id="rad_disable" ng-value="dt_false"
+                                   ng-model="entity.ques_attach_file">
+					        <label for="rad_disable">
+						        <span>${get_res('ques_disable','Disable')}</span> 
+					        </label>
+				        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group zb-form-group">
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">
+                    ${get_res('ques_max_answer_time','Max Answer Time')}
+                </label>
+                <div class="col-md-4">
+                    <input-text id="inputEmp_Train_Mode_Name" ng-model="entity.ques_max_answer_time">
+                    <span>(${get_res('ques_second','Second')})</span>
+                </div>
+            </div>
+            <div class="form-group zb-form-group">
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">
+                    ${get_res('ques_explanation','Explanation')}
+                </label>
+                <div class="col-md-10">
+                    <div class="clearblock" style="display:inline-block"></div>
+                    <c-html-box style="height: 100px;" data-rows="6" ng-model="entity.ques_explanation"></c-html-box>
+                </div>
+            </div>
+            <div class="form-group zb-form-group" 
+                 ng-if="entity.ques_type != 7 && entity.ques_type != 4 && entity.ques_type != 10 
+                        && entity.ques_type != 11 && entity.ques_type != 8 && entity.ques_type != 9">
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">
+                    ${get_res('ques_answer_option','Answer Option')}
+                </label>
+                <div class="col-md-4">
+                    <input-select ng-model="entity.ques_answer_options" 
+                                  data-list="vll_LMSEx_ques_answer_option" 
+                                  data-value="value" 
+                                  data-caption="caption"/>
+                </div>
+            </div>
+            <div class="form-group zb-form-group">
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">
+                    ${get_res('ques_randomization','Randomization')}
+                </label>
+                <div class="col-md-4">
+                    <input-select ng-model="entity.ques_randomization" 
+                                  data-list="vll_LMSEx_ques_randomization" 
+                                  data-value="value" 
+                                  data-caption="caption"/>
+                </div>
+            </div>
+            <div class="form-group zb-form-group">
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">
+                    ${get_res('ques_tgs','Tags')}
+                </label>
+                <div class="col-md-10">
+                    <tag-input ng-model="entity.ques_tags" data-label="primary"/>
+                </div>
+            </div>
+            <div class="form-group zb-form-group" ng-if="entity.ques_type == 7">
+                <label for="inputEmp_Train_Mode_Name" class="col-sm-2 zb-form-label">
+                    ${get_res('ques_evaluated_by','Evaluated by')}
+                </label>
+                <div class="col-md-10">
+                    <combobox load-data="$root.$getComboboxData" 
+                                ng-model="entity.ques_evaluated_by" 
+                                params="{key:'${encryptor.get_key('lms_cbb_employees')}', value:[]}" 
+                                on-search-change="false" on-search-press="true" placeholder="" 
+                                init-data="cbb_employees.value" paging="true" 
+                                close-on-select="true" template-fields="cbb_employees.display_fields" 
+                                reload="false">
+                    </combobox>
+                </div>
+            </div>
+        </div>
+    </collapse-box>
+
+</div>
+</%block>
+<%block name="modal_script">
+<script>
+    (function (scope) {
+        scope.dt_true = true;
+        scope.dt_false = true;
+        scope.entryChange = function (data, index) {
+            $.each(data, function (i, v) {
+                v.isCorrect = (i == index) ? true : false;
+            });
+            scope.$applyAsync();
+        }
+        scope.__mode = scope.$parent.mode;
+        scope.entity = {};
+        scope.entity.ques_answers = scope.__mode == 1 ? [{}] : scope.entity.ques_answers;
+        scope.entity.ques_type = scope.__mode == 1 ? 1 : scope.entity.ques_answers;
+        scope.entity.ques_answer_options = scope.__mode == 1 ? 1 : scope.entity.ques_answer_options;
+        scope.entity.ques_evaluated_by = scope.__mode == 1 ? null : scope.entity.ques_evaluated_by;
+        
+        loadValueList();
+        function loadValueList() {
+            services.api("${get_api_key('app_main.api.SYS_ValueList/get_list')}")
+            .data({
+                "name": [
+                    "LMSEx_ques_type",
+                    "LMSEx_ques_level",
+                    "LMSEx_ques_answer_option",
+                    "LMSEx_ques_randomization"
+                ]
+            })
+            .done()
+            .then(function (res) {
+                scope.vll_LMSEx_ques_type = getValue(res.values, "LMSEx_ques_type");
+                scope.vll_LMSEx_ques_level = getValue(res.values, "LMSEx_ques_level");
+                scope.vll_LMSEx_ques_answer_option = getValue(res.values, "LMSEx_ques_answer_option");
+                scope.vll_LMSEx_ques_randomization = getValue(res.values, "LMSEx_ques_randomization");
+                scope.$applyAsync();
+                function getValue(response, listName) {
+                    return _.findWhere(response, { "list_name": listName }) ? _.findWhere(response, { "list_name": listName }).values : [];
+                }
+            })
+        }
+
+        /***/
+
+        function beforeCallToServer() { }
+
+        /**
+         Save & close
+         **/
+        scope.saveNClose = function (event) {
+            debugger
+            if (scope.entity != null) {
+                var rsCheck = checkError();//Kết quả check input
+                if (rsCheck.result) {
+                    //Nhập sai: break khỏi hàm
+                    $msg.message("${get_global_res('Input_Error','Nhập liệu sai')}", rsCheck.errorMsg, function () { });
+                    return;
+                }
+                beforeCallToServer();
+                editData(function (res) {
+                    if (res.error == null) {
+                        if (scope.__mode == 1 || scope.__mode == 3)
+                            scope.$root.refresh();
+                        else {
+                            scope.$parent.currentItem = scope.entity;
+                            scope.$parent.currentItem.modified_on = res.item.modified_on;
+                            scope.$parent.currentItem.modified_by = res.item.modified_by;
+                            scope.$parent.$apply();
+                            //Refesh datatable
+                            scope.$root.refresh();
+                        }
+                        $msg.alert("${get_global_res('Handle_Success','Thao tác thành công')}", $type_alert.INFO);
+                        scope.entity = {};
+                        scope.__mode = 1;
+                        scope.$apply();
+                    } else {
+                        $msg.message("${get_global_res('Notification','Thông báo')}", "${get_global_res('Internal_Server_Error','Có lỗi từ phía máy chủ')}", function () { });
+                    }
+                })
+            } else {
+                $msg.message("${get_global_res('Input_Error','Nhập liệu sai')}", rsCheck.errorMsg, function () { });
+            }
+        }
+        /**
+         * Function check input
+         */
+        function checkError() {
+            var errMsg;
+            var valid = null;
+            var rs = {
+                "result": false,
+                "errorMsg": ''
+            };
+            valid = lv.Validate(scope.entity.ques_id);
+            rs.result = valid.isNullOrWhiteSpace();
+            rs.errorMsg = rs.result === true ? "${get_res('ques_id_is_not_null','Mã câu hỏi không được để trống')}" + '\n' : "" ;
+            if(rs.result === true){
+                return rs;
+            }
+            valid = lv.Validate(scope.entity.ques_type);
+            rs.result = valid.isNumber();
+            rs.errorMsg = rs.result === true ? "${get_res('ques_type_is_not_null','Loại câu hỏi không được để trống')}" + '\n' : "";
+            if (rs.result === false) {
+                return rs;
+            }
+            valid = lv.Validate(scope.entity.ques_level);
+            rs.result = valid.isNumber();
+            rs.errorMsg = rs.result === true ? "${get_res('ques_level_is_not_null','Cấp câu hỏi không được để trống')}" + '\n' : "" ;
+            if(rs.result === false){
+                return rs;
+            }
+            valid = lv.Validate(scope.entity.ques_detail_1);
+            rs.result = valid.isNullOrWhiteSpace();
+            rs.errorMsg = rs.result === true ? "${get_res('ques_detail_1_is_not_null','Chi tiết câu hỏi không được để trống')}" + '\n' : "" ;
+            if(rs.result === true){
+                return rs;
+            }
+            return rs;
+        }
+
+        function editData(callback) {
+            var url = getUrl();
+            if (scope.__mode == 3) {
+
+            }
+            services.api(url)
+                .data(scope.entity)
+                .done()
+                .then(function (res) {
+                    callback(res);
+                })
+        }
+
+        function getUrl() {
+            return scope.__mode == 1 || scope.__mode == 3 ? "${get_api_key('app_main.api.LMSLS_ExQuestionBank/insert')}" /*Mode 1: Tạo mới*/
+                    : "${get_api_key('app_main.api.LMSLS_ExQuestionBank/update')}" /*Mode 2: Cập nhật*/
+        }
+
+        function nextChar(c, i) {
+            if (i == undefined || i == null) {
+                i = 1;
+            }
+            if (scope.entity.ques_answer_options == 1 || scope.entity.ques_answer_options == 2)
+                return String.fromCharCode(c.charCodeAt(0) + i);
+            else if (scope.entity.ques_answer_options == 3)
+                return parseInt(c) + i;
+            else if (scope.entity.ques_answer_options == 4)
+                return int_to_roman(roman_to_int(c) + i);
+        }
+
+        function int_to_roman(num) {
+            var lookup = {M:1000,CM:900,D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1},roman = '',i;
+            for ( i in lookup ) {
+                while ( num >= lookup[i] ) {
+                    roman += i;
+                    num -= lookup[i];
+                }
+            }
+            return roman;
+        }
+
+        function roman_to_int(str1) {
+            if(str1 == null) return -1;
+            var num = char_to_int(str1.charAt(0));
+            var pre, curr;
+
+            for(var i = 1; i < str1.length; i++){
+                curr = char_to_int(str1.charAt(i));
+                pre = char_to_int(str1.charAt(i-1));
+                if(curr <= pre){
+                    num += curr;
+                } else {
+                    num = num - pre*2 + curr;
+                }
+            }
+            return num;
+        }
+
+        function char_to_int(c){
+            switch (c) {
+                case 'I': return 1;
+                case 'V': return 5;
+                case 'X': return 10;
+                case 'L': return 50;
+                case 'C': return 100;
+                case 'D': return 500;
+                case 'M': return 1000;
+                default: return -1;
+            }
+        }
+
+        scope.fnAddRowAnswers = function () {
+            scope.entity.ques_answers.push({
+                text: nextChar(scope.entity.ques_answers[scope.entity.ques_answers.length - 1].text)
+            });
+            scope.$applyAsync();
+        }
+        scope.fnMinusRowAnswers = function () {
+            if (scope.entity.ques_answers.length > 1) {
+                scope.entity.ques_answers.pop({});
+            }
+        }
+
+        scope.$watch("entity.ques_type", function (val) {
+            if (val == 1 || val == 2) { // checkboxes + dropdown
+                scope.entity.ques_answers = [
+                    {
+                        "text": "A",
+                        "isCorrect" : true,
+		            }
+                ]
+            } else if (val == 3) { // multiple choice
+                scope.entity.ques_answers = [
+                    {
+                        "text": "A",
+                        "isCorrect" : true,
+		            }
+                ]
+            } else if (val == 4 || val == 10 || val == 11) { // fill in the blank + Text Input + Number Input
+                scope.entity.ques_answers = [
+                    {}
+                ]
+            } else if (val == 5 || val == 6) { // Drag & match + matching
+                scope.entity.ques_answers = [
+                    {
+                        "text": "${get_res('ques_pair ','Pair')}" + "A",
+                    }
+                ]
+            } else if (val == 7) { // Essay
+                scope.entity.ques_answers = [
+                ]
+            } else if (val == 8 || val == 9) { // True/False + Yes/No
+                scope.entity.ques_answers = [
+                    {
+			            "text" : "A",
+			            "isCorrect" : true,
+			            "answers" : "TRUE/YES"
+		            },
+		            {
+			            "text" : "B",
+			            "isCorrect" : false,
+			            "answers" : "FALSE/NO"
+		            }
+                ]
+            }
+            fnChangeAnswers(scope.entity.ques_answer_options);
+        })
+
+        function _getDataInitCombobox() {
+            scope.$root.$getInitComboboxData(scope, [{
+                "key": "${encryptor.get_key('lms_cbb_employees')}",
+                "code": scope.entity.ques_evaluated_by ? scope.entity.ques_evaluated_by : null,
+                "alias": "cbb_employees"
+            },{
+                "key": "${encryptor.get_key('lms_cbb_exQuestionCategory')}",
+                "code": scope.entity.ques_category ? scope.entity.ques_category : null,
+                "alias": "cbb_excategory"
+            }]);
+        }
+        _getDataInitCombobox();
+
+        scope.$watch("entity.ques_answer_options", function (val) {
+            fnChangeAnswers(val);
+        });
+
+        function fnChangeAnswers(val) {
+            if (val == 1) { // A, B, C, D
+                var val = 'A';
+                $.each(scope.entity.ques_answers, function (i, v) {
+                    v.text = nextChar(val, i);
+                })
+            } else if (val == 2) { // a, b, c, d
+                var val = 'a';
+                $.each(scope.entity.ques_answers, function (i, v) {
+                    v.text = nextChar(val, i);
+                })
+            } else if (val == 3) { // 1, 2, 3, 4
+                var val = '1';
+                $.each(scope.entity.ques_answers, function (i, v) {
+                    v.text = nextChar(val, i);
+                })
+            } else if (val == 4) { // I, II, III, IV
+                var val = 'I';
+                $.each(scope.entity.ques_answers, function (i, v) {
+                    v.text = nextChar(val, i);
+                })
+            }
+            scope.$applyAsync();
+        }
+    });
+</script>
+
+</%block>

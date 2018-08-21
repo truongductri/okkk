@@ -1,0 +1,63 @@
+html {
+    font-size: 16px !important;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: @bg_grey;
+    overflow: hidden;
+}
+
+.app-content {
+    overflow: auto;
+    overflow-x: hidden;
+    height: calc(~'100%-66px');
+    margin-left: 0 !important;
+    overflow-y: auto;
+    margin-top: 36px;
+    margin-bottom: 30px;
+    background-color: #ebf9ff;
+}
+
+.hcs-home-portal-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 30px;
+    width: 100%;
+    background-color: @bg_blue;
+    color: #fff;
+    font-size: 11px;
+    line-height: 20px;
+    z-index: 1000;
+
+    ul {
+        height: 30px;
+
+        li {
+            list-style-type: none;
+            height: 20px;
+            border-right: 1px solid #fff;
+            float: left;
+            margin: 5px;
+            padding: 0 10px;
+        }
+    }
+}
+
+.hcs-home-portal-footer #endlist {
+    border: none;
+}
+
+.hcs-body {
+    /*max-width: 100%;
+    margin: 0 auto;
+    position: relative;*/
+    width: 100%;
+    padding: 30px 10px 10px 30px;
+    /*height: 100%;*/
+    background: @bg_cyan;
+}

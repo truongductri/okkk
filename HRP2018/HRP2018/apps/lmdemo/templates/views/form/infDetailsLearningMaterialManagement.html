@@ -1,0 +1,487 @@
+﻿<div id="collapseTableProvince" class="row" style="padding: 15px;">
+   <div class="information-header">
+      <p class="detail-title">
+         {{_currentItem.material_id}}_{{_currentItem.material_name}}
+      </p>
+   </div>
+   <div class="information-body">
+        <div class="detail-material">
+            <div class="col-md-8 col-lg-8 col-sm-8" style="color:#58ACFA;padding:0px">
+                <div class="form-group zb-form-group">
+                    <!--Danh mục-->
+                    <label for="inputEmp_Train_Mode_Name" class="col-sm-5 detail-content ">${get_res('category','Category')}</label>
+                    <div class="col-md-6 col-lg-6 col-sm-6 detail-content ">
+                    <p class="info-item" style="text-align:center;font-size:14px;">{{_currentItem.category}}</p>
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--Tên tác giả-->
+                    <label for="inputEmp_Train_Mode_Name" class="col-sm-5 detail-content ">${get_res('author','Author')}</label>
+                    <div class="col-md-6 col-lg-6 col-sm-6 detail-content ">
+                    <p class="info-item" style="text-align:center;font-size:14px;">{{_currentItem.author_name}}</p>
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--Tên tác giả-->
+                    <label for="inputEmp_Train_Mode_Name" class="col-sm-5 detail-content ">${get_res('date_publisher','Date Published')}</label>
+                    <div class="col-md-6 col-lg-6 col-sm-6 detail-content ">
+                    <p class="info-item" style="text-align:center;font-size:14px;">{{_currentItem.publisher_date | date:'dd/MM/yyyy'}}</p>
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--Người tạo-->
+                    <label for="inputEmp_Train_Mode_Name" class="col-sm-5 detail-content ">${get_res('creator','Creator')}</label>
+                    <div class="col-md-6 col-lg-6 col-sm-6 detail-content ">
+                    <p class="info-item" style="text-align:center;font-size:14px;">{{_currentItem.created_by}}</p>
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--Ngày tạo-->
+                    <label for="inputEmp_Train_Mode_Name" class="col-sm-5 detail-content ">${get_res('date_cre','Date Created')}</label>
+                    <div class="col-md-6 col-lg-6 col-sm-6 detail-content ">
+                    <p class="info-item" style="text-align:center;font-size:14px;">{{_currentItem.created_on | date:'dd/MM/yyyy'}}</p>
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--Dung lượng file-->
+                    <label for="inputEmp_Train_Mode_Name" class="col-sm-5 detail-content ">${get_res('size','Size')}</label>
+                    <div class="col-md-6 col-lg-6 col-sm-6 detail-content ">
+                    <p class="info-item" style="text-align:center;font-size:14px;">{{convertFileSize(_currentItem.files.file_size)}}</p>
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!--Ngày tài liệu có hiệu lực-->
+                    <label for="inputEmp_Train_Mode_Name" class="col-sm-5 detail-content ">${get_res('approval_date','Approval Date')}</label>
+                    <div class="col-md-6 col-lg-6 col-sm-6 detail-content ">
+                    <p class="info-item" style="text-align:center;font-size:14px;">{{_currentItem.approve_date}}</p>
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!-- Ngày tài liệu hết hiệu lực-->
+                    <label for="inputEmp_Train_Mode_Name" class="col-sm-5 detail-content ">${get_res('expiry_date','Expiry Date')}</label>
+                    <div class="col-md-6 col-lg-6 col-sm-6 detail-content ">
+                    <p class="info-item" style="text-align:center;font-size:14px;">{{_currentItem.date_valid_to | date:'dd/MM/yyyy'}}</p>
+                    </div>
+                </div>
+                <div class="form-group zb-form-group">
+                    <!-- Ngày tài liệu hết hiệu lực-->
+                    <label for="inputEmp_Train_Mode_Name" class="col-sm-5 detail-content ">${get_res('version','Version')}</label>
+                    <div class="col-md-6 col-lg-6 col-sm-6 detail-content ">
+                    <p class="info-item" style="text-align:center;font-size:14px;">{{_currentItem.version}}</p>
+                    </div>
+                </div>
+                <div class="form-group zb-form-group lms-star">
+                    <!--Rate--> 
+                    <label for="inputEmp_Train_Mode_Name" class="col-sm-5 detail-content" >${get_res('rate','Rate')}</label>
+                    <template-rating
+                        star-width= "$data.starWidth"
+                        rating-value="ratingValue"
+                        num-stars="$data.numStars"
+                        min-value="$data.minValue"
+                        max-value="$data.maxValue"
+                        current-item="$$dataRating"
+                        read-only="$data.readOnly"
+                        full-star="true"
+                        half-star="false">
+                    </template-rating>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-sm-4">
+                <div class="">
+                    <img ng-src="{{_currentItem.files.file_thumbnail}}" style="width: 100%;">
+                </div>
+                <div style="text-align:center;font-size: 0.675rem !important; padding-top: 30px;font-style:italic">
+                    <a> View history</a>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12" style="padding:0px">
+                <div class="form-group zb-form-group">
+                    <!--Comment-->
+                    <label for="inputEmp_Train_Mode_Name" class="col-sm-5 detail-content" style="padding-right:10px">${get_res('comment','Comment')}</label>
+                    <div class="col-sm-12" style="padding:0px">
+                        <div class="clearblock" ></div>
+                        <input-textarea rows="2" ng-model="entity.comment"></input-textarea>
+                        <div class="clearblock" ></div>
+                        <a class="relation-content-row" ng-click="postComment()" style="font-size:11px;cursor: pointer;float:right"> Post a comment</a>  
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--rating dưới comment-->
+        <div class="row" style="padding-top: 20px;">
+        <div class="col-md-4 col-lg-4 col-sm-4" >
+            <div class="circle-statistics">
+                <span class="fa fa-star checked" style="color:orange"></span><br/>
+                {{total_rating}} ${get_res('out_of','Out of')} 5
+            </div>
+        </div>
+        <div class="col-md-8 col-lg-8 col-sm-8" >
+            <div class="form-group zb-form-group lms-font-size" ng-repeat="item in data_rating track by $index">
+                <span>{{$index}}</span>
+                <span class="fa fa-star checked" style="color:orange; padding-top: 3px; padding-left: 3px;">
+                </span><br/>
+                <div class="col-sm-12">
+                    <ul style="padding-left: 0; margin-bottom: 0;">
+                        <li class="chart-star" style="width: {{(item.rating ? item.rating : 0)/(data_rating_max.rating ? data_rating_max.rating : 1) * 100}}%"></li>
+                    </ul>
+                </div>
+                <span>{{item.rating}}</span>
+            </div>
+        </div>
+        </div>
+        <div class="row" style="margin-top: 20px;border-top:1px solid #D5D3CF;text-align:center">
+            <p style="color:orangered;font-size:16px">${get_res('people_saying','What People are Saying')}</p>
+        </div>
+        <!--Chi tiet binh luan-->
+        <div class="row" style="padding-top: 10px; padding-bottom: 10px;font-size:11px;border-bottom:1px dashed #D5D3CF;" ng-repeat="elem in info_comments" >
+        <div class="form-group zb-form-group" ng-if="elem.id_comment">
+            <div class="col-lg-2 col-md-2 col-sm-2">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png" alt="user image" width="30" height="30">
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10">
+                <div class="info-comment">
+                    <a class="name-user" style="font-weight:bold">{{elem.login_account}}</a> <a class="date-comment" style="color:grey;font-size:9px"> at {{elem.created_on|date:'dd/MM/yyyy'}}</a>
+                    <p>{{elem.content}}</p>
+                </div>
+                <div class="data-comment">
+                    <div class="col-md-5 col-lg-5 col-sm-5 lms-star" style="padding:0px">
+                        <template-rating
+                            star-width="$data.starWidth"
+                            rating-value="elem.total_vote"
+                            num-stars="$data.numStars"
+                            min-value="$data.minValue"
+                            max-value="$data.maxValue"
+                            current-item=""
+                            read-only="elem.user_votes"
+                            full-star="false"
+                            ng-click="ratingComment"
+                            control-item="elem"
+                            half-star="true">
+                        </template-rating>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-sm-2">          
+                        <i class="bowtie-icon bowtie-approve" ng-click="Myfunction()" style="cursor: pointer;">Like</i>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-3"> 
+                        <i data-toggle="collapse" data-target="#post-reply-{{$index}}" 
+                           class="fa fa-mail-reply" style="cursor: pointer;" ng-click="fnClickReplyComment(elem, $event)">Reply</i>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-sm-2" style="padding-left:5px"> 
+                        <i class="bowtie-icon bowtie-status-warning" ng-click="Myfunction()" style="cursor: pointer;">Spam</i>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <!--add reply-->
+        <!--<div class="panel-group">
+            <div class="panel panel-default">
+                <div id="post-reply-{{$index}}" class="collapse">
+                    <div class="panel-body">
+                    <div class="clearblock" ></div>
+                    <input-textarea rows="2" ng-model="elem.reply" ng-value="'@' + elem.id_user"></input-textarea>
+                    <div class="clearblock" ></div>
+                    <a class="relation-content-row" ng-click="postReply(elem)" style="font-size:11px;cursor: pointer;float:right"> Post a reply</a>  
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <!-- Sub comment-->
+        <div class="sub-comment" style="padding-top: 20px;font-size:11px;padding-left:15px"  ng-repeat="elem_reply in elem.reply track by $index">
+            <div class="form-group zb-form-group">
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png" alt="user image" width="30" height="30">
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-10">
+                    <div class="info-comment">
+                        <a class="name-user" style="font-weight:bold">{{elem_reply.login_account}}</a> 
+                        <a class="date-comment" style="color:grey;font-size:9px"> at {{elem_reply.created_on|date:'dd/MM/yyyy'}}</a>
+                        <p>{{elem_reply.content}}</p>
+                    </div>
+                    <div class="data-comment">
+                        <div class="col-md-5 col-lg-5 col-sm-5 lms-star" style="padding:0px">
+                            <template-rating
+                                star-width="$data.starWidth"
+                                rating-value="elem_reply.total_vote"
+                                num-stars="$data.numStars"
+                                min-value="$data.minValue"
+                                max-value="$data.maxValue"
+                                current-item=""
+                                read-only="elem_reply.user_votes"
+                                full-star="false"
+                                ng-click="ratingReply"
+                                control-item="elem_reply"
+                                extend-data="elem.id_comment"
+                                half-star="true">
+                            </template-rating>
+                        </div>
+                        <div class="col-md-2 col-lg-2 col-sm-2">          
+                            <i class="bowtie-icon bowtie-approve" ng-click="Myfunction()" style="cursor: pointer;">Like</i>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-sm-3"> 
+                            <i data-toggle="collapse" data-target="#post-reply-{{$index}}" class="fa fa-mail-reply"  
+                               style="cursor: pointer;" ng-click="fnClickReplyComment(elem_reply, $event)">Reply</i>
+                        </div>
+                        <div class="col-md-2 col-lg-2 col-sm-2" style="padding-left:5px"> 
+                            <i class="bowtie-icon bowtie-status-warning" ng-click="Myfunction()" style="cursor: pointer;">Spam</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--add reply-->
+            <!--<div class="panel-group">
+                <div class="panel panel-default">
+                    <div id="post-reply-{{$index}}" class="collapse">
+                    <div class="panel-body">
+                        <div class="clearblock" ></div>
+                        <input-textarea rows="2" ng-model="elem.reply" ></input-textarea>
+                        <div class="clearblock" ></div>
+                        <a class="relation-content-row" ng-click="postReply(elem)" style="font-size:11px;cursor: pointer;float:right"> Post a reply</a>  
+                    </div>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+        </div>
+        <div class="row" style="color:dimgrey;text-align:center;font-size:11px;padding-bottom:20px;padding-top:10px">
+            <i class="bowtie-icon bowtie-chevron-down-all" ng-click="Myfunction()" style="cursor: pointer;"> --See more--</i>
+         </div>
+   </div>
+</div>
+<style>
+    .lms-star h1 {
+        display: none;
+    }
+
+    .chart-star {
+        list-style-type: none; 
+        padding: 5px; 
+        box-sizing: border-box; 
+        margin-top: 4px; 
+        width: 100%; 
+        background: orange; 
+        color: rgb(255, 255, 255); 
+        white-space: nowrap; 
+        font-size: 13px; 
+        font-family: Tahoma, Geneva, sans-serif;
+    }
+    
+    .bowtie-status-warning:hover {
+        color:dimgrey
+    }
+    .bowtie-approve:hover {
+        color:dimgrey
+    }
+    .bowtie-chevron-down-all:hover{
+        color:#D5D3CF
+    }
+    .circle-statistics {
+        color: orange;
+        width: 100%;
+        border: 1px solid orange;
+        border-radius: 50%;
+        text-align: center;
+        font-size: 10px;
+        padding: 34% 0;
+    }
+    .retangle-statistics{
+        width: 100%;
+        height: 20px;
+        background: #FCC940;
+        border: 1px solid #D69139;
+    }
+    .detail-content {
+     font-weight: normal;
+    height: 27px;
+    color: rgb(102, 102, 102);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 0.675rem !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    line-height: 13px !important;
+    text-align: left !important;
+    padding: 0px 0px 0px 5px;
+    overflow: hidden;
+    }
+    .detail-content::after{
+    content: ":";
+    float: right;
+    display: block;
+    }
+    .info-item {
+    font-weight: normal;
+    height: 27px;
+    color: rgb(102, 102, 102);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 0.675rem !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    line-height: 13px !important;
+    text-align: left !important;
+    padding: 0px 0px 0px 5px;
+    overflow: hidden;
+    }
+    .lms-font-size {
+        font-size: 0.775rem !important;
+    }
+
+</style>
+<script>
+    (function (scope) {
+        scope._currentItem = scope.$parent.currentItem; 
+
+        scope.rating;
+        scope.ratingValue = 0;
+        scope.$$dataRating = 0;
+        scope.$data = {
+            starWidth: "19px",
+            rating: 5,
+            numStars: 5,
+            minValue: 1,
+            maxValue: 5,
+            readOnly: false
+        }
+        // Hàm đánh giá file
+        scope.ratingComment = function (rating, item, extendData) {
+            console.log(rating)
+            services.api("${get_api_key('app_main.api.LMSLS_MaterialManagement/rating_comment')}")
+                .data({
+                    "where": {
+                        'id': scope._currentItem['_id'],
+                        'id_comment': item.id_comment,
+                    },
+                    "rating": rating
+                })
+                .done()
+                .then(function (res) {
+                    scope.loadDataComment();
+                })
+        }
+        // Hàm đánh giá file
+        scope.ratingReply = function (rating, item, extendData) {
+            console.log(rating)
+            services.api("${get_api_key('app_main.api.LMSLS_MaterialManagement/rating_reply')}")
+                .data({
+                    "where": {
+                        'id': scope._currentItem['_id'],
+                        'id_comment': extendData,
+                        'id_reply': item.id_reply
+                    },
+                    "rating": rating
+                })
+                .done()
+                .then(function (res) {
+                    scope.loadDataComment();
+                })
+        }
+        // Hàm load comment
+        //
+        scope.loadDataComment = function () {
+            services.api("${get_api_key('app_main.api.LMSLS_MaterialManagement/get_data_info_comment')}")
+                .data({
+                    "where": {
+                        'id': scope._currentItem['_id']
+                    }
+                })
+                .done()
+                .then(function (res) {
+                    scope.info_comments = res.comments;
+                    scope.total_rating = res.rating.total_rating ? res.rating.total_rating.toFixed(2) : 0;
+                    scope.data_rating = res.data_rating;
+                    scope.data_rating_max = res.data_rating.reduce(function(prev, current) {
+                        return (prev.rating > current.rating) ? prev : current
+                    }) 
+                    scope.$applyAsync();
+                })
+        }
+        scope.loadDataComment();
+        //
+        scope.postReply = postReply;
+        (function getData() {
+            services.api("${get_api_key('app_main.api.LMSLS_MaterialManagement/get_data_info_details')}")
+                .data({
+                    "where": {
+                        'id': scope._currentItem['_id']
+                    }
+                })
+                .done()
+                .then(function (res) {
+                    //scope.loadDataComment();
+                })
+        })();
+        scope.postComment = postComment;
+        function postComment() {
+            if (scope.entity != null) {
+                services.api("${get_api_key('app_main.api.LMSLS_MaterialManagement/post_comment')}")
+                .data({
+                    "where": {
+                        'id': scope._currentItem['_id'],
+                        'comments': scope.entity.comment,
+                        'rating': scope.$$dataRating
+                    }
+                })
+                .done()
+                .then(function (res) {
+                    scope.entity.comment = '';
+                    scope.loadDataComment();
+                })
+            } else {
+                $msg.message("${get_global_res('Input_Error','Mời nhập comment')}", rsCheck.errorMsg, function () { });
+            }
+        }
+        function postReply(rep_cmt) {
+            if (rep_cmt.reply && rep_cmt.id_comment) {
+                services.api("${get_api_key('app_main.api.LMSLS_MaterialManagement/post_reply')}")
+                .data({
+                    "where": {
+                        'id': scope._currentItem['_id'],
+                        'id_comment': rep_cmt.id_comment,
+                        'reply': rep_cmt.content_reply
+                    }
+                })
+                .done()
+                .then(function (res) {
+                    scope.loadDataComment();
+                })
+            } else {
+                $msg.message("${get_global_res('Input_Error','Mời nhập comment')}", rsCheck.errorMsg, function () { });
+            }
+        }
+        scope.saveNClose = function () {
+            console.log(scope);
+        }
+
+        scope.convertFileSize = function (size) {
+            if (size < 1024) {
+                return size + " B";
+            } else if (size < 1024 * 1024) {
+                return (size / 1024).toFixed(2) + " KB";
+            } else if (size < 1024 * 1024 * 1024) {
+                return (size / (1024 * 1024)).toFixed(2) + " MB";
+            } else if (size < 1024 * 1024 * 1024 * 1024) {
+                return (size / (1024 * 1024 * 1024)).toFixed(2) + " TB";
+            } else {
+                return (size / (1024 * 1024 * 1024 * 1024)).toFixed(2) + " GB";
+            }
+        }
+
+        scope.fnClickReplyComment = function (data, $event) {
+            if ($(".zb-form-textarea")) {
+                $(".zb-form-textarea").remove();
+            }
+            if ($(".lms-action-post-reply")) {
+                $(".lms-action-post-reply").remove();
+            }
+            var parent = $($($($event.target).parent()).parent()).parent();
+            var input = "<textarea rows='2' ng-model='elem.content_reply' class='form-control zb-form-textarea'>"
+                + "</textarea>"
+                + "<a class='relation-content-row lms-action-post-reply' ng-click='postReply(elem)' style='font-size:11px;cursor: pointer;float:right'> Post a reply</a>  ";
+            data.content_reply = '@' + data.login_account + ' ';
+            scope.elem = data;
+            parent.append($scope.$root.$compile(input)(scope));
+        } 
+    });
+    
+</script>

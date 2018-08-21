@@ -1,0 +1,168 @@
+﻿<style>
+    .lms-table-history-custom-header {
+        height: auto;
+	    padding: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* fraction*/
+        padding-bottom: 3px;
+        background: #008ccb;
+        color: white;
+    }
+    .lms-table-history-custom {
+	    height: auto;
+	    padding: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* fraction*/
+        padding-bottom: 3px;
+    }
+    .lms-table-history-custom-group {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        padding-top: 15px;
+        padding-bottom: 10px;
+    }
+    .lms-icon-up {
+        color: #555;
+        display: inline-block;
+        transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        transition: all ease .3s;
+    }
+    .lms-icon-down {
+        color: #555;
+        display: inline-block;
+        transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -webkit-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        transition: all ease .3s;
+    }
+</style>
+<div class="lms-body-version-history">
+    <p>This page includes previous versions of the file. User can restore the selected version.</p>
+    <br />
+    <div class="row" style="">
+        <div class="col-md-6">
+            <div class="form-group zb-form-group">
+                <!--Mã nhóm-->
+                <label class="col-sm-3 zb-form-label">File Name</label>
+                <div class="col-sm-9">
+                    <input-text ng-model="_currentItem.material_name"></input-text>
+                </div>
+            </div>
+        </div>
+    </div>  
+    <br />
+    <div class="">
+        <div class="lms-table-history-custom-header" style="text-align: center">
+		    <div ng-repeat="item in currentHeaderData">{{item.value}}</div>
+	    </div>
+        <div class="lms-table-history-custom-body" style="text-align: center">
+            <div ng-repeat="item in currentItemData track by $index">
+                <div class="lms-table-history-custom-group" item-group-download="{{$index}}">
+                    <div style="color: #008ccb">
+                        {{item.caption}} ({{item.items.length}})
+                    </div>
+                    <div style="border-bottom: 1px solid #008ccb"></div>
+                    <div>
+                        <i class="bowtie-icon bowtie-chevron-left-light lms-icon-up" style="color: #008ccb" onclick="onClickIconDonwload(this)"></i>
+                    </div>
+                </div>
+                <div class="lms-table-history-custom" item-group-child-download="{{$parent.$index}}" ng-repeat="data in item.items">
+                    <div>{{data.date_created|date:'MM/dd/yyyy h:mma' }}</div>
+                    <div>
+                        {{data.login_account ?data.login_account:noData}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function (scope) {
+        scope._currentItem = scope.$parent.currentItem;
+        scope.currentHeaderData = [
+            { key: "modidied_by", value: "${get_global_res('lms_download_history_dowload_on','Download on')}", width: "1fr" },
+            { key: "comment", value: "${get_global_res('lms_download_history_dowload_by','Download by')}", width: "1fr" }
+        ];
+        scope.currentItemData = [
+            {
+                caption: "To day",
+                items: [
+
+                ]
+            }, {
+                caption: "Yesterday",
+                items: [
+
+                ]
+            }, {
+                caption: "Last week",
+                items: [
+
+                ]
+            }
+        ]
+        scope.loadHistoryDownload = function () {
+                
+            services.api("${get_api_key('app_main.api.LMSLS_MaterialManagement/get_data_info_history_download')}")
+                .data({
+                    "where": {
+                        'id': scope._currentItem['_id']
+                    }
+                })
+                .done()
+                .then(function (res) {
+                    debugger
+                    
+                        var date_now = moment().format('YYYY-MM-DD') 
+                   
+                    scope.temp_downloads = res.items[0];
+                    if (scope.temp_downloads.downloads) {
+                        for (var i = 0; i < scope.temp_downloads.downloads.length; i++) {
+                            var date_created = scope.temp_downloads.downloads[i].date_created
+                            var value_date_created = moment(date_created, 'YYYY-MM-DD')
+                            var rangeTime = moment.preciseDiff(date_now, value_date_created, true)
+                            var rangeDay = rangeTime.years * 365 + rangeTime.months * 30 + rangeTime.days
+                            if (rangeDay == 0) {
+                                scope.currentItemData[0].items.push(scope.temp_downloads.downloads[i])
+                            }
+                            else if (rangeDay == 1) {
+                                scope.currentItemData[1].items.push(scope.temp_downloads.downloads[i])
+                            }
+                            else {
+                                scope.currentItemData[2].items.push(scope.temp_downloads.downloads[i])
+                            }
+                        }
+                    }
+                    else {
+                        scope.noData ="No history results"
+                    }
+                    
+                    scope.$applyAsync();
+                })
+        }
+        scope.loadHistoryDownload()
+    });
+</script>
+<script type="text/javascript">
+    var onClickIconDonwload = function (me) {
+        var icon = $(me);
+        var parent = icon.parent().parent();
+        var attrValue = parent.attr('item-group-download');
+        if (icon.hasClass('lms-icon-up')) {
+            icon.removeClass('lms-icon-up');
+            icon.addClass('lms-icon-down');
+            
+        } else {
+            icon.removeClass('lms-icon-down');
+            icon.addClass('lms-icon-up')
+        }
+        $("[item-group-child-download=" + attrValue + "]").slideToggle();
+    }
+</script>

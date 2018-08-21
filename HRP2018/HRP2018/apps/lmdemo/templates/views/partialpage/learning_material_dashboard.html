@@ -1,0 +1,256 @@
+﻿<div class="hcs-container" style="overflow:auto">
+    <div class="col-md-12 lms-dashboard">
+        <div class="lms-dashboard-header">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="lms-dashboard-header-box">
+                        <div class="lms-dashboard-header-box-tx">
+                            <div class="lms-dashboard-header-box-tx-info">
+                                <p class="lms-dashboard-count">{{dashBoard.number_material}}</p>
+                                <p class="lms-dashboard-info">Total Materials</p>
+                            </div>
+                            <div class="lms-dashboard-header-box-tx-icon">
+                                <i class="bowtie-icon  bowtie-symbol-book" style="color: white;font-size: 82px; height: 92px;position:absolute;bottom:0px;"></i>
+                            </div>
+                        </div>
+                        <div class="lms-dashboard-header-box-mo">
+                            <span>
+                                 More Info
+                                <i class="bowtie-icon bowtie-navigate-forward-circle"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="lms-dashboard-header-box">
+                        <div class="lms-dashboard-header-box-tx lms-dashboard-categories">
+                            <div class="lms-dashboard-header-box-tx-info">
+                                <p class="lms-dashboard-count">{{dashBoard.number_folder}}</p>
+                                <p class="lms-dashboard-info">Published Categories</p>
+                            </div>
+                            <div class="lms-dashboard-header-box-tx-icon">
+                                <i class="fa fa-check-circle-o" style="font-size:89px;color:white"></i>
+                            </div>
+                        </div>
+                        <div class="lms-dashboard-header-box-mo lms-dashboard-categories-bot">
+                            <span>
+                                 More Info
+                                <i class="bowtie-icon bowtie-navigate-forward-circle"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="lms-dashboard-header-box">
+                        <div class="lms-dashboard-header-box-tx lms-dashboard-peding">
+                            <div class="lms-dashboard-header-box-tx-info">
+                                <p class="lms-dashboard-count">50</p>
+                                <p class="lms-dashboard-info">Pending Materials</p>
+                            </div>
+                            <div class="lms-dashboard-header-box-tx-icon">
+                                <i class="fa fa-question-circle" style="font-size:95px;color:white"></i>
+                            </div>
+                        </div>
+                        <div class="lms-dashboard-header-box-mo lms-dashboard-peding-bot">
+                            <span>
+                                 More Info
+                                <i class="bowtie-icon bowtie-navigate-forward-circle"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="lms-dashboard-header-box">
+                        <div class="lms-dashboard-header-box-tx lms-dashboard-download">
+                            <div class="lms-dashboard-header-box-tx-info">
+                                <p class="lms-dashboard-count">{{dashBoard.number_download}}</p>
+                                <p class="lms-dashboard-info">Downloads</p>
+                            </div>
+                            <div class="lms-dashboard-header-box-tx-icon">
+                                <i class="bowtie-icon bowtie-install" style="color: white;font-size: 69px; height: 92px;position:absolute;bottom:0px;"></i>
+                            </div>
+                        </div>
+                        <div class="lms-dashboard-header-box-mo lms-dashboard-download-bot">
+                            <span>
+                                 More Info
+                                <i class="bowtie-icon bowtie-navigate-forward-circle"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--
+            Chart    
+        -->
+        <div class="lms-dashboard-chart">
+            <chart height-chart="300"
+                   chart-data-set="$chartLine.dataSetChart"
+                   chart-label-set="$chartLine.labelSetChart"
+                   title-chart="${get_res('title_chart','Last 10 Days Learning Material Activities')}"></chart>
+
+        </div>
+        <div>
+            <div class="col-md-6"><br/> 
+                <h3>Top 5 Material Category with View</h3>
+                <div>
+                    <div class="col-md-6" >           
+                        <div class="lms-dashboard-chart"><br/>
+                        <canvas id="pie" class="chart chart-pie"
+                          chart-data="dataPie" chart-labels="labelsPie"  chart-colors="colorsPie" chart-options="options" >
+                        </canvas> 
+                    </div>
+                    </div>
+                    <div class="col-md-6" style="padding-top: 35px;">                       
+                                <table >
+                                    <tr style="margin-bottom:3px">
+                                        <td style="background-color: {{colorsPie[0]}}; width:50px;border:4px solid white" ></td>
+                                        <td style="padding-left: 10px;">Category 1</td>
+                                    </tr>
+                                    <tr>
+                                        <td style=" background-color: {{colorsPie[1]}};border:4px solid white"></td>
+                                        <td style="padding-left: 10px;">Category 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td style=" background-color: {{colorsPie[2]}};border:4px solid white"></td>
+                                        <td style="padding-left: 10px;">Category 3</td>
+                                    </tr>
+                                    <tr>
+                                        <td style=" background-color: {{colorsPie[3]}};border:4px solid white"></td>
+                                        <td style="padding-left: 10px;">Category 4</td>
+                                    </tr>
+                                    <tr>
+                                        <td style=" background-color: {{colorsPie[4]}};border:4px solid white"></td>
+                                        <td style="padding-left: 10px;">Category 5</td>
+                                    </tr>
+  
+                            </table>
+                    </div>
+               </div>
+         </div>
+          <div class="col-md-6"><br/>
+              <h3>Top 5 Learning Material with View</h3>
+             <div class="lms-dashboard-chart"><br/>
+                <canvas id="base" class="chart-horizontal-bar"
+                  chart-data="dataHorizontalBar" chart-labels="labelsHorizontalBar"  style="max-width:400px !important;max-height:200px !important;">
+                </canvas>
+        </div>
+       </div>
+       </div>
+
+    </div>
+</div>
+<style>
+    .lms-dashboard {
+        padding: 30px;
+    }
+
+    .lms-dashboard-header-box {
+        height: 150px;
+    }
+
+    .lms-dashboard-header-box-tx {
+        display: flex;
+        height: 80%;
+        border: 1px solid #0094ff;
+        background: #b6e0ff;
+    }
+
+    .lms-dashboard-header-box-mo {
+        text-align: center;
+        height: 20%;
+        border-bottom: 1px solid #0094ff;
+        border-left: 1px solid #0094ff;
+        border-right: 1px solid #0094ff;
+        background: #6ec1ff;
+        color: #fff;
+    }
+
+    .lms-dashboard-categories {
+        border: 1px solid #548235;
+        background: #A9D08E;
+    }
+
+    .lms-dashboard-categories-bot {
+        background: #70AD47;
+        border-bottom: 1px solid #548235;
+        border-left: 1px solid #548235;
+        border-right: 1px solid #548235;
+    }
+
+    .lms-dashboard-peding {
+        border: 1px solid #C65911;
+        background: #F4B084;
+    }
+
+    .lms-dashboard-peding-bot {
+        background: #ED7D31;
+        border-bottom: 1px solid #C65911;
+        border-left: 1px solid #C65911;
+        border-right: 1px solid #C65911;
+    }
+
+    .lms-dashboard-download {
+        border: 1px solid #BF8F00;
+        background: #FFD966;
+    }
+
+    .lms-dashboard-download-bot {
+        background: #FFC000;
+        border-bottom: 1px solid #BF8F00;
+        border-left: 1px solid #BF8F00;
+        border-right: 1px solid #BF8F00;
+    }
+    .lms-dashboard-header-box {
+        cursor:pointer;
+        transition: .5s ease;
+    }
+    .lms-dashboard-header-box:hover {
+        box-shadow:
+            1px 1px #373737,
+            2px 2px #555453,
+            3px 3px #6A6968,
+            4px 4px #858483,
+            5px 5px #ACAAA7;
+            -webkit-transform: translateX(-3px);
+            transform: translateX(-3px);
+            transition: .5s ease;
+
+    }
+    .lms-dashboard-header-box-mo span {
+        line-height: 1.7;
+    }
+    .lms-dashboard-header-box-mo i {
+        padding-left: 10px;
+    }
+    .lms-dashboard-header-box-tx-info {
+        width: 60%;
+        padding: 15px 20px;
+    }
+    .lms-dashboard-header-box-tx-icon {
+        width: 45%;
+        padding: 15px;
+    }
+
+    .lms-dashboard-header-box-tx-icon img{
+        height: 82px;
+        width: 82px;
+    }
+    .lms-dashboard-count {
+        font-size: 27px;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 0;
+    }
+    .lms-dashboard-info {
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+    }
+    .lms-dashboard-chart {
+        padding-top: 10px;
+    }
+</style>
+<script>
+    <%include file="../../scripts/partialscript/learning_material_dashboard.js"/>
+</script>

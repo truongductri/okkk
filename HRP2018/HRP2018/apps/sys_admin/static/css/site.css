@@ -1,0 +1,32 @@
+div.mask {
+    background-image: url("images/Spinner-1s-68px.svg");
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 12000;
+    background-position: center center;
+    background-repeat: no-repeat
+    
+}
+.modal-dialog_1 {
+    max-width:none !important;
+}
+body .modal-dialog_1 { /* Width */
+    max-width: none !important;
+}
+
+.modal.fade .modal-dialog_1
+{
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    -webkit-transition: none !important;
+    transition: none !important;
+
+    -moz-transform: none !important;
+    -ms-transform: none !important;
+    -o-transform: none !important;
+    -webkit-transform: none !important;
+    transform: none !important;
+}
